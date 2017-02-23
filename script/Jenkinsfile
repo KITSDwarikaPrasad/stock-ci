@@ -1,0 +1,148 @@
+//node('lnxs0755(WMB)') {
+node('master') {
+	echo pwd()
+	setEnv()
+    echo "env.PATH:  ${env.PATH}"
+    //def mvnHome = '/app/easier/tools/apache-maven-3.3.9'
+	echo sh(script: "python --version", returnStdout: true)
+	echo sh(script: "ansible --version", returnStdout: true)
+	echo sh(script: "java -version", returnStdout: true)
+	echo sh(script: "javac -version", returnStdout: true)
+	
+	String directory = "/BODSSHARE/UKBQ/DSOUT/StockService/New_folder/"
+	String fileName = "SAPR3toStockAPI"
+	String extention = ".csv"
+	String filePath = "$directory$fileName$extention"
+	println("filePath: $filePath")
+			
+	try {
+		stage('Checkout') {
+			git url: 'https://github.com/KITSDwarikaPrasad/JUnitCI1.git',branch: 'branch1'
+		}
+		stage('pre-JUnit') {
+						
+			//chek if any existing csv file exists already		
+			def csvExists = fileExists(filePath)
+			if(csvExists) { //TO-do
+				println("$filePath file found")
+				
+				//hold the zip file - find out the latest zip file
+				String oldLastModZipFileName = sh(script: "ls -Art $directory$fileName" + "*.zip | head -n 1", returnStdout: true)
+				println("oldLastModZipFileName :"+ oldLastModZipFileName)
+	
+				//Create backup csv file	
+				//new File(directory, fileName).renameTo(new File(directory,fileName + "_bkp"))
+				sh "mv $filePath $filePath" + "_bkp"
+				println("Backup file created :SAPR3toStockAPI.csv_bkp")
+			} else {//To-do
+				println("$filePath file not found")
+				//throw new Exception("File not found (Before BODS job): $filePath");
+			}	
+				
+				
+				
+				echo "invoking BODS Job -- dummy"
+				//polling for the new csv file
+				dir('script') {
+				    sh "tr '\\r' '\\n' < poll_the_file.sh > poll_the_file1.sh"
+					sh(script: "sh poll_the_file1.sh --path $directory --file $fileName$extention --interval 60 --duration 1800")
+				}
+				//sh(script:"sh script/poll_the_file.sh --path $directory --file $fileName$extention --interval 60 --duration 1800",returnStdout: true)
+				
+				//def fileChecks = load "${pwd()}/script/FileChecks.groovy"
+				//echo "FileChecks.groovy file loaded
+				//def oldZipFile = fileChecks.preBODSProcess(directory,fileName,extention)
+				//echo "oldZipFile:$oldZipFile"
+				
+				//chek if the new csv file is present	
+				csvExists = fileExists(filePath)
+				if(csvExists) {
+					println("$filePath file found")
+					//check if the new zip file is newer
+					String newZipFileName = sh(script: "ls -Art $directory$fileName" + "*.zip | tail -n 1", returnStdout: true)
+					println("newZipFileName :"+ newZipFileName)
+					
+				//	long oldFileTs = Long.parseLong(oldLastModZipFileName.substring(oldLastModZipFileName.indexOf('_'), oldLastModZipFileName.indexOf('-')))
+				//	long newFileTs = Long.parseLong(newZipFileName.substring(newZipFileName.indexOf('_'), newZipFileName.indexOf('-')))
+					
+					def newZipFound = false
+					if( null != newZipFileName && newZipFileName.length() != 0 ) {
+						if( null !=oldLastModZipFileName && oldLastModZipFileName.length() != 0 ) {
+							def oldFileTs = sh(script: "echo '$oldLastModZipFileName' | grep -Eo '[[:digit:]]{14}'", returnStdout: true)
+							def newFileTs = sh(script: "echo '$newZipFileName' | grep -Eo '[[:digit:]]{14}'", returnStdout: true)
+							if( newFileTs > oldFileTs ) { 
+								newZipFound = true
+							}
+						} else {
+							newZipFound = true
+						}
+					}
+					
+					
+				    					
+					if( newZipFound == true ) {
+							println("Got a new zip file.")
+							//sort the content of new csv file
+							echo "starting sorting of csv file -- "
+							sh 'echo $(date +"%x %r %Z")'
+							sh "sort -t \',\' $filePath -o $directory$fileName" + "_sorted.csv"
+							echo "Sorting finished.."
+							sh 'echo $(date +"%x %r %Z")'
+					} else {
+						println("New Zip file not found, So the process will discontinue here.")
+						//throw new Exception("New Zip file not found");
+					}
+					
+					
+				} else {
+					println("$filePath file not found")
+					//throw new Exception("File not found (post BODS job): $filePath");
+				}
+				
+			
+	
+			
+			
+			//bat 'dir'
+		//	sh 'sh script/pre-run.sh'
+		}
+		stage('Build') {
+			
+				sh "mvn -B compile"
+		}
+		stage('Test') {
+		    echo 'Test starting'
+			sh "mvn -B test"
+			echo 'Test ending'+{new Date().getTime()}
+		}
+	} 
+	catch (error) {
+		stage('Cleanup after fail') {
+		    // emailext attachLog: true, body: "Build failed (see ${env.BUILD_URL}): ${error}", subject: "[JENKINS] ${env.JOB_NAME} failed", to: 'dwarika.prasad@kingfisher.com'
+			echo error.getMessage()
+		    throw error
+		}
+	}
+	finally {
+
+		step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+
+		stage('post-JUnit') {
+		    //stdout = sh(script: 'sh script/post-run.sh', returnStdout: true)
+	    //	sh 'rm ~/SAPR3toStockAPI_1000.csv'
+		//	sh 'rm ~/SAPR3toStockAPI_1010.csv'
+		    echo "Deleting the new csv file"
+		    sh 'rm $filePath'
+		    echo "rename the original file back i.e.  SAPR3toStockAPI.csv_bkp --> SAPR3toStockAPI.csv"
+	        sh "mv $filePath" + "_bkp" + " $filePath"
+			
+		}
+	}
+	
+}
+
+
+def setEnv() {
+  env.PATH = 
+"/app/easier/tools/apache-maven-3.3.9/bin:/support/home/esradm/usr/local/bin:/support/home/esradm/jdk1.8.0_111/bin:${env.PATH}"
+}
