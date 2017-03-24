@@ -19,11 +19,26 @@
 			<name>releases</name>
 			<url>https://nexus.kfplc.com:8443/nexus/content/groups/public</url>
 		</repository>
+		<repository>
+			<id>maven.oracle.com</id>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<url>https://maven.oracle.com</url>
+			<layout>default</layout>
+		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
 			<id>releases</id>
 			<url>https://nexus.kfplc.com:8443/nexus/content/groups/public</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>maven.oracle.com</id>
+			<url>https://maven.oracle.com</url>
 		</pluginRepository>
 	</pluginRepositories>
 
@@ -47,5 +62,11 @@
 			<artifactId>junit-addons</artifactId>
 			<version>1.4</version>
 		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc14</artifactId>
+			<version>10.2.0.5</version>
+		</dependency>
+
 	</dependencies>
 </project>

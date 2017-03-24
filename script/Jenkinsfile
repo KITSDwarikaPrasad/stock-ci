@@ -14,20 +14,21 @@ node('master') {
 	String extention = ".csv"
 	String filePath = "$directory$fileName$extention"
 	println("filePath: $filePath")
+	String oldLastModZipFileName = null;
 			
 	try {
 		stage('Checkout') {
-			git url: 'https://github.com/KITSDwarikaPrasad/JUnitCI1.git',branch: 'branch1'
+			git url: 'https://github.com/KITSDwarikaPrasad/stock-ci.git',branch: 'ansiblize'
 		}
 		stage('pre-JUnit') {
-						
+			
 			//chek if any existing csv file exists already		
 			def csvExists = fileExists(filePath)
 			if(csvExists) { //TO-do
-				println("$filePath file found")
+				println("$filePath directory found")
 				
 				//hold the zip file - find out the latest zip file
-				String oldLastModZipFileName = sh(script: "ls -Art $directory$fileName" + "*.zip | head -n 1", returnStdout: true)
+				oldLastModZipFileName = sh(script: "ls -Art $directory$fileName" + "*.zip | head -n 1", returnStdout: true)
 				println("oldLastModZipFileName :"+ oldLastModZipFileName)
 	
 				//Create backup csv file	
@@ -74,7 +75,7 @@ node('master') {
 								newZipFound = true
 							}
 						} else {
-							newZipFound = true
+							newZipFound = true //old file not  found
 						}
 					}
 					
@@ -86,6 +87,8 @@ node('master') {
 							echo "starting sorting of csv file -- "
 							sh 'echo $(date +"%x %r %Z")'
 							sh "sort -t \',\' $filePath -o $directory$fileName" + "_sorted.csv"
+							//sort the content of old csv file
+							sh "sort -t \',\' $filePath" + "_bkp" -o $filePath" + "_bkp" + "_sorted"
 							echo "Sorting finished.."
 							sh 'echo $(date +"%x %r %Z")'
 					} else {
