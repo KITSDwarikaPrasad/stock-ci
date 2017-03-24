@@ -19,7 +19,7 @@ public class FileCompareTest {
 //	File actualFile = new File("/support/home/esradm/SAPR3toStockAPI_1000.csv");
 //	File expectedFile = new File("/support/home/esradm/SAPR3toStockAPI_1010.csv");
 	File actualFile = new File("/BODSSHARE/UKBQ/DSOUT/StockService/New_folder/SAPR3toStockAPI_sorted.csv");
-	File expectedFile = new File("/BODSSHARE/UKBQ/DSOUT/StockService/New_folder/SAPR3toStockAPI.csv_bkp");
+	File expectedFile = new File("/BODSSHARE/UKBQ/DSOUT/StockService/New_folder/SAPR3toStockAPI.csv_bkp_sorted");
 	
 	
 	@Test
