@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.contentOf;
+//import static org.assertj.core.api.Assertions.contentOf;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,14 +14,13 @@ import java.io.IOException;
 import org.junit.Test;
 
 
-
-
 public class FileCompareTest {
 	
 //	File actualFile = new File("/support/home/esradm/SAPR3toStockAPI_1000.csv");
 //	File expectedFile = new File("/support/home/esradm/SAPR3toStockAPI_1010.csv");
-	File actualFile = new File("/BODSSHARE/UKBQ/DSOUT/StockService/SAPR3toStockAPI_sorted.csv");
-	File expectedFile = new File("/BODSSHARE/UKBQ/DSOUT/StockService/SAPR3toStockAPI.csv_bkp");
+	File actualFile = new File("/BODSSHARE/UKBQ/DSOUT/StockService/New_folder/SAPR3toStockAPI_sorted.csv");
+	File expectedFile = new File("/BODSSHARE/UKBQ/DSOUT/StockService/New_folder/SAPR3toStockAPI.csv_bkp");
+	
 	
 	@Test
 	 public void compareWithAssertJ() {
@@ -32,7 +31,7 @@ public class FileCompareTest {
 
 	
 	//@Test
-	 public void compareWithJUnit() throws IOException {
+	/* public void compareWithJUnit() throws IOException {
 		BufferedReader actual = new BufferedReader(new FileReader(actualFile));
 		BufferedReader expected = new BufferedReader(new FileReader(expectedFile));
 		String expectedLine;
@@ -49,12 +48,12 @@ public class FileCompareTest {
 	    
 	    assertNull("Actual had more lines then the actual.", actual.readLine());
 		
-	}
+	}*/
 	
 	//@Test
-	public void compareWithJUnitX() {
+	/*public void compareWithJUnitX() {
 		junitx.framework.FileAssert.assertEquals(expectedFile, actualFile);
-	}
+	}*/
 	
 
 }
