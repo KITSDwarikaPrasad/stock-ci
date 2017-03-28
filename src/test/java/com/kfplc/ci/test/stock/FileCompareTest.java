@@ -1,14 +1,12 @@
 package com.kfplc.ci.test.stock;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertNull;
 
 import static org.assertj.core.api.Assertions.assertThat;
 //import static org.assertj.core.api.Assertions.contentOf;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -45,8 +43,12 @@ public class FileCompareTest {
 //		assertThat(unprocessedLogRhs).hasSameContentAs(unprocessedLogLhs);
 		String logFilePath = ConfigReader.getProperty("UNPROCESSED_LOG_FILE_PATH");
 		Stream<java.lang.String> lines = Files.lines(Paths.get(logFilePath));
-		lines.forEach(line -> assertThat(line.substring(line.length()-100).trim()).hasSameClassAs(line.substring(0, line.length()-100)) );
+		StringBuilder sb = new StringBuilder("");
+		lines.forEach(line -> 
+			sb.append(String.format("%s could not be processed due to error : %s %n", line.substring(0, line.length()-100),line.substring(line.length()-100).trim()))
+		);
 		lines.close();
+		throw new AssertionError(sb.toString());
 	}
 
 	
@@ -68,7 +70,7 @@ public class FileCompareTest {
 	    
 	    assertNull("Actual had more lines then the actual.", actual.readLine());
 		
-	}*/
+	}
 	
 	//@Test
 	/*public void compareWithJUnitX() {
