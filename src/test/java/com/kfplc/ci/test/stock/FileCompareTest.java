@@ -40,7 +40,7 @@ public class FileCompareTest {
 
 		UnprocessedLogs unprocessedLogs = new UnprocessedLogs();
 		unprocessedLogs.parseLogFile();
-		assertThat(unprocessedLogLhs).hasSameContentAs(unprocessedLogRhs);
+		assertThat(unprocessedLogRhs).hasSameContentAs(unprocessedLogLhs);
 		
 	}
 
