@@ -43,11 +43,11 @@ public class UnprocessedLogs {
 		
 		try {
 			//leftfw.write(line.substring(0, line.length()-100));
-			leftBw.write(line.substring(0, line.length()-100));
-			leftBw.newLine();
+			leftBw.write(line.substring(0, line.length()-100) + "\r\n");
+			//leftBw.newLine();
 			leftBw.flush();
-			rightBw.write(line.substring(line.length()-100).trim());
-			rightBw.newLine();
+			rightBw.write(line.substring(line.length()-100).trim()  + "\r\n");
+			//rightBw.newLine();
 			rightBw.flush();
 			
 		} catch (IOException e) {
