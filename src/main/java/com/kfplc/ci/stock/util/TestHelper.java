@@ -84,9 +84,10 @@ public class TestHelper {
 
 	private static void pollTheFile(String csvFilePath) throws InterruptedException {
 		boolean fileArrived = false;
-		long pollingInterval = Long.valueOf( ConfigReader.getProperty("POLLING_DURATION_SECONDS") );
+		long pollingDuration = Long.valueOf( ConfigReader.getProperty("POLLING_DURATION_SECONDS") );
+		long pollingInterval = Long.valueOf( ConfigReader.getProperty("POLLING_INTERVAL_SECONDS") );
 		System.out.println("Started Polling for the csv file with polling interval(in Seconds) ="+ pollingInterval);
-		long endTimeSeconds= System.currentTimeMillis() + pollingInterval;
+		long endTimeSeconds= System.currentTimeMillis() + pollingDuration;
 		while (System.currentTimeMillis() < endTimeSeconds) {
 			System.out.println("checking for the file..");
 			if (Files.exists(Paths.get(csvFilePath))) {
