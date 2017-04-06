@@ -22,15 +22,21 @@ public class TestHelper {
 		String csvFilePath = directory + fileName + ".csv";
 
 		System.out.println("userDir: "+ userDir);
-		///hold the zip file - find out the latest zip file
-		System.out.println(ConfigReader.getProperty("ACTUAL_CSV_FILE_PATH"));
-		String oldLastModZipFileName = CommandRunner.runShellCommand("ls -Art "+directory + fileName + "*.zip | head -n 1");
-		System.out.println("oldLastModZipFileName :"+ oldLastModZipFileName);
-		//Create backup csv file	
-		Files.copy(Paths.get(directory, fileName + "csv"), Paths.get(directory, fileName + "csv_bkp"));
-		Files.delete(Paths.get(directory, fileName + "csv"));
-		//CommandRunner.sh("mv $filePath $filePath" + "_bkp");
-		System.out.println("Backup file created :SAPR3toStockAPI.csv_bkp");
+		
+		if( Files.exists( Paths.get(directory, fileName + ".csv")) ) {
+			///hold the zip file - find out the latest zip file
+			//System.out.println(ConfigReader.getProperty("ACTUAL_CSV_FILE_PATH"));
+			String oldLastModZipFileName = CommandRunner.runShellCommand("ls -Art "+directory + fileName + "*.zip | head -n 1");
+			System.out.println("oldLastModZipFileName :"+ oldLastModZipFileName);
+			//Create backup csv file	
+			Files.copy(Paths.get(directory, fileName + "csv"), Paths.get(directory, fileName + "csv_bkp"));
+			Files.delete(Paths.get(directory, fileName + "csv"));
+			//CommandRunner.sh("mv $filePath $filePath" + "_bkp");
+			System.out.println("Backup file created :SAPR3toStockAPI.csv_bkp");
+		} else {
+			System.out.println( "old files not found" );
+		}
+		
 
 		System.out.println("invoking BODS Job -- dummy");
 
