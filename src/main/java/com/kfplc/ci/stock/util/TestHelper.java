@@ -40,8 +40,9 @@ public class TestHelper {
 		}
 		
 
-		System.out.println("invoking BODS Job -- dummy");
-		CommandRunner.runShellCommand("ansible-playbook -i hosts/staging bods_play.yml -e \"moduleName=win_shell command=JOB_SAPR3_MicroservicenMBODS_STOCK.bat chdirTo=D:\\BODSSHARE\"", "src/main/ansible/");
+		System.out.println("invoking BODS Job ");
+//		CommandRunner.runShellCommand("ansible-playbook -i hosts/staging bods_play.yml -e \"moduleName=win_shell command=JOB_SAPR3_MicroservicenMBODS_STOCK.bat chdirTo=D:\\\\BODSSHARE\"", "src/main/ansible/");
+		CommandRunner.runShellCommand("ansible-playbook -i hosts/staging bods_play.yml -e \"moduleName=win_shell command='dir /Q' chdirTo='C:/ProgramData/SAP BusinessObjects/Data Services/log/DS_APP1456_01/'\"", "src/main/ansible/");
 		//polling for the new csv file
 		 pollTheFile(csvFilePath);
 //		CommandRunner.runShellCommand("tr '\\r' '\\n' < script/poll_the_file.sh > script/poll_the_file1.sh");
@@ -86,7 +87,7 @@ public class TestHelper {
 		boolean fileArrived = false;
 		long pollingDuration = Long.valueOf( ConfigReader.getProperty("POLLING_DURATION_SECONDS") ) * 1000;
 		long pollingInterval = Long.valueOf( ConfigReader.getProperty("POLLING_INTERVAL_SECONDS") ) * 1000;
-		System.out.println("Started Polling for the csv file with polling interval(in Seconds) ="+ pollingInterval);
+		System.out.println("Started Polling for the csv file with polling interval(in milliSeconds) ="+ pollingInterval);
 		long endTimeSeconds= System.currentTimeMillis() + pollingDuration;
 		while (System.currentTimeMillis() < endTimeSeconds) {
 			System.out.println("checking for the file..");
