@@ -43,8 +43,9 @@ public class TestHelper {
 		System.out.println("invoking BODS Job -- dummy");
 
 		//polling for the new csv file
-		CommandRunner.runShellCommand("tr '\\r' '\\n' < script/poll_the_file.sh > script/poll_the_file1.sh");
-		CommandRunner.runShellCommand("sh poll_the_file1.sh --path "+ directory +" --file "+ fileName +".csv --interval 60 --duration 1800");
+		 pollTheFile(csvFilePath);
+//		CommandRunner.runShellCommand("tr '\\r' '\\n' < script/poll_the_file.sh > script/poll_the_file1.sh");
+//		CommandRunner.runShellCommand("sh poll_the_file1.sh --path "+ directory +" --file "+ fileName +".csv --interval 60 --duration 1800");
 
 		if( Files.exists(Paths.get(directory, fileName +".csv")) ) {
 			System.out.println(fileName+".csv file found");
@@ -78,6 +79,27 @@ public class TestHelper {
 				System.out.println("New Zip file not found, So the process will discontinue here.");
 				//throw new Exception("New Zip file not found");
 			}
+		}
+	}
+
+	private static void pollTheFile(String csvFilePath) throws InterruptedException {
+		boolean fileArrived = false;
+		long pollingInterval = Long.valueOf( ConfigReader.getProperty("POLLING_DURATION_SECONDS") );
+		System.out.println("Started Polling for the csv file with polling interval(in Seconds) ="+ pollingInterval);
+		long endTimeSeconds= System.currentTimeMillis() + pollingInterval;
+		while (System.currentTimeMillis() < endTimeSeconds) {
+			System.out.println("checking for the file..");
+			if (Files.exists(Paths.get(csvFilePath))) {
+				System.out.println("File has arrived..");
+				fileArrived = true;
+				break;
+			}
+			Thread.sleep(pollingInterval);
+		}
+		
+		if (!fileArrived) {
+			System.out.println("File did not arrive.");
+			System.exit(1);
 		}
 	}
 
