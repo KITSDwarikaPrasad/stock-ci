@@ -1,0 +1,7 @@
+- name: change owner of path
+  win_owner:  
+    path: "{{chdirTo}}"
+    user: "{{owner}}"
+#    recurse: True
+  register: dir_out
+- debug: var=dir_out.stdout_lines

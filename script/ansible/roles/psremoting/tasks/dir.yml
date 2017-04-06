@@ -1,0 +1,5 @@
+---
+- win_shell: dir
+  args:
+    executable: cmd
+  register: dir_out

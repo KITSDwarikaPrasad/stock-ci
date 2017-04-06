@@ -1,0 +1,4 @@
+- name: create a directory
+  win_file:
+   path: D:\Jenkins
+   state: directory

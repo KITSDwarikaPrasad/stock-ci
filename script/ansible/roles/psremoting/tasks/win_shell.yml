@@ -1,0 +1,7 @@
+- win_shell: "{{command}}"  
+  args:
+    executable: cmd
+    chdir: "{{chdirTo}}"
+#    chdir: 'D:\Program Files (x86)\SAP BusinessObjects\Data Services\bin'
+  register: dir_out
+- debug: var=dir_out.stdout_lines

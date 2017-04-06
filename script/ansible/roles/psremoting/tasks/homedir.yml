@@ -1,0 +1,4 @@
+- win_shell: echo %HOMEDIR%
+  args:
+    executable: cmd
+  register: homedir_out
