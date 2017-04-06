@@ -3,6 +3,6 @@ ansible_ssh_user: srv-jenkins-ci@GHANP.KFPLC.COM
 ansible_ssh_port: 5986
 ansible_connection: winrm
 ansible_winrm_server_cert_validation: ignore
-ansible_winrm_operation_timeout_sec: 1900
-ansible_winrm_read_timeout_sec: 2000
+ansible_winrm_operation_timeout_sec: 180
+ansible_winrm_read_timeout_sec: 200
 #ansible_winrm_transport: ssl
