@@ -13,6 +13,9 @@ node('master') {
 	String fileName = "SAPR3toStockAPI"
 	String extention = ".csv"
 	String filePath = "$directory$fileName$extention"
+	String sortedFilePath = "$filePath" + "_sorted"
+	String sortedBkpFilePath = "$filePath" + "_bkp_sorted"
+
 	println("filePath: $filePath")
 	String oldLastModZipFileName = null;
 			
@@ -20,9 +23,13 @@ node('master') {
 		stage('Checkout') {
 			git url: 'https://github.com/KITSDwarikaPrasad/stock-ci.git',branch: 'ansiblize'
 		}
+		stage('Build') {
+			
+				sh "mvn -B compile"
+		}
 		stage('pre-JUnit') {
 			
-			//chek if any existing csv file exists already		
+			//check if any existing csv file exists already		
 			def csvExists = fileExists(filePath)
 			if(csvExists) { //TO-do
 				println("$filePath directory found")
@@ -86,9 +93,9 @@ node('master') {
 							//sort the content of new csv file
 							echo "starting sorting of csv file -- "
 							sh 'echo $(date +"%x %r %Z")'
-							sh "sort -t \',\' $filePath -o $directory$fileName" + "_sorted.csv"
+							sh "sort -t \',\' $filePath -o $sortedFilePath"
 							//sort the content of old csv file
-							sh "sort -t \',\' $filePath" + "_bkp" -o $filePath" + "_bkp" + "_sorted"
+							sh "sort -t \',\' $filePath" + "_bkp -o $sortedBkpFilePath"
 							echo "Sorting finished.."
 							sh 'echo $(date +"%x %r %Z")'
 					} else {
@@ -109,10 +116,7 @@ node('master') {
 			//bat 'dir'
 		//	sh 'sh script/pre-run.sh'
 		}
-		stage('Build') {
-			
-				sh "mvn -B compile"
-		}
+		
 		stage('Test') {
 		    echo 'Test starting'
 			sh "mvn -B test"
@@ -138,6 +142,11 @@ node('master') {
 		    sh 'rm $filePath'
 		    echo "rename the original file back i.e.  SAPR3toStockAPI.csv_bkp --> SAPR3toStockAPI.csv"
 	        sh "mv $filePath" + "_bkp" + " $filePath"
+			echo "remove other temp files"
+			sh 'rm $sortedBkpFilePath'
+			sh 'rm $sortedFilePath'
+			sh "rm $directory"+ "Unprocessed_log_lhs.txt"
+			sh "rm $directory"+ "Unprocessed_log_rhs.txt"
 			
 		}
 	}
