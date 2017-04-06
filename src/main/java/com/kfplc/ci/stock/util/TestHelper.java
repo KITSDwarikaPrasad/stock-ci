@@ -19,7 +19,7 @@ public class TestHelper {
 		String directory = ConfigReader.getProperty("TARGET_OUT_DIR");
 		String fileName = ConfigReader.getProperty("FILENAME");
 		String userDir = System.getProperty("user.dir");
-		//String csvFilePath = directory + fileName + ".csv";
+		String csvFilePath = directory + fileName + ".csv";
 
 		System.out.println("userDir: "+ userDir);
 		///hold the zip file - find out the latest zip file
@@ -62,9 +62,9 @@ public class TestHelper {
 				//sort the content of new csv file
 				System.out.println("starting sorting of csv file -- StartTime: "+new Date());
 				//sh 'echo $(date +"%x %r %Z")'
-				CommandRunner.runShellCommand( "sort -t \',\' $filePath -o $sortedFilePath" );
+				CommandRunner.runShellCommand( "sort -t \',\' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" );
 				//sort the content of old csv file
-				CommandRunner.runShellCommand( "sort -t \',\' $filePath" + "_bkp -o $sortedBkpFilePath" );
+				CommandRunner.runShellCommand( "sort -t \',\' "+ csvFilePath +"_bkp -o " +  csvFilePath + "_bkp_sorted" );
 				System.out.println( "Sorting finished..-- EndTime: "+new Date() );
 			} else {
 				System.out.println("New Zip file not found, So the process will discontinue here.");

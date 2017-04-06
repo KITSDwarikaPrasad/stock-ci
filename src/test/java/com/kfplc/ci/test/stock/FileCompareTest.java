@@ -18,9 +18,9 @@ import com.kfplc.ci.stock.util.TestHelper;
 
 public class FileCompareTest {
 	
-
-	File actualFile = new File(ConfigReader.getProperty("ACTUAL_CSV_FILE_PATH"));
-	File expectedFile = new File(ConfigReader.getProperty("EXPECTED_CSV_FILE_PATH"));
+	String directory = ConfigReader.getProperty("TARGET_OUT_DIR");
+	File actualFile = new File(directory + ConfigReader.getProperty("ACTUAL_CSV_FILENAME"));
+	File expectedFile = new File(directory + ConfigReader.getProperty("EXPECTED_CSV_FILENAME"));
 	
 	File unprocessedLogLhs = new File(ConfigReader.getProperty("UNPROCESSED_LOG_LHS_PATH"));
 	File unprocessedLogRhs = new File(ConfigReader.getProperty("UNPROCESSED_LOG_RHS_PATH"));
