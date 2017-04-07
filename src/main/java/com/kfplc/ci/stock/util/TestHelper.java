@@ -67,7 +67,7 @@ public class TestHelper {
 //		CommandRunner.runShellCommand("ansible-playbook -i hosts/staging bods_play.yml -e \"moduleName=win_shell command='dir /Q' chdirTo='C:/ProgramData/SAP BusinessObjects/Data Services/log/DS_APP1456_01/'\"", path, userDir + "/src/main/ansible/");
 		//CommandRunner.runShellCommandPB("echo $PATH", path, userDir + "/src/main/ansible/");
 //		CommandRunner.runShellCommandPB(null, userDir.concat("/src/main/ansible/"), ConfigReader.getProperty("ANSIBLE_COMMAND"));
-		CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh invokeSH.sh");
+		CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh invokeBodsJob.sh");
 		//polling for the new csv file
 		 pollTheFile(csvFilePath);
 //		CommandRunner.runShellCommand("sh poll_the_file1.sh --path "+ directory +" --file "+ fileName +".csv --interval 60 --duration 1800");
