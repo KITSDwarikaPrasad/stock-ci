@@ -57,7 +57,8 @@ public class TestHelper {
 		String[] path = {"PATH=/app/easier/tools/apache-maven-3.3.9/bin:/support/home/esradm/usr/local/bin:/support/home/esradm/jdk1.8.0_111/bin"};
 //		CommandRunner.runShellCommand("ansible-playbook -i hosts/staging bods_play.yml -e \"moduleName=win_shell command=JOB_SAPR3_MicroservicenMBODS_STOCK.bat chdirTo=D:\\\\BODSSHARE\"", "src/main/ansible/");
 //		CommandRunner.runShellCommand("ansible-playbook -i hosts/staging bods_play.yml -e \"moduleName=win_shell command='dir /Q' chdirTo='C:/ProgramData/SAP BusinessObjects/Data Services/log/DS_APP1456_01/'\"", path, userDir + "/src/main/ansible/");
-		CommandRunner.runShellCommand("ansible-playbook --version", path, userDir + "/src/main/ansible/");
+		CommandRunner.runShellCommand("echo $PATH", path, userDir + "/src/main/ansible/");
+		System.out.println("*---------------------*");
 		//polling for the new csv file
 		 pollTheFile(csvFilePath);
 //		CommandRunner.runShellCommand("tr '\\r' '\\n' < script/poll_the_file.sh > script/poll_the_file1.sh");
