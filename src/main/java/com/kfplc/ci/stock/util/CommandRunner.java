@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class CommandRunner {
 
-	
+	public static String output = null;
 	public static void main(String[] args) {
 		try {
 			runShellCommand( "command", null, null);
@@ -29,12 +29,14 @@ public class CommandRunner {
 	public static String runShellCommand(String script, String[] envVar, String chdirTo) throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
 		Process p;
+		
 		if(chdirTo == null) {
 			p = Runtime.getRuntime().exec(script, envVar, null);
 		} else {
 			p = Runtime.getRuntime().exec(script, envVar, new File(chdirTo));
 		}
 		new Thread(new Runnable() {
+			
 			public void run() {
 				BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 				String line = null; 
@@ -42,22 +44,24 @@ public class CommandRunner {
 				try {
 					while ((line = input.readLine()) != null)
 						System.out.println(line);
+					
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				output = line;
 			}
 		}).start();
 
 		p.waitFor();
-		return null;
+		return output;
 	}
 
 	public static void runShellCommandPB( Map<String, String> envVarMap, String chdirTo,  String... command) throws IOException {
 		// TODO Auto-generated method stub
 		ProcessBuilder pb = new ProcessBuilder(command);
 		Map<String, String> pbEnvMap = System.getenv();
-
-		pbEnvMap.put("Path", pbEnvMap.get("Path").concat("C:\\Users\\prasad01\\tools\\python\\WinPython-64bit-3.6.0.1\\scripts;"));
+		System.out.println("pbEnvMap ----> "+pbEnvMap);
+		pbEnvMap.put("PATH", pbEnvMap.get("PATH").concat("C:\\Users\\prasad01\\tools\\python\\WinPython-64bit-3.6.0.1\\scripts;"));
 		if(chdirTo != null) {
 			pb.directory(new File(chdirTo));
 		} 
