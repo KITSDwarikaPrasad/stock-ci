@@ -31,7 +31,8 @@ public class TestHelper {
 		List<String> list = new ArrayList<String>();
 		//Collections.addAll(list, Arrays.stream(ints).boxed().toArray(Integer[]::new));
 		
-			CommandRunner.runShellCommandPB(null, "C:\\Users\\prasad01\\", command );
+			CommandRunner.runShellCommandPB( "C:\\Users\\prasad01\\", command );
+			CommandRunner.runShellCommand("", null, null);
 
 		
 	}
@@ -65,7 +66,8 @@ public class TestHelper {
 //		CommandRunner.runShellCommand("ansible-playbook -i hosts/staging bods_play.yml -e \"moduleName=win_shell command=JOB_SAPR3_MicroservicenMBODS_STOCK.bat chdirTo=D:\\\\BODSSHARE\"", "src/main/ansible/");
 //		CommandRunner.runShellCommand("ansible-playbook -i hosts/staging bods_play.yml -e \"moduleName=win_shell command='dir /Q' chdirTo='C:/ProgramData/SAP BusinessObjects/Data Services/log/DS_APP1456_01/'\"", path, userDir + "/src/main/ansible/");
 		//CommandRunner.runShellCommandPB("echo $PATH", path, userDir + "/src/main/ansible/");
-		CommandRunner.runShellCommandPB(null, userDir.concat("/src/main/ansible/"), ConfigReader.getProperty("ANSIBLE_COMMAND"));
+//		CommandRunner.runShellCommandPB(null, userDir.concat("/src/main/ansible/"), ConfigReader.getProperty("ANSIBLE_COMMAND"));
+		CommandRunner.runShellCommandPB( userDir.concat(ConfigReader.getProperty("CHDIR_TO")), ConfigReader.getProperty("ANSIBLE_COMMAND"));
 		System.out.println("*---------------------*");
 		//polling for the new csv file
 		 pollTheFile(csvFilePath);

@@ -57,7 +57,7 @@ public class CommandRunner {
 		return output;
 	}
 
-	public static void runShellCommandPB( Map<String, String> envVarMap, String chdirTo,  String command) throws IOException {
+	public static void runShellCommandPB( String chdirTo,  String command) throws IOException {
 		// TODO Auto-generated method stub
 		ProcessBuilder pb = new ProcessBuilder(command.split(" "));
 		Map<String, String> pbEnvMap = System.getenv();
