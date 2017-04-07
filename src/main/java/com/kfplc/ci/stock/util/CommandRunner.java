@@ -52,12 +52,15 @@ public class CommandRunner {
 		return null;
 	}
 
-	public static void runShellCommandPB( Map<String, String> envVarMap, String... command) throws IOException {
+	public static void runShellCommandPB( Map<String, String> envVarMap, String chdirTo,  String... command) throws IOException {
 		// TODO Auto-generated method stub
 		ProcessBuilder pb = new ProcessBuilder(command);
 		Map<String, String> pbEnvMap = System.getenv();
 
-		envVarMap.put("Path", pbEnvMap.get("Path").concat("C:\\Users\\prasad01\\tools\\python\\WinPython-64bit-3.6.0.1\\scripts"));
+		pbEnvMap.put("Path", pbEnvMap.get("Path").concat("C:\\Users\\prasad01\\tools\\python\\WinPython-64bit-3.6.0.1\\scripts;"));
+		if(chdirTo != null) {
+			pb.directory(new File(chdirTo));
+		} 
 		pb.start();
 	}
 	

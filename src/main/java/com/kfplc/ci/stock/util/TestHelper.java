@@ -13,18 +13,18 @@ public class TestHelper {
 
 	
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
 		
-		System.out.println("PATH:"+System.getenv().get("Path"));
+//		System.out.println("PATH:"+System.getenv().get("Path"));
 		String[] path = {"C:\\Users\\prasad01\\tools\\python\\WinPython-64bit-3.6.0.1\\scripts"};
-		//	CommandRunner.runShellCommand("cmd /c echo %PATH%", path, null);
-			Map<String, String> envVarMap = System.getenv();
-			System.out.println("envVarMap :"+ envVarMap);
+			CommandRunner.runShellCommand("cmd /c dir", path, "C:\\Users\\prasad01\\tools\\");
+//			Map<String, String> envVarMap = System.getenv();
+//			System.out.println("envVarMap :"+ envVarMap);
 			//for(Map.Entry<String, String> entry ; )
 			//envVarMap.put("Path", envVarMap.get("Path").concat("C:\\Users\\prasad01\\tools\\python\\WinPython-64bit-3.6.0.1\\scripts"));
 			
-			CommandRunner.runShellCommandPB(envVarMap, "dir");
+			//CommandRunner.runShellCommandPB(envVarMap, "dir");
 
 		
 	}
@@ -57,7 +57,8 @@ public class TestHelper {
 		String[] path = {"PATH=/app/easier/tools/apache-maven-3.3.9/bin:/support/home/esradm/usr/local/bin:/support/home/esradm/jdk1.8.0_111/bin"};
 //		CommandRunner.runShellCommand("ansible-playbook -i hosts/staging bods_play.yml -e \"moduleName=win_shell command=JOB_SAPR3_MicroservicenMBODS_STOCK.bat chdirTo=D:\\\\BODSSHARE\"", "src/main/ansible/");
 //		CommandRunner.runShellCommand("ansible-playbook -i hosts/staging bods_play.yml -e \"moduleName=win_shell command='dir /Q' chdirTo='C:/ProgramData/SAP BusinessObjects/Data Services/log/DS_APP1456_01/'\"", path, userDir + "/src/main/ansible/");
-		CommandRunner.runShellCommand("echo $PATH", path, userDir + "/src/main/ansible/");
+		//CommandRunner.runShellCommandPB("echo $PATH", path, userDir + "/src/main/ansible/");
+		CommandRunner.runShellCommandPB(null, userDir.concat("/src/main/ansible/"), ConfigReader.getProperty("ANSIBLE_COMMAND"));
 		System.out.println("*---------------------*");
 		//polling for the new csv file
 		 pollTheFile(csvFilePath);
