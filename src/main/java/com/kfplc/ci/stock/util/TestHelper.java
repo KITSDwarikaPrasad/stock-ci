@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.attribute.FileTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.kfplc.ci.stock.ConfigReader;
@@ -23,8 +25,13 @@ public class TestHelper {
 //			System.out.println("envVarMap :"+ envVarMap);
 			//for(Map.Entry<String, String> entry ; )
 			//envVarMap.put("Path", envVarMap.get("Path").concat("C:\\Users\\prasad01\\tools\\python\\WinPython-64bit-3.6.0.1\\scripts"));
-			
-			CommandRunner.runShellCommandPB(null, "C:\\Users\\prasad01\\", "cmd");
+		String command = "cmd /c dir /Q";
+		//String[] commandArr = {"cmd","/c","dir","/Q"};	
+		String[] commandArr = command.split(" ");
+		List<String> list = new ArrayList<String>();
+		//Collections.addAll(list, Arrays.stream(ints).boxed().toArray(Integer[]::new));
+		
+			CommandRunner.runShellCommandPB(null, "C:\\Users\\prasad01\\", command );
 
 		
 	}
