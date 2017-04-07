@@ -18,13 +18,13 @@ public class TestHelper {
 		
 //		System.out.println("PATH:"+System.getenv().get("Path"));
 		String[] path = {"C:\\Users\\prasad01\\tools\\python\\WinPython-64bit-3.6.0.1\\scripts"};
-			CommandRunner.runShellCommand("cmd /c dir", path, "C:\\Users\\prasad01\\tools\\");
+		//	CommandRunner.runShellCommand("cmd /c dir", path, "C:\\Users\\prasad01\\tools\\");
 //			Map<String, String> envVarMap = System.getenv();
 //			System.out.println("envVarMap :"+ envVarMap);
 			//for(Map.Entry<String, String> entry ; )
 			//envVarMap.put("Path", envVarMap.get("Path").concat("C:\\Users\\prasad01\\tools\\python\\WinPython-64bit-3.6.0.1\\scripts"));
 			
-			//CommandRunner.runShellCommandPB(envVarMap, "dir");
+			CommandRunner.runShellCommandPB(null, "C:\\Users\\prasad01\\", "cmd");
 
 		
 	}

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.ProcessBuilder.Redirect;
 import java.util.Map;
 
 public class CommandRunner {
@@ -65,7 +66,10 @@ public class CommandRunner {
 		if(chdirTo != null) {
 			pb.directory(new File(chdirTo));
 		} 
-		pb.start();
+		pb.redirectOutput(Redirect.INHERIT);
+		System.out.println("chdirTo: "+chdirTo );
+		Process proces = pb.start();
+		
 	}
 	
 	/*public static void main(String[] args) {
