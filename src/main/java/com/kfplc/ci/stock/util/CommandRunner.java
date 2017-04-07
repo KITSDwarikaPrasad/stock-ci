@@ -27,14 +27,14 @@ public class CommandRunner {
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public static String runShellCommand(String script,  String chdirTo) throws IOException, InterruptedException {
+	public static String runShellCommand(String chdirTo, String command) throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
 		Process p;
 		
 		if(chdirTo == null) {
-			p = Runtime.getRuntime().exec(script);
+			p = Runtime.getRuntime().exec(command);
 		} else {
-			p = Runtime.getRuntime().exec(script, null, new File(chdirTo));
+			p = Runtime.getRuntime().exec(command, null, new File(chdirTo));
 		}
 		new Thread(new Runnable() {
 			
@@ -67,6 +67,7 @@ public class CommandRunner {
 			pb.directory(new File(chdirTo));
 		} 
 		pb.redirectOutput(Redirect.INHERIT);
+		pb.redirectError(Redirect.INHERIT);
 		System.out.println("chdirTo: "+chdirTo );
 		Process proces = pb.start();
 		
