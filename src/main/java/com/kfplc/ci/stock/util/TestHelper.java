@@ -40,7 +40,7 @@ public class TestHelper {
 		if( Files.exists( Paths.get(directory, fileName + ".csv")) ) {
 			///hold the zip file - find out the latest zip file
 			//System.out.println(ConfigReader.getProperty("ACTUAL_CSV_FILE_PATH"));
-			oldLastModZipFileName = CommandRunner.runShellCommand("ls -Art "+ fileName + "*.zip | head -n 1",null,  directory);
+			oldLastModZipFileName = CommandRunner.runShellCommand("ls -Art "+ directory + fileName + "*.zip | head -n 1",null,  null);
 			System.out.println("oldLastModZipFileName :"+ oldLastModZipFileName);
 			//Create backup csv file	
 			Files.copy(Paths.get(directory, fileName + ".csv"), Paths.get(directory, fileName + ".csv_bkp"));

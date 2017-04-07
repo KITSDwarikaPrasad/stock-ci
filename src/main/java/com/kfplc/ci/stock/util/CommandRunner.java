@@ -60,8 +60,8 @@ public class CommandRunner {
 		// TODO Auto-generated method stub
 		ProcessBuilder pb = new ProcessBuilder(command);
 		Map<String, String> pbEnvMap = System.getenv();
-		System.out.println("pbEnvMap ----> "+pbEnvMap);
-		pbEnvMap.put("PATH", pbEnvMap.get("PATH").concat("C:\\Users\\prasad01\\tools\\python\\WinPython-64bit-3.6.0.1\\scripts;"));
+		//System.out.println("pbEnvMap ----> "+pbEnvMap);
+		//pbEnvMap.put("PATH", pbEnvMap.get("PATH").concat("C:\\Users\\prasad01\\tools\\python\\WinPython-64bit-3.6.0.1\\scripts;"));
 		if(chdirTo != null) {
 			pb.directory(new File(chdirTo));
 		} 
