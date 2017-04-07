@@ -1,2 +1,0 @@
-- include: roles/psremoting/tasks/ipconfig
-- include: roles/psremoting/tasks/win_ping
