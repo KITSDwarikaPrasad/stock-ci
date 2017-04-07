@@ -2,7 +2,7 @@
 
 #cd ~
 sh ~/.bashrc
-#echo $PATH
-#ls -ltr
-#python --version
+python --version
 ansible --version
+echo $PATH
+#ls -ltr
