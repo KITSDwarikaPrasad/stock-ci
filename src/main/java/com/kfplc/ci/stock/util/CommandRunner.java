@@ -12,7 +12,7 @@ public class CommandRunner {
 	public static String output = null;
 	public static void main(String[] args) {
 		try {
-			runShellCommand( "command", null, null);
+			runShellCommand( "command",  null);
 		} catch (IOException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -27,14 +27,14 @@ public class CommandRunner {
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public static String runShellCommand(String script, String[] envVar, String chdirTo) throws IOException, InterruptedException {
+	public static String runShellCommand(String script,  String chdirTo) throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
 		Process p;
 		
 		if(chdirTo == null) {
-			p = Runtime.getRuntime().exec(script, envVar, null);
+			p = Runtime.getRuntime().exec(script);
 		} else {
-			p = Runtime.getRuntime().exec(script, envVar, new File(chdirTo));
+			p = Runtime.getRuntime().exec(script, null, new File(chdirTo));
 		}
 		new Thread(new Runnable() {
 			

@@ -32,7 +32,7 @@ public class TestHelper {
 		//Collections.addAll(list, Arrays.stream(ints).boxed().toArray(Integer[]::new));
 		
 			CommandRunner.runShellCommandPB( "C:\\Users\\prasad01\\", command );
-			CommandRunner.runShellCommand("", null, null);
+			CommandRunner.runShellCommand("",  null);
 
 		
 	}
@@ -48,7 +48,7 @@ public class TestHelper {
 		if( Files.exists( Paths.get(directory, fileName + ".csv")) ) {
 			///hold the zip file - find out the latest zip file
 			//System.out.println(ConfigReader.getProperty("ACTUAL_CSV_FILE_PATH"));
-			oldLastModZipFileName = CommandRunner.runShellCommand("ls -Art "+ directory + fileName + "*.zip | head -n 1",null,  null);
+			oldLastModZipFileName = CommandRunner.runShellCommand("ls -Art "+ directory + fileName + "*.zip | head -n 1", null);
 			System.out.println("oldLastModZipFileName :"+ oldLastModZipFileName);
 			//Create backup csv file	
 			Files.copy(Paths.get(directory, fileName + ".csv"), Paths.get(directory, fileName + ".csv_bkp"));
@@ -67,6 +67,7 @@ public class TestHelper {
 //		CommandRunner.runShellCommand("ansible-playbook -i hosts/staging bods_play.yml -e \"moduleName=win_shell command='dir /Q' chdirTo='C:/ProgramData/SAP BusinessObjects/Data Services/log/DS_APP1456_01/'\"", path, userDir + "/src/main/ansible/");
 		//CommandRunner.runShellCommandPB("echo $PATH", path, userDir + "/src/main/ansible/");
 //		CommandRunner.runShellCommandPB(null, userDir.concat("/src/main/ansible/"), ConfigReader.getProperty("ANSIBLE_COMMAND"));
+		CommandRunner.runShellCommand( "tr '\\r' '\\n' < invokeBodsJob.sh > invokeBodsJob1.sh",ConfigReader.getProperty("CHDIR_TO"));
 		CommandRunner.runShellCommandPB( ConfigReader.getProperty("CHDIR_TO"), ConfigReader.getProperty("ANSIBLE_COMMAND"));
 		System.out.println("*---------------------*");
 		//polling for the new csv file
@@ -77,7 +78,7 @@ public class TestHelper {
 		if( Files.exists(Paths.get(directory, fileName +".csv")) ) {
 			System.out.println(fileName+".csv file found");
 			//check if the new zip file is newer
-			String newZipFileName = CommandRunner.runShellCommand("ls -Art "+ fileName + "*.zip | tail -n 1", null, directory);
+			String newZipFileName = CommandRunner.runShellCommand("ls -Art "+ fileName + "*.zip | tail -n 1",  directory);
 			System.out.println("newZipFileName :"+ newZipFileName);
 			boolean newZipFound = false;
 			if( null != newZipFileName && newZipFileName.length() != 0 ) {
@@ -98,9 +99,9 @@ public class TestHelper {
 				//sort the content of new csv file
 				System.out.println("starting sorting of csv file -- StartTime: "+new Date());
 				//sh 'echo $(date +"%x %r %Z")'
-				CommandRunner.runShellCommand( "sort -t \',\' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" , null, null);
+				CommandRunner.runShellCommand( "sort -t \',\' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" ,  null);
 				//sort the content of old csv file
-				CommandRunner.runShellCommand( "sort -t \',\' "+ csvFilePath +"_bkp -o " +  csvFilePath + "_bkp_sorted", null, null);
+				CommandRunner.runShellCommand( "sort -t \',\' "+ csvFilePath +"_bkp -o " +  csvFilePath + "_bkp_sorted",  null);
 				System.out.println( "Sorting finished..-- EndTime: "+new Date() );
 			} else {
 				System.out.println("New Zip file not found, So the process will discontinue here.");
