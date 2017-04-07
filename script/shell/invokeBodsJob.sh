@@ -1,8 +1,7 @@
 #!/bin/bash
 
-cd ~
-sh .bashrc
+sh ~/.bashrc
+ansible --version
+python --version
 echo $PATH
 ls -ltr
-python --version
-ansible --version
