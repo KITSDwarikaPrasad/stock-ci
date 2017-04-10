@@ -159,10 +159,12 @@ public class TestHelper {
 				System.out.println("starting sorting of csv file -- StartTime: "+new Date());
 				//sh 'echo $(date +"%x %r %Z")'
 				System.out.println( "sort -t \',\' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" );
-				
-				CommandRunner.runShellCommandPB(null, "/bin/sort -t',' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" );
-				//sort the content of old csv file
-				CommandRunner.runShellCommand(null, "/bin/sort -t',' "+ csvFilePath +"_bkp -o " +  csvFilePath + "_bkp_sorted" );
+				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +" --dest "+ csvFilePath +"_sorted");
+				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +"_bkp --dest "+ csvFilePath +"_bkp_sorted");
+
+//				CommandRunner.runShellCommandPB(null, "/bin/sort -t',' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" );
+//				//sort the content of old csv file
+//				CommandRunner.runShellCommand(null, "/bin/sort -tzz',' "+ csvFilePath +"_bkp -o " +  csvFilePath + "_bkp_sorted" );
 				System.out.println( "Sorting finished..-- EndTime: "+new Date() );
 //			} else {
 //				System.out.println("New Zip file not found, So the process will discontinue here.");

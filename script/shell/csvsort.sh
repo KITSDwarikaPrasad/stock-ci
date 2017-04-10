@@ -4,8 +4,8 @@ function usage
 {
 echo '''usage: sh csvsort.sh --Args
  Args : 
-  -s --source : source file for sorting
-  -d --dest : destination file for sorting
+  -s --source : Source file for sorting
+  -d --dest : Destination file for sorting
   -h --help'''
 }
 
@@ -17,7 +17,7 @@ fi
 
 while [ "$1" != "" ]; do
     case $1 in
-        -s | --source  )          shift
+        -s | --source  )        shift
                                 source=$1
                                 ;;
         -d | --dest )           shift
@@ -32,19 +32,4 @@ while [ "$1" != "" ]; do
     shift
 done
 
-
-((end_time=${SECONDS}+$duration))
-
-while ((${SECONDS} < ${end_time}))
-do
-  echo "checking for the file.."
-  if [[ -r ${directory}/${filename} ]]
-  then
-    echo "File has arrived."
-    exit 0
-  fi
-  sleep ${interval}
-done
-
-echo "File did not arrive."
-exit 1
+sort -t',' $source -o $destination
