@@ -111,6 +111,9 @@ public class TestHelper {
 		if( Files.exists( Paths.get(directory, fileName + ".csv")) ) {
 			//System.out.println(ConfigReader.getProperty("ACTUAL_CSV_FILE_PATH"));
 			//Create backup csv file	
+			if(Files.exists(Paths.get(directory, fileName + ".csv_bkp"))) {
+				Files.delete(Paths.get(directory, fileName + ".csv_bkp"));
+			}
 			Files.copy(Paths.get(directory, fileName + ".csv"), Paths.get(directory, fileName + ".csv_bkp"));
 			Files.delete(Paths.get(directory, fileName + ".csv"));
 			//CommandRunner.sh("mv $filePath $filePath" + "_bkp");
