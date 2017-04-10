@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -25,25 +26,80 @@ public class TestHelper {
 	static String userDir = System.getProperty("user.dir");
 	
 
+	/**
+	 * @param args
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	/**
+	 * @param args
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	/**
+	 * @param args
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public static void main(String[] args) throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
 		
 //		System.out.println("PATH:"+System.getenv().get("Path"));
-		String[] path = {"C:\\Users\\prasad01\\tools\\python\\WinPython-64bit-3.6.0.1\\scripts"};
+//		String[] path = {"C:\\Users\\prasad01\\tools\\python\\WinPython-64bit-3.6.0.1\\scripts"};
 		//	CommandRunner.runShellCommand("cmd /c dir", path, "C:\\Users\\prasad01\\tools\\");
 //			Map<String, String> envVarMap = System.getenv();
 //			System.out.println("envVarMap :"+ envVarMap);
 			//for(Map.Entry<String, String> entry ; )
 			//envVarMap.put("Path", envVarMap.get("Path").concat("C:\\Users\\prasad01\\tools\\python\\WinPython-64bit-3.6.0.1\\scripts"));
-		String command = "cmd /c dir /Q";
+//		String command = "cmd /c dir /Q";
 		//String[] commandArr = {"cmd","/c","dir","/Q"};	
-		String[] commandArr = command.split(" ");
-		List<String> list = new ArrayList<String>();
-		//Collections.addAll(list, Arrays.stream(ints).boxed().toArray(Integer[]::new));
+//		String[] commandArr = command.split(" ");
+//		List<String> list = new ArrayList<String>();
+//		//Collections.addAll(list, Arrays.stream(ints).boxed().toArray(Integer[]::new));
+//		
+//			CommandRunner.runShellCommandPB( "C:\\Users\\prasad01\\", command );
+//			//CommandRunner.runShellCommand("",  null);
+//
+		Path dir = Paths.get(directory);
+//		ArrayList<String> paths = new ArrayList<String>();
+		Optional<Path> lastFilePath = 
+				Files.list(dir)
+				 .filter(p -> Files.isDirectory(p) == false)
+				 .filter(p -> p.toString().endsWith(".zip"))
+				 .max((p1, p2) -> (int)(p1.toFile().lastModified() - p2.toFile().lastModified()) );
+				// .sorted((Path p1, Path p2) -> p2.toFile().lastModified - p1.toFile().lastModified());
+//				 .forEach( p -> {
+//					 System.out.println(p.toUri());
+//				 });
+				 
 		
-			CommandRunner.runShellCommandPB( "C:\\Users\\prasad01\\", command );
-			//CommandRunner.runShellCommand("",  null);
-
+		System.out.println(lastFilePath.get());
+//				 .forEach( p -> paths.add(p.toUri().toString()));
+		
+//		File dir = new File(directory);
+//		File theNewestFile = null;
+//		if(!dir.exists()) System.out.println(dir + " Directory doesn't exists");
+//		File[] files = dir.listFiles(new FilenameFilter() {
+//			
+//
+//			@Override
+//			public boolean accept(File file, String name) {
+//				// TODO Auto-generated method stub
+//				
+//				return name.endsWith(".zip");
+//			}
+//			
+//			
+//		});
+//		for (File file : files) {
+//			System.out.println(file.getName());
+//		}
+//		if (files.length > 0) {
+//	        /** The newest file comes first **/
+//	        Arrays.sort(files, (f1, f2) -> (int)(f2.lastModified() - f1.lastModified()));
+//	        theNewestFile = files[0];
+//	    }
+//		System.out.println("theNewestFile" + theNewestFile);
 		
 	}
 
@@ -127,8 +183,8 @@ public class TestHelper {
 		Path dir = Paths.get(directory);
 		Optional<Path> lastFilePath = Files.list(dir)
 				// .filter(f -> Files.isDirectory(f) == false)
-				 .filter(f -> f.endsWith(".zip"))
-				 .max((f1, f2) -> (int)(f1.toFile().lastModified() - f2.toFile().lastModified()) );
+				 .filter(p -> p.toString().endsWith(".zip"))
+				 .max((p1, p2) -> (int)(p1.toFile().lastModified() - p2.toFile().lastModified()) );
 		return lastFilePath;
 	}
 
