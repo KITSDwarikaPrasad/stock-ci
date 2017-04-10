@@ -99,7 +99,7 @@ public class TestHelper {
 		System.out.println("userDir: "+ userDir);
 		
 		
-		cleanUpBuild();
+		//cleanUpBuild();
 		
 //		if( Files.exists( Paths.get(directory, fileName + ".csv")) ) {
 //			//System.out.println(ConfigReader.getProperty("ACTUAL_CSV_FILE_PATH"));
@@ -160,7 +160,7 @@ public class TestHelper {
 				//sh 'echo $(date +"%x %r %Z")'
 				System.out.println( "sort -t \',\' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" );
 				
-				CommandRunner.runShellCommand(null, "/bin/sort -t \',\' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" );
+				CommandRunner.runShellCommandPB(null, "/bin/sort -t \',\' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" );
 				//sort the content of old csv file
 				CommandRunner.runShellCommand(null, "/bin/sort -t \',\' "+ csvFilePath +"_bkp -o " +  csvFilePath + "_bkp_sorted" );
 				System.out.println( "Sorting finished..-- EndTime: "+new Date() );
