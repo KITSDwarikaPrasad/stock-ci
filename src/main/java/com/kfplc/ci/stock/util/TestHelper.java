@@ -160,9 +160,9 @@ public class TestHelper {
 				//sh 'echo $(date +"%x %r %Z")'
 				System.out.println( "sort -t \',\' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" );
 				
-				CommandRunner.runShellCommandPB(null, "/bin/sort -t \',\' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" );
+				CommandRunner.runShellCommandPB(null, "/bin/sort -t ',' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" );
 				//sort the content of old csv file
-				CommandRunner.runShellCommand(null, "/bin/sort -t \',\' "+ csvFilePath +"_bkp -o " +  csvFilePath + "_bkp_sorted" );
+				CommandRunner.runShellCommand(null, "/bin/sort -t ',' "+ csvFilePath +"_bkp -o " +  csvFilePath + "_bkp_sorted" );
 				System.out.println( "Sorting finished..-- EndTime: "+new Date() );
 //			} else {
 //				System.out.println("New Zip file not found, So the process will discontinue here.");
