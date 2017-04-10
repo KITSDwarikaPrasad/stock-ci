@@ -1,5 +1,5 @@
-#- include: roles/psremoting/tasks/ipconfig.yml
-#- include: roles/psremoting/tasks/win_ping.yml
-#- include: roles/psremoting/tasks/winrmconfig.yml
-- include: roles/psremoting/tasks/{{moduleName}}.yml
-#- include: roles/psremoting/tasks/win_file.yml
+#- include: roles/psremoting/tasks/ipconfig.yaml
+#- include: roles/psremoting/tasks/win_ping.yaml
+#- include: roles/psremoting/tasks/winrmconfig.yaml
+- include: roles/psremoting/tasks/{{moduleName}}.yaml
+#- include: roles/psremoting/tasks/win_file.yaml
