@@ -101,16 +101,16 @@ public class TestHelper {
 		
 		cleanUpBuild();
 		
-		if( Files.exists( Paths.get(directory, fileName + ".csv")) ) {
-			//System.out.println(ConfigReader.getProperty("ACTUAL_CSV_FILE_PATH"));
-			//Create backup csv file	
-			Files.copy(Paths.get(directory, fileName + ".csv"), Paths.get(directory, fileName + ".csv_bkp"));
-			Files.delete(Paths.get(directory, fileName + ".csv"));
-			//CommandRunner.sh("mv $filePath $filePath" + "_bkp");
-			System.out.println("Backup file created :SAPR3toStockAPI.csv_bkp");
-		} else {
-			System.out.println( "old files not found" );
-		}
+//		if( Files.exists( Paths.get(directory, fileName + ".csv")) ) {
+//			//System.out.println(ConfigReader.getProperty("ACTUAL_CSV_FILE_PATH"));
+//			//Create backup csv file	
+//			Files.copy(Paths.get(directory, fileName + ".csv"), Paths.get(directory, fileName + ".csv_bkp"));
+//			Files.delete(Paths.get(directory, fileName + ".csv"));
+//			//CommandRunner.sh("mv $filePath $filePath" + "_bkp");
+//			System.out.println("Backup file created :SAPR3toStockAPI.csv_bkp");
+//		} else {
+//			System.out.println( "old files not found" );
+//		}
 		///hold the zip file - find out the latest zip file
 		//oldLastModZipFileName = CommandRunner.runShellCommand(null, "ls -Art "+ directory + fileName + "*.zip | head -n 1");
 		oldLastModZipTs = getLastModifiedZipFile();
@@ -122,7 +122,7 @@ public class TestHelper {
 		
 //		CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh invokeBodsJob.sh");
 		//polling for the new csv file
-		 pollTheFile(csvFilePath);
+//		 pollTheFile(csvFilePath);
 //		CommandRunner.runShellCommand("sh poll_the_file1.sh --path "+ directory +" --file "+ fileName +".csv --interval 60 --duration 1800");
 
 		if( Files.exists(Paths.get(directory, fileName +".csv")) ) {
@@ -160,9 +160,9 @@ public class TestHelper {
 				//sh 'echo $(date +"%x %r %Z")'
 				System.out.println( "sort -t \',\' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" );
 				
-				CommandRunner.runShellCommand(null, "sort -t \',\' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" );
+				CommandRunner.runShellCommand(null, "/bin/sort -t \',\' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" );
 				//sort the content of old csv file
-				CommandRunner.runShellCommand(null, "sort -t \',\' "+ csvFilePath +"_bkp -o " +  csvFilePath + "_bkp_sorted" );
+				CommandRunner.runShellCommand(null, "/bin/sort -t \',\' "+ csvFilePath +"_bkp -o " +  csvFilePath + "_bkp_sorted" );
 				System.out.println( "Sorting finished..-- EndTime: "+new Date() );
 //			} else {
 //				System.out.println("New Zip file not found, So the process will discontinue here.");
