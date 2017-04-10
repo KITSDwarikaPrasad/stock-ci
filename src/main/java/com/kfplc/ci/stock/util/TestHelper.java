@@ -31,16 +31,7 @@ public class TestHelper {
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	/**
-	 * @param args
-	 * @throws IOException
-	 * @throws InterruptedException
-	 */
-	/**
-	 * @param args
-	 * @throws IOException
-	 * @throws InterruptedException
-	 */
+
 	public static void main(String[] args) throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
 		
@@ -100,7 +91,6 @@ public class TestHelper {
 //	        theNewestFile = files[0];
 //	    }
 //		System.out.println("theNewestFile" + theNewestFile);
-		
 	}
 
 	public static void preUnitTest() throws IOException, InterruptedException {
@@ -130,12 +120,7 @@ public class TestHelper {
 
 		System.out.println("invoking BODS Job ");
 		
-		//String[] path = {"PATH=/app/easier/tools/apache-maven-3.3.9/bin:/support/home/esradm/usr/local/bin:/support/home/esradm/jdk1.8.0_111/bin"};
-//		CommandRunner.runShellCommand("ansible-playbook -i hosts/staging bods_play.yml -e \"moduleName=win_shell command=JOB_SAPR3_MicroservicenMBODS_STOCK.bat chdirTo=D:\\\\BODSSHARE\"", "src/main/ansible/");
-//		CommandRunner.runShellCommand("ansible-playbook -i hosts/staging bods_play.yml -e \"moduleName=win_shell command='dir /Q' chdirTo='C:/ProgramData/SAP BusinessObjects/Data Services/log/DS_APP1456_01/'\"", path, userDir + "/src/main/ansible/");
-		//CommandRunner.runShellCommandPB("echo $PATH", path, userDir + "/src/main/ansible/");
-//		CommandRunner.runShellCommandPB(null, userDir.concat("/src/main/ansible/"), ConfigReader.getProperty("ANSIBLE_COMMAND"));
-		CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh invokeBodsJob.sh");
+//		CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh invokeBodsJob.sh");
 		//polling for the new csv file
 		 pollTheFile(csvFilePath);
 //		CommandRunner.runShellCommand("sh poll_the_file1.sh --path "+ directory +" --file "+ fileName +".csv --interval 60 --duration 1800");
@@ -168,19 +153,21 @@ public class TestHelper {
 //			}
 
 
-			if( newZipFound == true ) {
+//			if( newZipFound == true ) {
 				System.out.println("Got a new zip file.");
 				//sort the content of new csv file
 				System.out.println("starting sorting of csv file -- StartTime: "+new Date());
 				//sh 'echo $(date +"%x %r %Z")'
+				System.out.println( "sort -t \',\' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" );
+				
 				CommandRunner.runShellCommand(null, "sort -t \',\' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" );
 				//sort the content of old csv file
 				CommandRunner.runShellCommand(null, "sort -t \',\' "+ csvFilePath +"_bkp -o " +  csvFilePath + "_bkp_sorted" );
 				System.out.println( "Sorting finished..-- EndTime: "+new Date() );
-			} else {
-				System.out.println("New Zip file not found, So the process will discontinue here.");
-				//throw new Exception("New Zip file not found");
-			}
+//			} else {
+//				System.out.println("New Zip file not found, So the process will discontinue here.");
+//				//throw new Exception("New Zip file not found");
+//			}
 		}
 	}
 
