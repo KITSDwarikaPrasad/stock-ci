@@ -105,15 +105,15 @@ public class TestHelper {
 
 	public static void preUnitTest() throws IOException, InterruptedException {
 		String csvFilePath = directory + fileName + ".csv";
-		Optional<Path> oldLastModZipFile = null;
+		Optional<Integer> oldLastModZipTs = null;
 		System.out.println("userDir: "+ userDir);
+		
+		
+		cleanUpBuild();
 		
 		if( Files.exists( Paths.get(directory, fileName + ".csv")) ) {
 			//System.out.println(ConfigReader.getProperty("ACTUAL_CSV_FILE_PATH"));
 			//Create backup csv file	
-			if(Files.exists(Paths.get(directory, fileName + ".csv_bkp"))) {
-				Files.delete(Paths.get(directory, fileName + ".csv_bkp"));
-			}
 			Files.copy(Paths.get(directory, fileName + ".csv"), Paths.get(directory, fileName + ".csv_bkp"));
 			Files.delete(Paths.get(directory, fileName + ".csv"));
 			//CommandRunner.sh("mv $filePath $filePath" + "_bkp");
@@ -123,9 +123,10 @@ public class TestHelper {
 		}
 		///hold the zip file - find out the latest zip file
 		//oldLastModZipFileName = CommandRunner.runShellCommand(null, "ls -Art "+ directory + fileName + "*.zip | head -n 1");
-		oldLastModZipFile = getLastModifiedZipFile();
-		System.out.println("oldLastModZipFileName :"+ oldLastModZipFile.isPresent());
-		
+		oldLastModZipTs = getLastModifiedZipFile();
+		if(oldLastModZipTs.isPresent()) {
+			System.out.println("oldLastModZipFileTs :"+ oldLastModZipTs);
+		}
 
 		System.out.println("invoking BODS Job ");
 		
@@ -143,11 +144,15 @@ public class TestHelper {
 			System.out.println(fileName+".csv file found");
 			//check if the new zip file is newer
 //			String newZipFileName = CommandRunner.runShellCommand(directory, "ls -Art "+ fileName + "*.zip | tail -n 1");
-			Optional<Path> newZipFile = getLastModifiedZipFile();
-			boolean newZipFound = false;
-			if( !oldLastModZipFile.equals(newZipFile)) {
-				newZipFound = true;
+			boolean newZipFound = true;
+			Optional<Integer> newZipFileTs = getLastModifiedZipFile();
+			System.out.println("newZipFile :"+ newZipFileTs.get());
+			if(newZipFileTs.isPresent()) {
+				if(oldLastModZipTs.isPresent() && newZipFileTs.get() == oldLastModZipTs.get()) {
+					newZipFound = false;
+				}
 			}
+			
 //			System.out.println("newZipFileName :"+ newZipFileName);
 //			boolean newZipFound = false;
 //			if( null != newZipFileName && newZipFileName.length() != 0 ) {
@@ -179,15 +184,18 @@ public class TestHelper {
 		}
 	}
 
-	private static Optional<Path> getLastModifiedZipFile() throws IOException {
+	
+
+	private static Optional<Integer> getLastModifiedZipFile() throws IOException {
 //		File dir = new File(directory);
 //		File[] files = dir.listFiles(FilenameFilter.accept());
 		
 		Path dir = Paths.get(directory);
-		Optional<Path> lastFilePath = Files.list(dir)
+		Optional<Integer> lastFilePath = Files.list(dir)
 				// .filter(f -> Files.isDirectory(f) == false)
 				 .filter(p -> p.toString().endsWith(".zip"))
-				 .max((p1, p2) -> (int)(p1.toFile().lastModified() - p2.toFile().lastModified()) );
+				 .map(p -> (int)p.toFile().lastModified())
+				 .max((t1, t2) -> (t1 - t2)) ;
 		return lastFilePath;
 	}
 
@@ -210,6 +218,18 @@ public class TestHelper {
 		if (!fileArrived) {
 			System.out.println("File did not arrive.");
 			System.exit(1);
+		}
+	}
+	
+	private static void cleanUpBuild() throws IOException {
+		if(Files.exists(Paths.get(directory, fileName + ".csv_bkp"))) {
+			Files.delete(Paths.get(directory, fileName + ".csv_bkp"));
+		}
+		if(Files.exists(Paths.get(directory, fileName + ".csv_sorted"))) {
+			Files.delete(Paths.get(directory, fileName + ".csv_sorted"));
+		}
+		if(Files.exists(Paths.get(directory, fileName + ".csv_bkp_sorted"))) {
+			Files.delete(Paths.get(directory, fileName + ".csv_bkp_sorted"));
 		}
 	}
 
