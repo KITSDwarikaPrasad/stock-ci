@@ -1,18 +1,28 @@
 package com.kfplc.ci.stock.util;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
+
+import javax.swing.filechooser.FileFilter;
 
 import com.kfplc.ci.stock.ConfigReader;
 
 public class TestHelper {
 
+	static String directory = ConfigReader.getProperty("TARGET_OUT_DIR");
+	static String fileName = ConfigReader.getProperty("FILENAME");
+	static String userDir = System.getProperty("user.dir");
 	
 
 	public static void main(String[] args) throws IOException, InterruptedException {
@@ -38,18 +48,12 @@ public class TestHelper {
 	}
 
 	public static void preUnitTest() throws IOException, InterruptedException {
-		String directory = ConfigReader.getProperty("TARGET_OUT_DIR");
-		String fileName = ConfigReader.getProperty("FILENAME");
-		String userDir = System.getProperty("user.dir");
 		String csvFilePath = directory + fileName + ".csv";
-		String oldLastModZipFileName = null;
+		Optional<Path> oldLastModZipFile = null;
 		System.out.println("userDir: "+ userDir);
 		
 		if( Files.exists( Paths.get(directory, fileName + ".csv")) ) {
-			///hold the zip file - find out the latest zip file
 			//System.out.println(ConfigReader.getProperty("ACTUAL_CSV_FILE_PATH"));
-			oldLastModZipFileName = CommandRunner.runShellCommand(null, "ls -Art "+ directory + fileName + "*.zip | head -n 1");
-			System.out.println("oldLastModZipFileName :"+ oldLastModZipFileName);
 			//Create backup csv file	
 			Files.copy(Paths.get(directory, fileName + ".csv"), Paths.get(directory, fileName + ".csv_bkp"));
 			Files.delete(Paths.get(directory, fileName + ".csv"));
@@ -58,11 +62,15 @@ public class TestHelper {
 		} else {
 			System.out.println( "old files not found" );
 		}
+		///hold the zip file - find out the latest zip file
+		//oldLastModZipFileName = CommandRunner.runShellCommand(null, "ls -Art "+ directory + fileName + "*.zip | head -n 1");
+		oldLastModZipFile = getLastModifiedZipFile();
+		System.out.println("oldLastModZipFileName :"+ oldLastModZipFile.isPresent());
 		
 
 		System.out.println("invoking BODS Job ");
 		
-		String[] path = {"PATH=/app/easier/tools/apache-maven-3.3.9/bin:/support/home/esradm/usr/local/bin:/support/home/esradm/jdk1.8.0_111/bin"};
+		//String[] path = {"PATH=/app/easier/tools/apache-maven-3.3.9/bin:/support/home/esradm/usr/local/bin:/support/home/esradm/jdk1.8.0_111/bin"};
 //		CommandRunner.runShellCommand("ansible-playbook -i hosts/staging bods_play.yml -e \"moduleName=win_shell command=JOB_SAPR3_MicroservicenMBODS_STOCK.bat chdirTo=D:\\\\BODSSHARE\"", "src/main/ansible/");
 //		CommandRunner.runShellCommand("ansible-playbook -i hosts/staging bods_play.yml -e \"moduleName=win_shell command='dir /Q' chdirTo='C:/ProgramData/SAP BusinessObjects/Data Services/log/DS_APP1456_01/'\"", path, userDir + "/src/main/ansible/");
 		//CommandRunner.runShellCommandPB("echo $PATH", path, userDir + "/src/main/ansible/");
@@ -75,20 +83,25 @@ public class TestHelper {
 		if( Files.exists(Paths.get(directory, fileName +".csv")) ) {
 			System.out.println(fileName+".csv file found");
 			//check if the new zip file is newer
-			String newZipFileName = CommandRunner.runShellCommand(directory, "ls -Art "+ fileName + "*.zip | tail -n 1");
-			System.out.println("newZipFileName :"+ newZipFileName);
+//			String newZipFileName = CommandRunner.runShellCommand(directory, "ls -Art "+ fileName + "*.zip | tail -n 1");
+			Optional<Path> newZipFile = getLastModifiedZipFile();
 			boolean newZipFound = false;
-			if( null != newZipFileName && newZipFileName.length() != 0 ) {
-				if( null !=oldLastModZipFileName && oldLastModZipFileName.length() != 0 ) {
-					FileTime oldFileTs = (FileTime) Files.getAttribute(Paths.get(oldLastModZipFileName), "creationTime");
-					FileTime newFileTs = (FileTime) Files.getAttribute(Paths.get(newZipFileName), "creationTime");
-					if( newFileTs.compareTo(oldFileTs)  > 0 ) { 
-						newZipFound = true;
-					}
-				} else {
-					newZipFound = true; //old file not  found
-				}
+			if( !oldLastModZipFile.equals(newZipFile)) {
+				newZipFound = true;
 			}
+//			System.out.println("newZipFileName :"+ newZipFileName);
+//			boolean newZipFound = false;
+//			if( null != newZipFileName && newZipFileName.length() != 0 ) {
+//				if( null !=oldLastModZipFile && oldLastModZipFile.length() != 0 ) {
+//					FileTime oldFileTs = (FileTime) Files.getAttribute(Paths.get(oldLastModZipFile), "creationTime");
+//					FileTime newFileTs = (FileTime) Files.getAttribute(Paths.get(newZipFileName), "creationTime");
+//					if( newFileTs.compareTo(oldFileTs)  > 0 ) { 
+//						newZipFound = true;
+//					}
+//				} else {
+//					newZipFound = true; //old file not  found
+//				}
+//			}
 
 
 			if( newZipFound == true ) {
@@ -105,6 +118,18 @@ public class TestHelper {
 				//throw new Exception("New Zip file not found");
 			}
 		}
+	}
+
+	private static Optional<Path> getLastModifiedZipFile() throws IOException {
+//		File dir = new File(directory);
+//		File[] files = dir.listFiles(FilenameFilter.accept());
+		
+		Path dir = Paths.get(directory);
+		Optional<Path> lastFilePath = Files.list(dir)
+				// .filter(f -> Files.isDirectory(f) == false)
+				 .filter(f -> f.endsWith(".zip"))
+				 .max((f1, f2) -> (int)(f1.toFile().lastModified() - f2.toFile().lastModified()) );
+		return lastFilePath;
 	}
 
 	private static void pollTheFile(String csvFilePath) throws InterruptedException {
