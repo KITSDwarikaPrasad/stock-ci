@@ -33,3 +33,5 @@ while [ "$1" != "" ]; do
 done
 
 sort -t',' $source -o $destination
+
+sleep 180
