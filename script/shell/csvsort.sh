@@ -6,6 +6,7 @@ echo '''usage: sh csvsort.sh --Args
  Args : 
   -s --source : Source file for sorting
   -d --dest : Destination file for sorting
+  -w --wait : wait time for next action
   -h --help'''
 }
 
@@ -23,6 +24,9 @@ while [ "$1" != "" ]; do
         -d | --dest )           shift
                                 destination=$1
                                 ;;
+        -w | --wait )           shift
+                                destination=$1
+                                ;;
         -h | --help )           usage
                                 exit
                                 ;;
@@ -34,4 +38,4 @@ done
 
 sort -t',' $source -o $destination
 
-sleep 180
+sleep $wait
