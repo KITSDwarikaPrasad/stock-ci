@@ -50,16 +50,16 @@
 <!-- 			<version>2.6.0</version> -->
 		</dependency>
 
-		<dependency>
+<!-- 		<dependency>
 			<groupId>junit-addons</groupId>
 			<artifactId>junit-addons</artifactId>
 			<version>1.4</version>
-		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>com.oracle</groupId> -->
-		<!-- <artifactId>ojdbc14</artifactId> -->
-		<!-- <version>10.2.0.5</version> -->
-		<!-- </dependency> -->
+		</dependency> -->
+<!-- 		<dependency>
+		<groupId>com.oracle</groupId>
+		<artifactId>ojdbc14</artifactId>
+		<version>10.2.0.5</version>
+		</dependency> -->
 
 	</dependencies>
 </project>
