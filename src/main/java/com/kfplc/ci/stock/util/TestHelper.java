@@ -126,7 +126,11 @@ public class TestHelper {
 
 	public static void cleanUpBuild() throws IOException {
 		if(Files.exists(Paths.get(directory, fileName + ".csv_bkp"))) {
-			Files.copy(Paths.get(directory, fileName + ".csv_bkp"), Paths.get(directory, fileName + ".csv"));
+			if(Files.exists(Paths.get(directory, fileName + ".csv"))) {
+				Files.delete(Paths.get(directory, fileName + ".csv_bkp"));
+			} else {
+				Files.copy(Paths.get(directory, fileName + ".csv_bkp"), Paths.get(directory, fileName + ".csv"));
+			}
 		}
 		if(Files.exists(Paths.get(directory, fileName + ".csv_sorted"))) {
 			Files.delete(Paths.get(directory, fileName + ".csv_sorted"));
