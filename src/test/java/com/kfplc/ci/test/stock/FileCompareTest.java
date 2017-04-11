@@ -31,7 +31,7 @@ public class FileCompareTest {
 	 public void compareWithAssertJ() throws IOException, InterruptedException {
 		TestHelper.preUnitTest();
 		 assertThat(actualFile).hasSameContentAs(expectedFile);
-		
+		 TestHelper.cleanUpBuild();
 	}
 	
 //	@Test
