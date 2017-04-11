@@ -20,6 +20,11 @@ import com.kfplc.ci.stock.InputTextRow;
 import com.kfplc.ci.stock.TestHelper;
 import com.kfplc.ci.stock.util.ConfigReader;
 
+/**
+ * Write the test cases in this file 
+ * @author prasad01
+ *
+ */
 public class FileCompareTest {
 
 	String directory = ConfigReader.getProperty("TARGET_OUT_DIR");
@@ -31,15 +36,25 @@ public class FileCompareTest {
 
 
 
+	/**
+	 * First Test case
+	 * 	steps:
+	 * 		InputTextRow - create row for Input to BODS job
+	 *		TestHelper.preUnitTest() - Invoke preJunit which internally invokes the BODS job remotely
+	 *		assert statement
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
 	@Test
-	public void compareWithAssertJ() throws IOException, InterruptedException, SQLException {
+	public void test1() throws IOException, InterruptedException, SQLException {
 		InputTextRow inputTextRow = new InputTextRow();
 		inputTextRow.setCurrent_stock_quantity("20");
 		
 		InputTextFile.createRow(inputTextRow);
 		TestHelper.preUnitTest();
 		assertThat(actualFile).hasSameContentAs(expectedFile);
-		TestHelper.cleanUpBuild();
+		//TestHelper.cleanUpBuild();
 	}
 
 	//	@Test

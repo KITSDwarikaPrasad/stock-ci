@@ -3,8 +3,11 @@ package com.kfplc.ci.stock;
 import java.util.Formatter;
 
 /**
+ * The class to hold data reflecting one row in input text file.
+ * Configure Default values here itself, override by calling setter methods.
+ * All fields are String only.
+ * No need to left pad zeros separately as the class takes care of formatting.
  * @author prasad01
- *
  */
 public class InputTextRow {
 	
@@ -169,20 +172,22 @@ public class InputTextRow {
 	
 	
 	/**
-	 * //		rowStringBuilder.append("1")	//Record_Identifier	1
-	 * //		.append(storeCd)	//Store_Code	6
-//		.append("ddmmyyyy")	//Stock_Date	8
-//		.append(bQCd)	//BQCode	8
-//		.append("000000001.9")	//Current_Stock_Quantity	11
-//		.append("00000000000")	//Optimum_Stock_Quantity	11
-//		.append("00000000000")	//On_Order_Quantity	11
-//		.append("1")	//Ranged_Flag	1
-//		.append("000")	//CDL	3
-//		.append("0")	//Out_Of_Stock	1
-//		.append("0")	//Stocked_Flag	1
-//		.append("ddmmyyyy");	//Creation_Date	8
-//		
-//		return rowStringBuilder.toString();
+	 * The method to join the different components to create a single row.
+	 * The method takes care of formatting.
+	 * Formatting details are below -
+	 *  <p>FIELD_NAME			PRECISION	Splitted row sample<p>
+	 *  <p>Record_Identifier		1	1                      <p>
+	 *  <p>Store_Code				6	FAE111                 <p>
+	 *  <p>Stock_Date				8	02102016               <p>
+	 *  <p>BQCode					8	20115883               <p>
+	 *  <p>Current_Stock_Quantity	11	0000016.000            <p>
+	 *  <p>Optimum_Stock_Quantity	11	00000000000            <p>
+	 *  <p>On_Order_Quantity		11	00000000000            <p>
+	 *  <p>Ranged_Flag				1	1                      <p>
+	 *  <p>CDL						3	000                    <p>
+	 *  <p>Out_Of_Stock				1	0                      <p>
+	 *  <p>Stocked_Flag				1	0                      <p>
+	 *  <p>Creation_Date			8	03102016               <p>
 	 */
 	public String join() {
 		StringBuilder rowStringBuilder = new StringBuilder();

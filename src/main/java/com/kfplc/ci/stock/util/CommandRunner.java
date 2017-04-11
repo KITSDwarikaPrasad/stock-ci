@@ -19,11 +19,12 @@ public class CommandRunner {
 		}
 	}
 
+
 	/**
-	 * @param script
-	 * @param envVar
-	 * @param chdirTo
-	 * @return
+	 * The method helps in runn the shell command - the implementation used the Runtime.exec()
+	 * @param chdirTo - The path where  the script is placed- analogous to cd command
+	 * @param command - the actual command to be executed  which arguments like 'sh myscript.sh arg1 arg2' 
+	 * @return - console output
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
@@ -57,6 +58,14 @@ public class CommandRunner {
 		return output;
 	}
 
+	/**
+	 * The method helps in runn the shell command - the implementation used the ProcessBuilder and is specific to java8
+	 * @param chdirTo - The path where  the script is placed- analogous to cd command
+	 * @param command - the actual command to be executed  which arguments like 'sh myscript.sh arg1 arg2' 
+	 * @return - console output
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public static void runShellCommandPB( String chdirTo,  String command) throws IOException {
 		// TODO Auto-generated method stub
 		ProcessBuilder pb = new ProcessBuilder(command.split(" "));

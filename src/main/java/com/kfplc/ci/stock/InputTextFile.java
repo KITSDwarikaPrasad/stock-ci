@@ -14,6 +14,10 @@ import java.util.Formatter;
 import com.kfplc.ci.stock.util.ConfigReader;
 import com.kfplc.ci.stock.util.WMBConnection;
 
+/**
+ * This class has the methods to create new Input data and write to the Input file for BODS job 
+ * @author prasad01
+ */
 public class InputTextFile {
 
 	private static Connection connection;
@@ -22,30 +26,9 @@ public class InputTextFile {
 	private static ResultSet resultSet;
 	private static ResultSet resultSetBQ;
 
-	private static void main(String[] args) {
-
-//		try {
-//			createTextFile();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-
-		
-//		String value = "123";
-//		String padded="00000000".substring(value.length()) + value;
-//		System.out.println(padded);
-		
-//		StringBuilder rowStringBuilder = new StringBuilder();
-//		Formatter formatter = new Formatter(rowStringBuilder);
-////		formatter.format("%4$2s %3$2s %2$2s %1$2s", "a", "b", "c", "d");
-//		formatter.format("%4$2s%3$2s%2$2s %1$2s", "a", "b", "c", "d");
-//		System.out.println(rowStringBuilder);
-	}
 
 	/**
-	 * To create the input te
+	 * Method to fetch the Store code and  BQCode from Database, Then set these values in the InputTextRow
 	 * @param inputTextRow 
 	 * @throws SQLException
 	 */
@@ -88,7 +71,13 @@ public class InputTextFile {
 		
 		return inputTextRow;
 	}
+	
+	
 
+	/**The method to write the input data to Input Text file
+	 * @param inputTextRow - The object holding the different sections of the input row for BODS job
+	 * @throws SQLException
+	 */
 	public static void createRow(InputTextRow inputTextRow) throws SQLException {
 
 		fillBQStoreCd(inputTextRow);

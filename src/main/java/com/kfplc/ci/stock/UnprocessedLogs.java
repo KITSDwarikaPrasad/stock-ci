@@ -9,6 +9,11 @@ import java.util.stream.Stream;
 
 import com.kfplc.ci.stock.util.ConfigReader;
 
+/**
+ * The class having methods to parse the Unprocessed logs
+ * @author prasad01
+ *
+ */
 public class UnprocessedLogs {
 	
 	
@@ -30,6 +35,10 @@ public class UnprocessedLogs {
 
 	}*/
 
+	/**
+	 * This method splits the Unprocessed log file content into two parts and writes to separate files as LHS_PAth and RHS_Path
+	 * @throws IOException
+	 */
 	public void parseLogFile() throws IOException {
 		BufferedWriter leftBw = Files.newBufferedWriter(Paths.get(ConfigReader.getProperty("UNPROCESSED_LOG_LHS_PATH")));
 		BufferedWriter rightBw = Files.newBufferedWriter(Paths.get(ConfigReader.getProperty("UNPROCESSED_LOG_RHS_PATH")));
@@ -41,6 +50,12 @@ public class UnprocessedLogs {
 		lines.close();
 	}
 
+	/**
+	 * The methods to be invoked internally only, to write the unprocessed log's content to the LHS and RHS files
+	 * @param leftBw
+	 * @param rightBw
+	 * @param line
+	 */
 	private void writeToFiles(BufferedWriter leftBw, BufferedWriter rightBw, java.lang.String line) {
 		
 		try {

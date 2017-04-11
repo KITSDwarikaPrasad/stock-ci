@@ -7,8 +7,11 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * @author prasad01
  * This is the Utility class for reading configurations
+ * <p> the configuration file path - /resources/config.properties </p>
+ * <p> the secure configurations file path - user's home directory/doNotDelete/conf/stock-ci_config.properties</p>
+ * @author prasad01
+ * 
  */
 public class ConfigReader {
 

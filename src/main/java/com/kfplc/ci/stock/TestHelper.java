@@ -10,6 +10,11 @@ import java.util.Optional;
 import com.kfplc.ci.stock.util.CommandRunner;
 import com.kfplc.ci.stock.util.ConfigReader;
 
+/**
+ * The class with methods and flows to help in one test case
+ * @author prasad01
+ *
+ */
 public class TestHelper {
 
 	static String directory = ConfigReader.getProperty("TARGET_OUT_DIR");
@@ -17,6 +22,7 @@ public class TestHelper {
 	static String userDir = System.getProperty("user.dir");
 
 	/**
+	 * The method to be invoked before running the assert statements, all the operation to be done before the actual test
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
@@ -87,7 +93,8 @@ public class TestHelper {
 
 
 	/**
-	 * @return
+	 * Method to identify the most recent zip file created by BODS job
+	 * @return Optional Integer - depending on the existing old zip file in the directory
 	 * @throws IOException
 	 */
 	private static Optional<Integer> getLastModifiedZipFile() throws IOException {
@@ -103,6 +110,11 @@ public class TestHelper {
 		return lastFilePath;
 	}
 
+	/**
+	 * Method to poll the target directory for the new csv file
+	 * @param csvFilePath
+	 * @throws InterruptedException
+	 */
 	private static void pollTheFile(String csvFilePath) throws InterruptedException {
 		boolean fileArrived = false;
 		long pollingDuration = Long.valueOf( ConfigReader.getProperty("POLLING_DURATION_SECONDS") ) * 1000;
@@ -125,6 +137,10 @@ public class TestHelper {
 		}
 	}
 
+	/**
+	 * Method to be called at start of each test case to delete the files created by previous test case
+	 * @throws IOException
+	 */
 	public static void cleanUpBuild() throws IOException {
 		if(Files.exists(Paths.get(directory, fileName + ".csv_bkp"))) {
 			if(Files.exists(Paths.get(directory, fileName + ".csv"))) {

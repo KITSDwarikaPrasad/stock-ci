@@ -15,7 +15,6 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 /**
- * @author prasad01
  * This is the class for decrypting the protected configurations like database passwords etc
  */
 public class ProtectedConfig {

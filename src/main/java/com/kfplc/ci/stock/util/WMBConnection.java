@@ -8,13 +8,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
+ * This is the Utility class for handle sql connections
  * @author prasad01
- *This is the Utility class for handle sql connections
+ *
  */
 public class WMBConnection {
 	
 	/**
-	 * Method to get the Connection to WMB Database
+	 * Util Method to get the Connection to WMB Database
 	 * @return Connection
 	 * @throws Exception
 	 */
@@ -31,34 +32,34 @@ public class WMBConnection {
 	 * @return Connection
 	 * @throws SQLException
 	 */
-	public static Connection testConnection() throws SQLException {
-
-		Connection conn = null;
-		Statement stmt = null;
-		ResultSet rs = null;
-		try{
-			conn = getConnection();
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select * from MBODS.ARTICLE where EANCODE='5010214541300'");
-			while(rs!= null && rs.next()) {
-				System.out.println("rs[1]:"+rs.getString(1));
-			}
-
-		} catch(Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(stmt != null) {
-				stmt.close();
-			}
-			closeConnection(conn);
-			
-		}
-		return null;
-
-	}
+//	public static Connection testConnection() throws SQLException {
+//
+//		Connection conn = null;
+//		Statement stmt = null;
+//		ResultSet rs = null;
+//		try{
+//			conn = getConnection();
+//			stmt = conn.createStatement();
+//			rs = stmt.executeQuery("select * from MBODS.ARTICLE where EANCODE='5010214541300'");
+//			while(rs!= null && rs.next()) {
+//				System.out.println("rs[1]:"+rs.getString(1));
+//			}
+//
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			if(stmt != null) {
+//				stmt.close();
+//			}
+//			closeConnection(conn);
+//			
+//		}
+//		return null;
+//
+//	}
 	
 	/**
-	 * Method to close the connection
+	 * Util Method to close the connection
 	 * @param Connection
 	 * @throws SQLException
 	 */
@@ -69,18 +70,12 @@ public class WMBConnection {
 		
 	}
 
-	public static void main(String[] args) {
-		//WMBConnection wmbConnection = new WMBConnection();
-		try {
-			Connection conn = WMBConnection.getConnection();
-			WMBConnection.testConnection();
-			WMBConnection.closeConnection(conn);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
+	/**
+	 * Util Method to close Prepared statement
+	 * @param preparedStatement
+	 * @throws SQLException
+	 */
 	public static void closePreparedStatement(PreparedStatement preparedStatement) throws SQLException {
 		if(preparedStatement != null) {
 			preparedStatement.close();
@@ -88,9 +83,14 @@ public class WMBConnection {
 		
 	}
 
-	public static void closeResultSet(ResultSet resultSetBQ) throws SQLException {
-		if(resultSetBQ != null) {
-			resultSetBQ.close();
+	/**
+	 * Util Method to close the Resultset
+	 * @param resultSet
+	 * @throws SQLException
+	 */
+	public static void closeResultSet(ResultSet resultSet) throws SQLException {
+		if(resultSet != null) {
+			resultSet.close();
 		}
 		
 	}
