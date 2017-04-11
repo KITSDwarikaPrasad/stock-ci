@@ -24,7 +24,7 @@ public class ProtectedConfig {
 			(byte) 0xde, (byte) 0x33, (byte) 0x10, (byte) 0x12,
 	};
 
-	/*public static void main(String[] args) throws Exception {
+/*	public static void main(String[] args) throws Exception {
 		String originalPassword = "KzVD,61Lviki10AP";
 		System.out.println("Original password: " + originalPassword);
 		String encryptedPassword = encrypt(originalPassword);
@@ -66,7 +66,8 @@ public class ProtectedConfig {
 		char [] chArr = null;
 		try {
 
-			String pkDir = System.getProperty("user.home").concat("/.vault-pass");
+			//String pkDir = System.getProperty("user.home").concat("/.vault-pass");
+			String pkDir = ConfigReader.getProperty("VAULT_PASS_PATH");
 			br = new BufferedReader(new FileReader(pkDir));
 			String sFirtsLine = null;
 			sFirtsLine = null;
