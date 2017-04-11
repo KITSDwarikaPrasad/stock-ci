@@ -59,7 +59,7 @@ public class CommandRunner {
 	}
 
 	/**
-	 * The method helps in runn the shell command - the implementation used the ProcessBuilder and is specific to java8
+	 * The method helps in running the shell command - the implementation uses the ProcessBuilder and is specific to java8
 	 * @param chdirTo - The path where  the script is placed- analogous to cd command
 	 * @param command - the actual command to be executed  which arguments like 'sh myscript.sh arg1 arg2' 
 	 * @return - console output
@@ -77,7 +77,7 @@ public class CommandRunner {
 		} 
 		pb.redirectOutput(Redirect.INHERIT);
 		pb.redirectError(Redirect.INHERIT);
-		System.out.println("chdirTo: "+chdirTo );
+//		System.out.println("chdirTo: "+chdirTo );
 		Process proces = pb.start();
 		
 	}

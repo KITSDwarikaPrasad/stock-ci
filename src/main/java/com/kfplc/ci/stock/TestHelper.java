@@ -76,9 +76,9 @@ public class TestHelper {
 				//sort the content of new csv file
 				System.out.println("starting sorting of csv file -- StartTime: "+new Date());
 				//sh 'echo $(date +"%x %r %Z")'
-				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +" --dest "+ csvFilePath +"_sorted -w "+ ConfigReader.getProperty("SORT_WAIT_TIME_SEC"));
-				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +"_bkp --dest "+ csvFilePath +"_bkp_sorted -w "+ ConfigReader.getProperty("SORT_WAIT_TIME_SEC"));
-
+				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +" --dest "+ csvFilePath +"_sorted");
+				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +"_bkp --dest "+ csvFilePath +"_bkp_sorted");
+				Thread.sleep(Long.parseLong(ConfigReader.getProperty("SORT_WAIT_TIME_SEC")) * 1000);
 				//				CommandRunner.runShellCommandPB(null, "/bin/sort -t',' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" );
 				//				//sort the content of old csv file
 				//				CommandRunner.runShellCommand(null, "/bin/sort -tzz',' "+ csvFilePath +"_bkp -o " +  csvFilePath + "_bkp_sorted" );
@@ -117,8 +117,8 @@ public class TestHelper {
 	 */
 	private static void pollTheFile(String csvFilePath) throws InterruptedException {
 		boolean fileArrived = false;
-		long pollingDuration = Long.valueOf( ConfigReader.getProperty("POLLING_DURATION_SECONDS") ) * 1000;
-		long pollingInterval = Long.valueOf( ConfigReader.getProperty("POLLING_INTERVAL_SECONDS") ) * 1000;
+		long pollingDuration = Long.parseLong( ConfigReader.getProperty("POLLING_DURATION_SECONDS") ) * 1000;
+		long pollingInterval = Long.parseLong( ConfigReader.getProperty("POLLING_INTERVAL_SECONDS") ) * 1000;
 		System.out.println("Started Polling for the csv file with polling interval(in milliSeconds) ="+ pollingInterval);
 		long endTimeSeconds= System.currentTimeMillis() + pollingDuration;
 		while (System.currentTimeMillis() < endTimeSeconds) {
