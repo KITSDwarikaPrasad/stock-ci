@@ -144,7 +144,7 @@ public class TestHelper {
 	public static void cleanUpBuild() throws IOException {
 		if(Files.exists(Paths.get(directory, fileName + ".csv_bkp"))) {
 			if(Files.exists(Paths.get(directory, fileName + ".csv"))) {
-				Files.delete(Paths.get(directory, fileName + ".csv_bkp"));
+				Files.delete(Paths.get(directory, fileName + ".csv"));
 			} else {
 				Files.copy(Paths.get(directory, fileName + ".csv_bkp"), Paths.get(directory, fileName + ".csv"));
 			}
