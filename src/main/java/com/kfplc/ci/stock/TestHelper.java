@@ -1,4 +1,4 @@
-package com.kfplc.ci.stock.util;
+package com.kfplc.ci.stock;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,7 +7,8 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Optional;
 
-import com.kfplc.ci.stock.ConfigReader;
+import com.kfplc.ci.stock.util.CommandRunner;
+import com.kfplc.ci.stock.util.ConfigReader;
 
 public class TestHelper {
 

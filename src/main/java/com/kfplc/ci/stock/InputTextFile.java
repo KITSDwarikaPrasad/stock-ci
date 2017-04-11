@@ -11,6 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Formatter;
 
+import com.kfplc.ci.stock.util.ConfigReader;
+import com.kfplc.ci.stock.util.WMBConnection;
+
 public class InputTextFile {
 
 	private static Connection connection;

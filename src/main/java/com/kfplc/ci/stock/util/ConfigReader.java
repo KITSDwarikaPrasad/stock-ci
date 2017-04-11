@@ -1,4 +1,4 @@
-package com.kfplc.ci.stock;
+package com.kfplc.ci.stock.util;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

@@ -1,4 +1,4 @@
-package com.kfplc.ci.stock;
+package com.kfplc.ci.stock.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -62,7 +62,7 @@ public class WMBConnection {
 	 * @param Connection
 	 * @throws SQLException
 	 */
-	static void closeConnection(Connection conn) throws SQLException {
+	public static void closeConnection(Connection conn) throws SQLException {
 		if(conn != null) {
 			conn.close();
 		}

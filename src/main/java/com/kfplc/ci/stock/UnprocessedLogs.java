@@ -7,6 +7,8 @@ import java.nio.file.Paths;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import com.kfplc.ci.stock.util.ConfigReader;
+
 public class UnprocessedLogs {
 	
 	

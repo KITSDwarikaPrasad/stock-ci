@@ -14,10 +14,11 @@ import java.sql.SQLException;
 import java.util.stream.Stream;
 
 import org.junit.Test;
-import com.kfplc.ci.stock.ConfigReader;
+
 import com.kfplc.ci.stock.InputTextFile;
 import com.kfplc.ci.stock.InputTextRow;
-import com.kfplc.ci.stock.util.TestHelper;
+import com.kfplc.ci.stock.TestHelper;
+import com.kfplc.ci.stock.util.ConfigReader;
 
 public class FileCompareTest {
 
