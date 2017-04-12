@@ -1,4 +1,4 @@
-package com.kfplc.ci.stock;
+package com.kfplc.ci.datafeed;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import com.kfplc.ci.stock.util.ConfigReader;
+import com.kfplc.ci.datafeed.util.ConfigReader;
 
 /**
  * The class having methods to parse the Unprocessed logs

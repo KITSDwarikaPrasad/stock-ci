@@ -1,4 +1,4 @@
-package com.kfplc.ci.stock.util;
+package com.kfplc.ci.datafeed.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

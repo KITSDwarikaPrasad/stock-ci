@@ -1,4 +1,4 @@
-package com.kfplc.ci.stock;
+package com.kfplc.ci.datafeed;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -11,8 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Formatter;
 
-import com.kfplc.ci.stock.util.ConfigReader;
-import com.kfplc.ci.stock.util.WMBConnection;
+import com.kfplc.ci.datafeed.util.ConfigReader;
+import com.kfplc.ci.datafeed.util.WMBConnection;
 
 /**
  * This class has the methods to create new Input data and write to the Input file for BODS job 
@@ -43,11 +43,11 @@ public class InputTextFile {
 			preparedStatement = connection.prepareStatement(sqlQueryStoreCd);
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet != null && resultSet.next()) {
-				inputTextRow.setStore_code(resultSet.getString(1));
+				inputTextRow.setFull_store_code(resultSet.getString(1));
 			}
 			
 			
-			String sqlQueryBQCd = "select BQCODE from MBODS.EFFECTIVE_ARTICLE_DELTA_RES where ROWNUM =1";
+			String sqlQueryBQCd = "select BQCODE from MBODS."+ ConfigReader.getProperty("TBL_EFFECTIVE_ARTICLE")+" where ROWNUM =1";
 			preparedStatementBQ = connection.prepareStatement(sqlQueryBQCd);
 			resultSetBQ = preparedStatementBQ.executeQuery();
 			if(resultSetBQ != null && resultSetBQ.next()) {
@@ -60,8 +60,8 @@ public class InputTextFile {
 			e.printStackTrace();
 		} finally {
 			WMBConnection.closeResultSet(resultSet);
-			WMBConnection.closeResultSet(resultSetBQ);
 			WMBConnection.closePreparedStatement(preparedStatement);
+			WMBConnection.closeResultSet(resultSetBQ);
 			WMBConnection.closePreparedStatement(preparedStatementBQ);
 			WMBConnection.closeConnection(connection);
 		}
@@ -78,33 +78,18 @@ public class InputTextFile {
 	 * @param inputTextRow - The object holding the different sections of the input row for BODS job
 	 * @throws SQLException
 	 */
-	public static void createRow(InputTextRow inputTextRow) throws SQLException {
+	public static void createInputTextFile(InputTextRow inputTextRow) throws SQLException {
 
 		fillBQStoreCd(inputTextRow);
 
 		Path path = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH"));
 
 		try(BufferedWriter writer = Files.newBufferedWriter(path)) {
-			writer.write(inputTextRow.join());
+			writer.write(inputTextRow.toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		//		rowStringBuilder.append("1")	//Record_Identifier	1
-		//		.append(storeCd)	//Store_Code	6
-		//		.append("ddmmyyyy")	//Stock_Date	8
-		//		.append(bQCd)	//BQCode	8
-		//		.append("000000001.9")	//Current_Stock_Quantity	11
-		//		.append("00000000000")	//Optimum_Stock_Quantity	11
-		//		.append("00000000000")	//On_Order_Quantity	11
-		//		.append("1")	//Ranged_Flag	1
-		//		.append("000")	//CDL	3
-		//		.append("0")	//Out_Of_Stock	1
-		//		.append("0")	//Stocked_Flag	1
-		//		.append("ddmmyyyy");	//Creation_Date	8
-		//		
-		//		return rowStringBuilder.toString();
 	}
 
 	

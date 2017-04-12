@@ -1,4 +1,4 @@
-package com.kfplc.ci.stock;
+package com.kfplc.ci.datafeed;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,8 +7,8 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Optional;
 
-import com.kfplc.ci.stock.util.CommandRunner;
-import com.kfplc.ci.stock.util.ConfigReader;
+import com.kfplc.ci.datafeed.util.CommandRunner;
+import com.kfplc.ci.datafeed.util.ConfigReader;
 
 /**
  * The class with methods and flows to help in one test case
@@ -18,7 +18,7 @@ import com.kfplc.ci.stock.util.ConfigReader;
 public class TestHelper {
 
 	static String directory = ConfigReader.getProperty("TARGET_OUT_DIR");
-	static String fileName = ConfigReader.getProperty("FILENAME");
+	static String fileName = ConfigReader.getProperty("CSV_FILENAME");
 	static String userDir = System.getProperty("user.dir");
 
 	/**
@@ -27,7 +27,7 @@ public class TestHelper {
 	 * @throws InterruptedException
 	 */
 	public static void preUnitTest() throws IOException, InterruptedException {
-		String csvFilePath = directory + fileName + ".csv";
+		String csvFilePath = directory + fileName ;
 		Optional<Integer> oldLastModZipTs = null;
 		System.out.println("userDir: "+ userDir);
 
@@ -76,11 +76,11 @@ public class TestHelper {
 				//sort the content of new csv file
 				System.out.println("starting sorting of csv file -- StartTime: "+new Date());
 				//sh 'echo $(date +"%x %r %Z")'
-				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +" --dest "+ csvFilePath +"_sorted");
-				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +"_bkp --dest "+ csvFilePath +"_bkp_sorted");
+				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +" --dest "+ csvFilePath +"_Actual");
+				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +"_Expected");
 			//	Thread.sleep(Long.parseLong(ConfigReader.getProperty("SORT_WAIT_TIME_SEC")) * 1000);
-				pollTheFile(csvFilePath +"_sorted");
-				pollTheFile(csvFilePath +"_bkp_sorted");
+				pollTheFile(csvFilePath +"_Actual");
+				pollTheFile(csvFilePath +"_Expected");
 				
 				//				CommandRunner.runShellCommandPB(null, "/bin/sort -t',' "+ csvFilePath +" -o "+ csvFilePath +"_sorted" );
 				//				//sort the content of old csv file

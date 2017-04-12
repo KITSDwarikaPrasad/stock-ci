@@ -1,4 +1,4 @@
-package com.kfplc.ci.stock;
+package com.kfplc.ci.datafeed;
 
 import java.util.Formatter;
 
@@ -12,7 +12,7 @@ import java.util.Formatter;
 public class InputTextRow {
 	
 	String record_identifier = "1";
-	String store_code;
+	String full_store_code;
 	String stock_date = "ddmmyyyy";
 	String bqcode;
 	String current_stock_quantity = "0";
@@ -40,14 +40,14 @@ public class InputTextRow {
 	/**
 	 * @return the store_code
 	 */
-	public String getStore_code() {
-		return store_code;
+	public String getFull_store_code() {
+		return full_store_code;
 	}
 	/**
 	 * @param store_code the store_code to set
 	 */
-	public void setStore_code(String store_code) {
-		this.store_code = store_code;
+	public void setFull_store_code(String store_code) {
+		this.full_store_code = store_code;
 	}
 	/**
 	 * @return the stock_date
@@ -189,12 +189,13 @@ public class InputTextRow {
 	 *  <p>Stocked_Flag				1	0                      <p>
 	 *  <p>Creation_Date			8	03102016               <p>
 	 */
-	public String join() {
+	@Override
+	public String toString() {
 		StringBuilder rowStringBuilder = new StringBuilder();
 		Formatter formatter = new Formatter(rowStringBuilder);
 //		formatter.format("%4$2s %3$2s %2$2s %1$2s", "a", "b", "c", "d");
 		formatter.format("%1$1s%2$6s%3$8s%4$8s%5$11s%6$11s%7$11s%8$1s%9$3s%10$1s%11$1s%12$8s", 
-				record_identifier, store_code, stock_date, bqcode, current_stock_quantity, optimum_stock_quantity, on_order_quantity, ranged_flag, cdl, out_of_stock, stocked_flag, creation_date);
+				record_identifier, full_store_code, stock_date, bqcode, current_stock_quantity, optimum_stock_quantity, on_order_quantity, ranged_flag, cdl, out_of_stock, stocked_flag, creation_date);
 		formatter.close();
 		return rowStringBuilder.toString().replace(' ', '0');
 	}

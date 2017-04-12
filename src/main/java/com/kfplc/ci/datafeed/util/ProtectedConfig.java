@@ -1,4 +1,4 @@
-package com.kfplc.ci.stock.util;
+package com.kfplc.ci.datafeed.util;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -23,15 +23,6 @@ public class ProtectedConfig {
 			(byte) 0xde, (byte) 0x33, (byte) 0x10, (byte) 0x12,
 			(byte) 0xde, (byte) 0x33, (byte) 0x10, (byte) 0x12,
 	};
-
-/*	public static void main(String[] args) throws Exception {
-		String originalPassword = "KzVD,61Lviki10AP";
-		System.out.println("Original password: " + originalPassword);
-		String encryptedPassword = encrypt(originalPassword);
-		System.out.println("Encrypted password: " + encryptedPassword);
-		String decryptedPassword = decrypt(encryptedPassword);
-		System.out.println("Decrypted password: " + decryptedPassword);
-	}*/
 
 
 	

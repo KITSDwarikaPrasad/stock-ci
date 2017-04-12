@@ -1,4 +1,4 @@
-package com.kfplc.ci.test.stock;
+package com.kfplc.ci.test.datafeed;
 
 //import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertNull;
@@ -15,21 +15,23 @@ import java.util.stream.Stream;
 
 import org.junit.Test;
 
-import com.kfplc.ci.stock.InputTextFile;
-import com.kfplc.ci.stock.InputTextRow;
-import com.kfplc.ci.stock.TestHelper;
-import com.kfplc.ci.stock.util.ConfigReader;
+import com.kfplc.ci.datafeed.ExpecetdCSVFile;
+import com.kfplc.ci.datafeed.ExpectedCSVRow;
+import com.kfplc.ci.datafeed.InputTextFile;
+import com.kfplc.ci.datafeed.InputTextRow;
+import com.kfplc.ci.datafeed.TestHelper;
+import com.kfplc.ci.datafeed.util.ConfigReader;
 
 /**
  * Write the test cases in this file 
  * @author prasad01
  *
  */
-public class FileCompareTest {
+public class DataFeedTest {
 
 	String directory = ConfigReader.getProperty("TARGET_OUT_DIR");
-	File actualFile = new File(directory + ConfigReader.getProperty("ACTUAL_CSV_FILENAME"));
-	File expectedFile = new File(directory + ConfigReader.getProperty("EXPECTED_CSV_FILENAME"));
+	File actualFile = new File(directory + ConfigReader.getProperty("CSV_FILENAME") + "_Actual");
+	File expectedFile = new File(directory + ConfigReader.getProperty("CSV_FILENAME") + "_Expected");
 
 	File unprocessedLogLhs = new File(ConfigReader.getProperty("UNPROCESSED_LOG_LHS_PATH"));
 	File unprocessedLogRhs = new File(ConfigReader.getProperty("UNPROCESSED_LOG_RHS_PATH"));
@@ -47,12 +49,19 @@ public class FileCompareTest {
 	 * @throws SQLException
 	 */
 	@Test
-	public void test1() throws IOException, InterruptedException, SQLException {
+	public void testStockLevelRounding() throws IOException, InterruptedException, SQLException {
+		//Setup
+		//Create Input Text File
 		InputTextRow inputTextRow = new InputTextRow();
-		inputTextRow.setCurrent_stock_quantity("20");
+		inputTextRow.setCurrent_stock_quantity("1.9");
+		InputTextFile.createInputTextFile(inputTextRow);
+		//Create Expeccted CSV File
+		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+		expecetdCSVRow.setStockLevel("2");
+		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
 		
-		InputTextFile.createRow(inputTextRow);
 		TestHelper.preUnitTest();
+		
 		assertThat(actualFile).hasSameContentAs(expectedFile);
 		//TestHelper.cleanUpBuild();
 	}
