@@ -69,9 +69,10 @@ public class TestHelper {
 				//sort the content of new csv file
 				System.out.println("------> starting sorting of csv file -- StartTime: "+new Date());
 				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +" --dest "+ csvFilePath +"_Actual");
-				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +"_Expected");
+				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +"_Expected.0 --dest "+ csvFilePath +"_Expected");
 				pollTheFile(csvFilePath +"_Actual");
 				pollTheFile(csvFilePath +"_Expected");
+				Files.delete(Paths.get(directory, fileName + "_Expected.0"));
 				System.out.println( "---------> Sorting finished..-- EndTime: "+new Date() );
 			} else {
 				System.out.println("-------->New Zip file not found, So the process will discontinue here.");

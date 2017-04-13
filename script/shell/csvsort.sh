@@ -32,7 +32,4 @@ while [ "$1" != "" ]; do
     shift
 done
 
-if [$destination != ""]; then
-	sort -t',' $source -o $destination
-else
-	sort -t',' $source
+sort -t',' $source -o $destination
