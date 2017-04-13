@@ -126,12 +126,13 @@ public class TestHelper {
 					ran = null;
 				}
 
-				System.out.println("--------> File has arrived completely..");
-				fileArrived = true;
-				break;
+				if(fileArrived) {
+					break;
+				}
 			}
 			Thread.sleep(pollingInterval);
 		}
+		System.out.println("--------> File has arrived completely..");
 
 		if (!fileArrived) {
 			System.out.println("-----------> File did not arrive.");
