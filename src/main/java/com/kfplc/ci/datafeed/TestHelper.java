@@ -99,40 +99,31 @@ public class TestHelper {
 	 * Method to poll the target directory for the new csv file
 	 * @param csvFilePath
 	 * @throws InterruptedException
+	 * @throws IOException 
 	 */
-	private static void pollTheFile(String csvFilePath) throws InterruptedException {
+	private static void pollTheFile(String strFilePath) throws InterruptedException, IOException {
 		boolean fileArrived = false;
 		long pollingDuration = Long.parseLong( ConfigReader.getProperty("POLLING_DURATION_SECONDS") ) * 1000;
 		long pollingInterval = Long.parseLong( ConfigReader.getProperty("POLLING_INTERVAL_SECONDS") ) * 1000;
-		System.out.println("----------> Started Polling for the csv file "+csvFilePath +" , with polling interval(in milliSeconds) ="+ pollingInterval);
+		System.out.println("----------> Started Polling for the csv file "+strFilePath +" , with polling interval(in milliSeconds) ="+ pollingInterval);
 		long endTimeSeconds= System.currentTimeMillis() + pollingDuration;
-		RandomAccessFile ran = null;
-		File csvFile = new File(csvFilePath);
+		Path filePath = Paths.get(strFilePath);
+		long fileSize = 0L;
 		while (System.currentTimeMillis() < endTimeSeconds) {
 			System.out.println("checking for the file..");
-			if(csvFile.exists()) {
-
-				try {
-					ran = new RandomAccessFile(csvFile, "rw");
+			if(Files.exists(filePath)) {
+				
+				long newFileSize = Files.size(filePath);
+				if( newFileSize == fileSize) {
 					fileArrived = true;
+					System.out.println("--------> File has arrived completely..");
 					break;
-				} catch (Exception ex) {
-					System.out.println("  still copying ........... " + ex.getMessage());
-				} finally {
-					if(ran != null) try {
-						ran.close();
-					} catch (IOException ex) {}
-
-					ran = null;
-				}
-
-				if(fileArrived) {
-					break;
+				} else {
+					fileSize = newFileSize;
 				}
 			}
 			Thread.sleep(pollingInterval);
 		}
-		System.out.println("--------> File has arrived completely..");
 
 		if (!fileArrived) {
 			System.out.println("-----------> File did not arrive.");
@@ -162,38 +153,4 @@ public class TestHelper {
 		}
 	}
 	
-	public static boolean copyCompleted(String csvFilePath){
-
-		boolean copyCompleted = false;
-
-		if(Files.exists(Paths.get(csvFilePath))) {
-
-			while(true) {
-
-				RandomAccessFile ran = null;
-
-				try {
-					ran = new RandomAccessFile(new File(csvFilePath), "rw");
-					copyCompleted = true;
-					break;
-				} catch (Exception ex) {
-					System.out.println("  still copying ........... " + ex.getMessage());
-				} finally {
-					if(ran != null) try {
-						ran.close();
-					} catch (IOException ex) {
-
-					}
-
-					ran = null;
-				}
-
-			}
-
-			if(copyCompleted){
-				System.out.println("Copy Completed ........................");
-			}
-		}
-		return copyCompleted;
-	}
 }

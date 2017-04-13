@@ -36,23 +36,25 @@ public class InputTextFile {
 		
 		//read store_code and BQCode from database
 		try {
-			
-			String sqlQueryStoreCd = "select FULLSTORECODE from MBREPOS.MBSTRCD where ROWNUM =1";
-			
-			connection = WMBConnection.getConnection();
-			preparedStatement = connection.prepareStatement(sqlQueryStoreCd);
-			resultSet = preparedStatement.executeQuery();
-			if(resultSet != null && resultSet.next()) {
-				inputTextRow.setFull_store_code(resultSet.getString(1));
+			if(inputTextRow.getFull_store_code()== null) {
+				String sqlQueryStoreCd = "select FULLSTORECODE from MBREPOS.MBSTRCD where ROWNUM =1";
+				connection = WMBConnection.getConnection();
+				preparedStatement = connection.prepareStatement(sqlQueryStoreCd);
+				resultSet = preparedStatement.executeQuery();
+				if(resultSet != null && resultSet.next()) {
+					inputTextRow.setFull_store_code(resultSet.getString(1));
+				}
 			}
 			
-			
-			String sqlQueryBQCd = "select BQCODE from MBODS."+ ConfigReader.getProperty("TBL_EFFECTIVE_ARTICLE")+" where ROWNUM =1";
-			preparedStatementBQ = connection.prepareStatement(sqlQueryBQCd);
-			resultSetBQ = preparedStatementBQ.executeQuery();
-			if(resultSetBQ != null && resultSetBQ.next()) {
-				inputTextRow.setBqcode(resultSetBQ.getString(1));
+			if(inputTextRow.getBqcode() == null) {
+				String sqlQueryBQCd = "select BQCODE from MBODS."+ ConfigReader.getProperty("TBL_EFFECTIVE_ARTICLE")+" where ROWNUM =1";
+				preparedStatementBQ = connection.prepareStatement(sqlQueryBQCd);
+				resultSetBQ = preparedStatementBQ.executeQuery();
+				if(resultSetBQ != null && resultSetBQ.next()) {
+					inputTextRow.setBqcode(resultSetBQ.getString(1));
+				}
 			}
+			
 			
 			
 		} catch (Exception e) {
