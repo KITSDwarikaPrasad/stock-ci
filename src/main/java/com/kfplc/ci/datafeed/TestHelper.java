@@ -134,9 +134,6 @@ public class TestHelper {
 			Files.delete(Paths.get(directory, fileName + "_bkp"));
 		}
 		if(Files.exists(Paths.get(directory, fileName))) {
-			if(Files.exists(Paths.get(directory, fileName + "_bkp"))) {
-				Files.delete(Paths.get(directory, fileName + "_bkp"));
-			} 
 			Files.copy(Paths.get(directory, fileName), Paths.get(directory, fileName + "_bkp"));
 		}
 		if(Files.exists(Paths.get(directory, fileName + "_Actual"))) {
