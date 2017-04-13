@@ -31,22 +31,18 @@ public class TestHelper {
 		Optional<Integer> oldLastModZipTs = null;
 		System.out.println("userDir: "+ userDir);
 
-//		if( Files.exists( Paths.get(directory, fileName)) ) {
-//			//Create backup csv file	
-//			Files.copy(Paths.get(directory, fileName), Paths.get(directory, fileName + "_bkp"));
-//			Files.delete(Paths.get(directory, fileName));
-//			System.out.println("Backup file created :SAPR3toStockAPI.csv_bkp");
-//		} else {
-//			System.out.println( "old files not found" );
-//		}
+		//		if( Files.exists( Paths.get(directory, fileName)) ) {
+		//			//Create backup csv file	
+		//			Files.copy(Paths.get(directory, fileName), Paths.get(directory, fileName + "_bkp"));
+		//			Files.delete(Paths.get(directory, fileName));
+		//			System.out.println("Backup file created :SAPR3toStockAPI.csv_bkp");
+		//		} else {
+		//			System.out.println( "old files not found" );
+		//		}
 		///hold the zip file - find out the latest zip file
 		oldLastModZipTs = getLastModifiedZipFileTs();
-//		if(oldLastModZipTs.isPresent()) {
-//			System.out.println("oldLastModZipFileTs :"+ oldLastModZipTs);
-//		}
 
 		System.out.println("-----------> invoking BODS Job ");
-
 		CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh invokeBodsJob.sh");
 		//polling for the new csv file
 		pollTheFile(csvFilePath);
@@ -131,9 +127,11 @@ public class TestHelper {
 	public static void preJUnitCleanUp() throws IOException {
 		if(Files.exists(Paths.get(directory, fileName + "_bkp"))) {
 			Files.delete(Paths.get(directory, fileName + "_bkp"));
+			System.out.println("----> Deleted existin bkp file");
 		}
 		if(Files.exists(Paths.get(directory, fileName))) {
 			Files.copy(Paths.get(directory, fileName), Paths.get(directory, fileName + "_bkp"));
+			Files.delete(Paths.get(directory, fileName));
 			System.out.println("-------> Backup file created :"+fileName + "_bkp");
 		}
 		if(Files.exists(Paths.get(directory, fileName + "_Actual"))) {
