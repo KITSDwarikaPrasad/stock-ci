@@ -83,7 +83,7 @@ public class InputTextFile {
 		fillBQStoreCd(inputTextRow);
 
 		Path path = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH"));
-
+		System.out.println("Creating input File : " + path );
 		try(BufferedWriter writer = Files.newBufferedWriter(path)) {
 			writer.write(inputTextRow.toString());
 		} catch (IOException e) {

@@ -96,8 +96,8 @@ public class ExpecetdCSVFile {
 
 		List<ExpectedCSVRow> expectedCSVRowList =  fetchDataFromDB(inputTextRow.getFull_store_code(), expecetdCSVRow.getStockLevel(), inputTextRow.getBqcode());
 		
-		Path path = Paths.get(ConfigReader.getProperty("CSV_FILENAME") + "_Expected");
-
+		Path path = Paths.get(ConfigReader.getProperty("TARGET_OUT_DIR") + ConfigReader.getProperty("CSV_FILENAME") + "_Expected");
+		System.out.println("Creating Expected CSV File : " + path );
 		try(BufferedWriter writer = Files.newBufferedWriter(path)) {
 			writer.write(ConfigReader.getProperty("EXPECTED_FILE_HEADER"));
 			for (ExpectedCSVRow expectedCSVRow : expectedCSVRowList) {
