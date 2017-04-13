@@ -31,8 +31,7 @@ public class TestHelper {
 		Optional<Integer> oldLastModZipTs = null;
 		System.out.println("userDir: "+ userDir);
 
-
-		cleanUpBuild();
+		preJUnitCleanUp();
 
 		if( Files.exists( Paths.get(directory, fileName + ".csv")) ) {
 			//Create backup csv file	
@@ -130,19 +129,21 @@ public class TestHelper {
 	 * Method to be called at start of each test case to delete the files created by previous test case
 	 * @throws IOException
 	 */
-	public static void cleanUpBuild() throws IOException {
-		if(Files.exists(Paths.get(directory, fileName + ".csv_bkp"))) {
-			if(Files.exists(Paths.get(directory, fileName + ".csv"))) {
-				Files.delete(Paths.get(directory, fileName + ".csv"));
-			} else {
-				Files.copy(Paths.get(directory, fileName + ".csv_bkp"), Paths.get(directory, fileName + ".csv"));
-			}
+	public static void preJUnitCleanUp() throws IOException {
+		if(Files.exists(Paths.get(directory, fileName + "_bkp"))) {
+			Files.delete(Paths.get(directory, fileName + "_bkp"));
 		}
-		if(Files.exists(Paths.get(directory, fileName + ".csv_sorted"))) {
-			Files.delete(Paths.get(directory, fileName + ".csv_sorted"));
+		if(Files.exists(Paths.get(directory, fileName))) {
+			if(Files.exists(Paths.get(directory, fileName + "_bkp"))) {
+				Files.delete(Paths.get(directory, fileName + "_bkp"));
+			} 
+			Files.copy(Paths.get(directory, fileName), Paths.get(directory, fileName + "_bkp"));
 		}
-		if(Files.exists(Paths.get(directory, fileName + ".csv_bkp_sorted"))) {
-			Files.delete(Paths.get(directory, fileName + ".csv_bkp_sorted"));
+		if(Files.exists(Paths.get(directory, fileName + "_Actual"))) {
+			Files.delete(Paths.get(directory, fileName + "_Actual"));
+		}
+		if(Files.exists(Paths.get(directory, fileName + "_Expected"))) {
+			Files.delete(Paths.get(directory, fileName + "_Expected"));
 		}
 	}
 
