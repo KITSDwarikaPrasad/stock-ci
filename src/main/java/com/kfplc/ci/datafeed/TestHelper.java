@@ -1,6 +1,8 @@
 package com.kfplc.ci.datafeed;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -64,9 +66,9 @@ public class TestHelper {
 
 				//sort the content of new csv file
 				System.out.println("------> starting sorting of csv file -- StartTime: "+new Date());
-				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +" --dest "+ csvFilePath +"_Actual");
-				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +"_Expected.0 --dest "+ csvFilePath +"_Expected");
+				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh -s "+ csvFilePath +" --dest "+ csvFilePath +"_Actual");
 				pollTheFile(csvFilePath +"_Actual");
+				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh -s "+ csvFilePath +"_Expected.0 --dest "+ csvFilePath +"_Expected");
 				pollTheFile(csvFilePath +"_Expected");
 				Files.delete(Paths.get(directory, fileName + "_Expected.0"));
 				System.out.println( "---------> Sorting finished..-- EndTime: "+new Date() );
@@ -104,10 +106,27 @@ public class TestHelper {
 		long pollingInterval = Long.parseLong( ConfigReader.getProperty("POLLING_INTERVAL_SECONDS") ) * 1000;
 		System.out.println("----------> Started Polling for the csv file "+csvFilePath +" , with polling interval(in milliSeconds) ="+ pollingInterval);
 		long endTimeSeconds= System.currentTimeMillis() + pollingDuration;
+		RandomAccessFile ran = null;
+		File csvFile = new File(csvFilePath);
 		while (System.currentTimeMillis() < endTimeSeconds) {
 			System.out.println("checking for the file..");
-			if (Files.exists(Paths.get(csvFilePath))) {
-				System.out.println("--------> File has arrived..");
+			if(csvFile.exists()) {
+
+				try {
+					ran = new RandomAccessFile(csvFile, "rw");
+					fileArrived = true;
+					break;
+				} catch (Exception ex) {
+					System.out.println("  still copying ........... " + ex.getMessage());
+				} finally {
+					if(ran != null) try {
+						ran.close();
+					} catch (IOException ex) {}
+
+					ran = null;
+				}
+
+				System.out.println("--------> File has arrived completely..");
 				fileArrived = true;
 				break;
 			}
@@ -141,5 +160,39 @@ public class TestHelper {
 			Files.delete(Paths.get(directory, fileName + "_Expected"));
 		}
 	}
+	
+	public static boolean copyCompleted(String csvFilePath){
 
+		boolean copyCompleted = false;
+
+		if(Files.exists(Paths.get(csvFilePath))) {
+
+			while(true) {
+
+				RandomAccessFile ran = null;
+
+				try {
+					ran = new RandomAccessFile(new File(csvFilePath), "rw");
+					copyCompleted = true;
+					break;
+				} catch (Exception ex) {
+					System.out.println("  still copying ........... " + ex.getMessage());
+				} finally {
+					if(ran != null) try {
+						ran.close();
+					} catch (IOException ex) {
+
+					}
+
+					ran = null;
+				}
+
+			}
+
+			if(copyCompleted){
+				System.out.println("Copy Completed ........................");
+			}
+		}
+		return copyCompleted;
+	}
 }
