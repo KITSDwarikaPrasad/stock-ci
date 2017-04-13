@@ -50,7 +50,8 @@ public class DataFeedTest {
 	 */
 	@Test
 	public void testStockLevelRounding() throws IOException, InterruptedException, SQLException {
-		//Setup
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
 		//Create Input Text File
 		InputTextRow inputTextRow = new InputTextRow();
 		inputTextRow.setCurrent_stock_quantity("1.9");

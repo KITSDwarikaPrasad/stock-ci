@@ -31,8 +31,6 @@ public class TestHelper {
 		Optional<Integer> oldLastModZipTs = null;
 		System.out.println("userDir: "+ userDir);
 
-		preJUnitCleanUp();
-
 		if( Files.exists( Paths.get(directory, fileName + ".csv")) ) {
 			//Create backup csv file	
 			Files.copy(Paths.get(directory, fileName + ".csv"), Paths.get(directory, fileName + ".csv_bkp"));
