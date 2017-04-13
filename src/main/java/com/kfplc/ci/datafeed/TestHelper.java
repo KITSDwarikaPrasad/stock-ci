@@ -31,32 +31,32 @@ public class TestHelper {
 		Optional<Integer> oldLastModZipTs = null;
 		System.out.println("userDir: "+ userDir);
 
-		if( Files.exists( Paths.get(directory, fileName + ".csv")) ) {
-			//Create backup csv file	
-			Files.copy(Paths.get(directory, fileName + ".csv"), Paths.get(directory, fileName + ".csv_bkp"));
-			Files.delete(Paths.get(directory, fileName + ".csv"));
-			System.out.println("Backup file created :SAPR3toStockAPI.csv_bkp");
-		} else {
-			System.out.println( "old files not found" );
-		}
+//		if( Files.exists( Paths.get(directory, fileName)) ) {
+//			//Create backup csv file	
+//			Files.copy(Paths.get(directory, fileName), Paths.get(directory, fileName + "_bkp"));
+//			Files.delete(Paths.get(directory, fileName));
+//			System.out.println("Backup file created :SAPR3toStockAPI.csv_bkp");
+//		} else {
+//			System.out.println( "old files not found" );
+//		}
 		///hold the zip file - find out the latest zip file
-		oldLastModZipTs = getLastModifiedZipFile();
-		if(oldLastModZipTs.isPresent()) {
-			System.out.println("oldLastModZipFileTs :"+ oldLastModZipTs);
-		}
+		oldLastModZipTs = getLastModifiedZipFileTs();
+//		if(oldLastModZipTs.isPresent()) {
+//			System.out.println("oldLastModZipFileTs :"+ oldLastModZipTs);
+//		}
 
-		System.out.println("invoking BODS Job ");
+		System.out.println("-----------> invoking BODS Job ");
 
 		CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh invokeBodsJob.sh");
 		//polling for the new csv file
 		pollTheFile(csvFilePath);
 
-		if( Files.exists(Paths.get(directory, fileName +".csv")) ) {
-			System.out.println(fileName+".csv file found");
+		if( Files.exists(Paths.get(directory, fileName)) ) {
+			System.out.println(fileName + " file found");
 			//check if the new zip file is newer
 			boolean newZipFound = true;
-			Optional<Integer> newZipFileTs = getLastModifiedZipFile();
-			System.out.println("newZipFile :"+ newZipFileTs.get());
+			Optional<Integer> newZipFileTs = getLastModifiedZipFileTs();
+			System.out.println("newZipFileTs :"+ newZipFileTs.get());
 			if(newZipFileTs.isPresent()) {
 				if(oldLastModZipTs.isPresent() && newZipFileTs.get() == oldLastModZipTs.get()) {
 					newZipFound = false;
@@ -64,17 +64,17 @@ public class TestHelper {
 			}
 
 			if( newZipFound == true ) {
-				System.out.println("Got a new zip file.");
+				System.out.println("------------> Got a new zip file.");
 
 				//sort the content of new csv file
-				System.out.println("starting sorting of csv file -- StartTime: "+new Date());
+				System.out.println("------> starting sorting of csv file -- StartTime: "+new Date());
 				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +" --dest "+ csvFilePath +"_Actual");
 				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +"_Expected");
 				pollTheFile(csvFilePath +"_Actual");
 				pollTheFile(csvFilePath +"_Expected");
-				System.out.println( "Sorting finished..-- EndTime: "+new Date() );
+				System.out.println( "---------> Sorting finished..-- EndTime: "+new Date() );
 			} else {
-				System.out.println("New Zip file not found, So the process will discontinue here.");
+				System.out.println("-------->New Zip file not found, So the process will discontinue here.");
 			}
 		}
 	}
@@ -86,7 +86,7 @@ public class TestHelper {
 	 * @return Optional Integer - depending on the existing old zip file in the directory
 	 * @throws IOException
 	 */
-	private static Optional<Integer> getLastModifiedZipFile() throws IOException {
+	private static Optional<Integer> getLastModifiedZipFileTs() throws IOException {
 
 		Path dir = Paths.get(directory);
 		Optional<Integer> lastFilePath = Files.list(dir)
@@ -105,12 +105,12 @@ public class TestHelper {
 		boolean fileArrived = false;
 		long pollingDuration = Long.parseLong( ConfigReader.getProperty("POLLING_DURATION_SECONDS") ) * 1000;
 		long pollingInterval = Long.parseLong( ConfigReader.getProperty("POLLING_INTERVAL_SECONDS") ) * 1000;
-		System.out.println("Started Polling for the csv file "+csvFilePath +" , with polling interval(in milliSeconds) ="+ pollingInterval);
+		System.out.println("----------> Started Polling for the csv file "+csvFilePath +" , with polling interval(in milliSeconds) ="+ pollingInterval);
 		long endTimeSeconds= System.currentTimeMillis() + pollingDuration;
 		while (System.currentTimeMillis() < endTimeSeconds) {
 			System.out.println("checking for the file..");
 			if (Files.exists(Paths.get(csvFilePath))) {
-				System.out.println("File has arrived..");
+				System.out.println("--------> File has arrived..");
 				fileArrived = true;
 				break;
 			}
@@ -118,7 +118,7 @@ public class TestHelper {
 		}
 
 		if (!fileArrived) {
-			System.out.println("File did not arrive.");
+			System.out.println("-----------> File did not arrive.");
 			System.exit(1);
 		}
 	}
@@ -133,6 +133,7 @@ public class TestHelper {
 		}
 		if(Files.exists(Paths.get(directory, fileName))) {
 			Files.copy(Paths.get(directory, fileName), Paths.get(directory, fileName + "_bkp"));
+			System.out.println("-------> Backup file created :"+fileName + "_bkp");
 		}
 		if(Files.exists(Paths.get(directory, fileName + "_Actual"))) {
 			Files.delete(Paths.get(directory, fileName + "_Actual"));
