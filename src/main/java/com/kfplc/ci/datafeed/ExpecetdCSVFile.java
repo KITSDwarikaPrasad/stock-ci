@@ -99,7 +99,7 @@ public class ExpecetdCSVFile {
 		Path path = Paths.get(ConfigReader.getProperty("TARGET_OUT_DIR") + ConfigReader.getProperty("CSV_FILENAME") + "_Expected");
 		System.out.println("Creating Expected CSV File : " + path );
 		try(BufferedWriter writer = Files.newBufferedWriter(path)) {
-			writer.write(ConfigReader.getProperty("EXPECTED_FILE_HEADER\r\n"));
+			writer.write(ConfigReader.getProperty("EXPECTED_FILE_HEADER") + "\r\n");
 			for (ExpectedCSVRow expectedCSVRow : expectedCSVRowList) {
 				writer.write(expectedCSVRow.toString()+ "\r\n");
 			}
