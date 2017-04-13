@@ -77,7 +77,7 @@ public class ExpectedCSVRow {
 	public String toString() {
 		StringBuilder rowStringBuilder = new StringBuilder();
 		Formatter formatter = new Formatter(rowStringBuilder);
-		formatter.format("%1$s,%2$13s,%3$s,%4$s,%5$s", 
+		formatter.format("%1$4s,%2$13s,%3$s,%4$s,%5$s", 
 				storeCode, ean, stockLevel, rangedFlg, opco);
 		formatter.close();
 		return rowStringBuilder.toString().replace(' ', '0');
