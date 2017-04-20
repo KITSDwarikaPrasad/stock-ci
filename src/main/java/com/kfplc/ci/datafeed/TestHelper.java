@@ -28,7 +28,7 @@ public class TestHelper {
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public static void preUnitTest() throws IOException, InterruptedException {
+	public static void invokeBODSJob() throws IOException, InterruptedException {
 		String csvFilePath = directory + fileName ;
 		Optional<Integer> oldLastModZipTs = null;
 		System.out.println("userDir: "+ userDir);

@@ -73,8 +73,8 @@ public class ExpectedCSVRow {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	@Override
-	public String toString() {
+
+	public String formatAsRow() {
 		StringBuilder rowStringBuilder = new StringBuilder();
 		Formatter formatter = new Formatter(rowStringBuilder);
 		formatter.format("%1$4s,%2$13s,%3$s,%4$s,%5$s", 

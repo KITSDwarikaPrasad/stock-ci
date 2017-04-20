@@ -24,6 +24,12 @@ import com.kfplc.ci.datafeed.util.ConfigReader;
 
 /**
  * Write the test cases in this file 
+ *	<p>steps: </p>
+ *  <p>InputTextRow - create row for Input to BODS job</p>
+ *  <p>createExpectedCSVFile - create the expected CSV File w.r.t. InputTextRow.</p>
+ *  <p>TestHelper.invokeBODSJob() - Invoke BODS Job remotely </p>
+ *  <p>assert statement</p>
+ * 
  * @author prasad01
  *
  */
@@ -39,34 +45,168 @@ public class DataFeedTest {
 
 
 	/**
-	 * First Test case
-	 * 	steps:
-	 * 		InputTextRow - create row for Input to BODS job
-	 *		TestHelper.preUnitTest() - Invoke preJunit which internally invokes the BODS job remotely
-	 *		assert statement
+	 * If the Stock level is a non - Integer then it should be rounded down to nearest lower integer value
+	 * 
 	 * @throws IOException
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
 	@Test
-	public void testStockLevelRounding() throws IOException, InterruptedException, SQLException {
+	public void testStockLevelRoundingNonInteger() throws IOException, InterruptedException, SQLException {
+		System.out.println("To Test - If the Stock level is a non - Integer then it should be rounded down to nearest lower integer value.");
 		//Cleanup
 		TestHelper.preJUnitCleanUp();
 		//Create Input Text File
 		InputTextRow inputTextRow = new InputTextRow();
-		inputTextRow.setCurrent_stock_quantity("1.9");
+		inputTextRow.setCurrent_stock_quantity("1.999");
+		
 		InputTextFile.createInputTextFile(inputTextRow);
 		//Create Expeccted CSV File
 		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
-		expecetdCSVRow.setStockLevel("2");
+		expecetdCSVRow.setStockLevel("1");
 		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
 		
-		TestHelper.preUnitTest();
+		TestHelper.invokeBODSJob();
 		
 		assertThat(actualFile).hasSameContentAs(expectedFile);
 		//TestHelper.cleanUpBuild();
 	}
 
+	/**
+	 * If the Stock level is a Integer then it should be exported as same
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testStockLevelRoundingInteger() throws IOException, InterruptedException, SQLException {
+		System.out.println("To Test - If the Stock level is a Integer then it should be exported as same");
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
+		//Create Input Text File
+		InputTextRow inputTextRow = new InputTextRow();
+		inputTextRow.setCurrent_stock_quantity("3.000");
+		
+		InputTextFile.createInputTextFile(inputTextRow);
+		//Create Expeccted CSV File
+		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+		expecetdCSVRow.setStockLevel("3");
+		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
+		
+		TestHelper.invokeBODSJob();
+		
+		assertThat(actualFile).hasSameContentAs(expectedFile);
+		//TestHelper.cleanUpBuild();
+	}
+	
+	/**
+	 * If the Stock level is a Zero then it should be exported as same
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testStockLevelRoundingZero() throws IOException, InterruptedException, SQLException {
+		System.out.println("To Test - If the Stock level is a Integer then it should be exported as same");
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
+		//Create Input Text File
+		InputTextRow inputTextRow = new InputTextRow();
+		inputTextRow.setCurrent_stock_quantity("0.000");
+		
+		InputTextFile.createInputTextFile(inputTextRow);
+		//Create Expeccted CSV File
+		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+		expecetdCSVRow.setStockLevel("0");
+		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
+		
+		TestHelper.invokeBODSJob();
+		
+		assertThat(actualFile).hasSameContentAs(expectedFile);
+		//TestHelper.cleanUpBuild();
+	}
+	
+	/**
+	 * If the Stock level is a Large number then it should be exported as nearest lower integer
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testStockLevelRoundingLargeNumber() throws IOException, InterruptedException, SQLException {
+		System.out.println("To Test - If the Stock level is a Integer then it should be exported as same");
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
+		//Create Input Text File
+		InputTextRow inputTextRow = new InputTextRow();
+		inputTextRow.setCurrent_stock_quantity("9999999.999");
+		
+		InputTextFile.createInputTextFile(inputTextRow);
+		//Create Expeccted CSV File
+		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+		expecetdCSVRow.setStockLevel("9999999");
+		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
+		
+		TestHelper.invokeBODSJob();
+		
+		assertThat(actualFile).hasSameContentAs(expectedFile);
+		//TestHelper.cleanUpBuild();
+	}
+	
+	/**
+	 * If the Stock level is a Not a Number then it should be exported as zero
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testStockLevelNaN() throws IOException, InterruptedException, SQLException {
+		System.out.println("To Test - If the Stock level is a Integer then it should be exported as same");
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
+		//Create Input Text File
+		InputTextRow inputTextRow = new InputTextRow();
+		inputTextRow.setCurrent_stock_quantity("aaaaaaaaaaa");
+		
+		InputTextFile.createInputTextFile(inputTextRow);
+		//Create Expeccted CSV File
+		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+		expecetdCSVRow.setStockLevel("0");
+		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
+		
+		TestHelper.invokeBODSJob();
+		
+		assertThat(actualFile).hasSameContentAs(expectedFile);
+		//TestHelper.cleanUpBuild();
+	}
+	
+	/**
+	 * If the Stock level is a Negative Number then it should be exported as zero
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testStockLevelNegative() throws IOException, InterruptedException, SQLException {
+		System.out.println("To Test - If the Stock level is a Integer then it should be exported as same");
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
+		//Create Input Text File
+		InputTextRow inputTextRow = new InputTextRow();
+		inputTextRow.setCurrent_stock_quantity("aaaaaaaaaaa");
+		
+		InputTextFile.createInputTextFile(inputTextRow);
+		//Create Expeccted CSV File
+		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+		expecetdCSVRow.setStockLevel("0");
+		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
+		
+		TestHelper.invokeBODSJob();
+		
+		assertThat(actualFile).hasSameContentAs(expectedFile);
+		//TestHelper.cleanUpBuild();
+	}
+	
 	//	@Test
 	public void parseUnprocessedLogs() throws IOException {
 

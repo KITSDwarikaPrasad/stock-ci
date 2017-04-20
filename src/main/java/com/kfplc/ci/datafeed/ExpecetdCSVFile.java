@@ -97,11 +97,14 @@ public class ExpecetdCSVFile {
 		List<ExpectedCSVRow> expectedCSVRowList =  fetchDataFromDB(inputTextRow.getFull_store_code(), expecetdCSVRow.getStockLevel(), inputTextRow.getBqcode());
 		
 		Path path = Paths.get(ConfigReader.getProperty("TARGET_OUT_DIR") + ConfigReader.getProperty("CSV_FILENAME") + "_Expected.0");
-		System.out.println("Creating Expected CSV File : " + path );
+		//System.out.println("Creating Expected CSV File : " + path );
 		try(BufferedWriter writer = Files.newBufferedWriter(path)) {
 			writer.write(ConfigReader.getProperty("EXPECTED_FILE_HEADER"));
+			String outputRow = null;
 			for (ExpectedCSVRow expectedCSVRow : expectedCSVRowList) {
-				writer.write("\r\n" + expectedCSVRow.toString());
+				outputRow = expectedCSVRow.formatAsRow();
+				System.out.println("Expected Row : "+ outputRow);
+				writer.write("\r\n" + outputRow);
 			}
 			
 		} catch (IOException e) {

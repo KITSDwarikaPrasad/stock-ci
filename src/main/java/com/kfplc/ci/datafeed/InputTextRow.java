@@ -189,8 +189,8 @@ public class InputTextRow {
 	 *  <p>Stocked_Flag				1	0                      <p>
 	 *  <p>Creation_Date			8	03102016               <p>
 	 */
-	@Override
-	public String toString() {
+	
+	public String formatAsRow() {
 		StringBuilder rowStringBuilder = new StringBuilder();
 		Formatter formatter = new Formatter(rowStringBuilder);
 //		formatter.format("%4$2s %3$2s %2$2s %1$2s", "a", "b", "c", "d");
