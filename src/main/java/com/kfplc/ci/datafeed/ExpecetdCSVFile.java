@@ -91,26 +91,62 @@ public class ExpecetdCSVFile {
 	 * @param inputTextRow - The object holding the different sections of the input row for BODS job
 	 * @param expecetdCSVRow 
 	 * @throws SQLException
+	 * @throws IOException 
 	 */
-	public static void createExpectedCSVFile(InputTextRow inputTextRow, ExpectedCSVRow expecetdCSVRow) throws SQLException {
-
-		List<ExpectedCSVRow> expectedCSVRowList =  fetchDataFromDB(inputTextRow.getFull_store_code(), expecetdCSVRow.getStockLevel(), inputTextRow.getBqcode());
-		
+	public static int createExpectedCSVFile(InputTextRow inputTextRow, ExpectedCSVRow expecetdCSVRow) throws SQLException, IOException {
+		int rowsWrittenCount = 0;
 		Path path = Paths.get(ConfigReader.getProperty("TARGET_OUT_DIR") + ConfigReader.getProperty("CSV_FILENAME") + "_Expected.0");
-		//System.out.println("Creating Expected CSV File : " + path );
-		try(BufferedWriter writer = Files.newBufferedWriter(path)) {
-			writer.write(ConfigReader.getProperty("EXPECTED_FILE_HEADER"));
-			String outputRow = null;
-			for (ExpectedCSVRow expectedCSVRow : expectedCSVRowList) {
-				outputRow = expectedCSVRow.formatAsRow();
-				System.out.println("Expected Row : "+ outputRow);
-				writer.write("\r\n" + outputRow);
+		if(!expecetdCSVRow.isNoOutputFlag()) {
+			List<ExpectedCSVRow> expectedCSVRowList =  fetchDataFromDB(inputTextRow.getFull_store_code(), expecetdCSVRow.getStockLevel(), inputTextRow.getBqcode());
+			rowsWrittenCount = expectedCSVRowList.size();
+			//System.out.println("Creating Expected CSV File : " + path );
+			try(BufferedWriter writer = Files.newBufferedWriter(path)) {
+				writer.write(ConfigReader.getProperty("EXPECTED_FILE_HEADER"));
+				String outputRow = null;
+				for (ExpectedCSVRow expectedCSVRow : expectedCSVRowList) {
+					outputRow = expectedCSVRow.formatAsRow();
+					System.out.println("------------> Expected Row : "+ outputRow);
+					writer.write("\r\n" + outputRow);
+				}
+			} 
+			
+		} else {
+			Files.createFile(path);
+		}
+		return rowsWrittenCount;
+	}
+	
+/*	*//**
+	 * @param inputTextRowList
+	 * @param expecetdCSVRowList
+	 * @throws SQLException
+	 * @throws IOException
+	 *//*
+	public static void createExpectedCSVFile(List<InputTextRow> inputTextRowList, List<ExpectedCSVRow> expecetdCSVRowList) throws SQLException, IOException {
+		Path path = Paths.get(ConfigReader.getProperty("TARGET_OUT_DIR") + ConfigReader.getProperty("CSV_FILENAME") + "_Expected.0");
+		
+		for (int rowNumber = 0; rowNumber < inputTextRowList.size(); rowNumber++ ) {
+			if(!expecetdCSVRowList.get(rowNumber).isNoOutputFlag()) {
+				List<ExpectedCSVRow> expectedCSVRowListDB =  fetchDataFromDB(inputTextRowList.get(rowNumber).getFull_store_code(), expecetdCSVRowList.get(rowNumber).getStockLevel(), inputTextRowList.get(rowNumber).getBqcode());
+				
+				//System.out.println("Creating Expected CSV File : " + path );
+				try(BufferedWriter writer = Files.newBufferedWriter(path)) {
+					writer.write(ConfigReader.getProperty("EXPECTED_FILE_HEADER"));
+					String outputRow = null;
+					for (ExpectedCSVRow expectedCSVRow : expectedCSVRowListDB) {
+						outputRow = expectedCSVRow.formatAsRow();
+						System.out.println("------------> Expected Row : "+ outputRow);
+						writer.write("\r\n" + outputRow);
+					}
+				} 
+				
+			} else {
+				if(Files.notExists(path)) {
+					Files.createFile(path);
+				}
 			}
 			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-	}
+	}*/
 
 }

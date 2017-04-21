@@ -23,6 +23,7 @@ public class InputTextRow {
 	String out_of_stock = "0";
 	String stocked_flag = "0";
 	String creation_date = "ddmmyyyy";
+	String textRow = "";
 	
 	
 	/**
@@ -170,7 +171,6 @@ public class InputTextRow {
 		this.creation_date = creation_date;
 	}
 	
-	
 	/**
 	 * The method to join the different components to create a single row.
 	 * The method takes care of formatting.
@@ -191,13 +191,17 @@ public class InputTextRow {
 	 */
 	
 	public String formatAsRow() {
-		StringBuilder rowStringBuilder = new StringBuilder();
-		Formatter formatter = new Formatter(rowStringBuilder);
+		
+		if(textRow.isEmpty()) {
+			StringBuilder rowStringBuilder = new StringBuilder();
+			Formatter formatter = new Formatter(rowStringBuilder);
 //		formatter.format("%4$2s %3$2s %2$2s %1$2s", "a", "b", "c", "d");
-		formatter.format("%1$1s%2$6s%3$8s%4$8s%5$11s%6$11s%7$11s%8$1s%9$3s%10$1s%11$1s%12$8s", 
-				record_identifier, full_store_code, stock_date, bqcode, current_stock_quantity, optimum_stock_quantity, on_order_quantity, ranged_flag, cdl, out_of_stock, stocked_flag, creation_date);
-		formatter.close();
-		return rowStringBuilder.toString().replace(' ', '0');
+			formatter.format("%1$1s%2$6s%3$8s%4$8s%5$11s%6$11s%7$11s%8$1s%9$3s%10$1s%11$1s%12$8s", 
+					record_identifier, full_store_code, stock_date, bqcode, current_stock_quantity, optimum_stock_quantity, on_order_quantity, ranged_flag, cdl, out_of_stock, stocked_flag, creation_date);
+			formatter.close();
+			textRow = rowStringBuilder.toString().replace(' ', '0'); 
+		}
+		return textRow;
 	}
 	
 }

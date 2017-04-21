@@ -88,7 +88,7 @@ public class InputTextFile {
 		//System.out.println("Creating input File : " + path );
 		try(BufferedWriter writer = Files.newBufferedWriter(path)) {
 			String inputRow = inputTextRow.formatAsRow();
-			System.out.println("Input Row: "+inputRow);
+			System.out.println("--------------> Input Row: "+inputRow);
 			writer.write(inputRow + "\r\n" );
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

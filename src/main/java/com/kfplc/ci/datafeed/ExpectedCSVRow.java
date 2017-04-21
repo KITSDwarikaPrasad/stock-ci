@@ -6,9 +6,11 @@ public class ExpectedCSVRow {
 	
 	String storeCode;
 	String ean;
-	String stockLevel;
+	String stockLevel = "0";
 	String rangedFlg = "1";
 	String opco = "UKBQ";
+	boolean noOutputFlag = false;
+	boolean unprocessedFileFlag = false;
 	/**
 	 * @return the storeCode
 	 */
@@ -70,10 +72,39 @@ public class ExpectedCSVRow {
 	public void setOpco(String opco) {
 		this.opco = opco;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	
+	
+	/**
+	 * Marks that the there will not be any row in Expected CSV file
+	 * @return the noOutputFlag
 	 */
-
+	public boolean isNoOutputFlag() {
+		return noOutputFlag;
+	}
+	/**
+	 * To mark the there will not be any row in Expected CSV file
+	 * @param noOutputFlag the noOutputFlag to set
+	 */
+	public void setNoOutputFlag(boolean noOutputFlag) {
+		this.noOutputFlag = noOutputFlag;
+	}
+	/**
+	 * Marks that the data should be found in Unprocessed log file
+	 * @return the unprocessedFileFlag
+	 */
+	public boolean isUnprocessedFileFlag() {
+		return unprocessedFileFlag;
+	}
+	/**
+	 * To marks that the data should be found in Unprocessed log file
+	 * @param unprocessedFileFlag the unprocessedFileFlag to set
+	 */
+	public void setUnprocessedFileFlag(boolean unprocessedFileFlag) {
+		this.unprocessedFileFlag = unprocessedFileFlag;
+	}
+	/**
+	 * @return Foramatted String 
+	 */
 	public String formatAsRow() {
 		StringBuilder rowStringBuilder = new StringBuilder();
 		Formatter formatter = new Formatter(rowStringBuilder);

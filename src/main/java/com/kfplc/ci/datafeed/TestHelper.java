@@ -1,8 +1,6 @@
 package com.kfplc.ci.datafeed;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,6 +20,7 @@ public class TestHelper {
 	static String directory = ConfigReader.getProperty("TARGET_OUT_DIR");
 	static String fileName = ConfigReader.getProperty("CSV_FILENAME");
 	static String userDir = System.getProperty("user.dir");
+	static String unprocessedLogPath = ConfigReader.getProperty("UNPROCESSED_LOG_FILE_PATH");
 
 	/**
 	 * The method to be invoked before running the assert statements, all the operation to be done before the actual test
@@ -151,6 +150,19 @@ public class TestHelper {
 		if(Files.exists(Paths.get(directory, fileName + "_Expected"))) {
 			Files.delete(Paths.get(directory, fileName + "_Expected"));
 		}
+//		if(Files.exists(Paths.get(unprocessedLogPath))) {
+//			Files.delete(Paths.get(unprocessedLogPath));
+//		}
 	}
+
+
+	/**
+	 * @param testName
+	 * @param scenario
+	 */
+	public static void logWhatToTest(String testName, String scenario) {
+		System.out.println("################ Test Case Name:"+testName+" , Scenario :- " + scenario);
+	}
+
 	
 }

@@ -8,3 +8,4 @@ ansible-playbook -i hosts/staging bods_play.yaml -e "moduleName=win_shell comman
 #ansible --version
 #echo $PATH
 #ls -ltr
+gujh

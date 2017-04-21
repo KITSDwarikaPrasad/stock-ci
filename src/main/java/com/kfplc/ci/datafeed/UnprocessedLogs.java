@@ -74,6 +74,18 @@ public class UnprocessedLogs {
 		
 	}
 
+	public static void printUnprocessedCause(String inputRow) throws IOException {
+		// TODO Auto-generated method stub
+		String logFilePath = ConfigReader.getProperty("UNPROCESSED_LOG_FILE_PATH");
+		Stream<java.lang.String> lines = Files.lines(Paths.get(logFilePath));
+		lines.forEach(line -> {
+			if(line.contains(inputRow)) {
+				System.out.println("Input Row:"+ inputRow + ", Unprocessed due to Error: "+ line.substring(0, line.length()-100).trim());
+			}
+			
+		});
+	}
+
 
 
 	/*private  void parseLogFile() throws IOException {
