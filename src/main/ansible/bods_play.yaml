@@ -1,5 +1,4 @@
 ---
  - hosts: bods
    roles:
-    - kinit
     - psremoting

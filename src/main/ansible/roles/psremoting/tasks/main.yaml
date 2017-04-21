@@ -1,5 +1,6 @@
 #- include: roles/psremoting/tasks/ipconfig.yaml
 #- include: roles/psremoting/tasks/win_ping.yaml
 #- include: roles/psremoting/tasks/winrmconfig.yaml
+- include: roles/psremoting/tasks/kinit.yaml
 - include: roles/psremoting/tasks/{{moduleName}}.yaml
 #- include: roles/psremoting/tasks/win_file.yaml
