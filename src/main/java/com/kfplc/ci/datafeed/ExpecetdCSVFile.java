@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -139,27 +140,18 @@ public class ExpecetdCSVFile {
 	 * @throws IOException 
 	 */
 	public static void sortData(String source, String destination) throws IOException {
-		System.out.println("To sort "+ source +" to destination "+ destination);
+//		System.out.println("------> starting sorting of csv file -- StartTime: "+new Date());
+		System.out.println("-------->To sort "+ source +" to destination "+ destination);
 		Stream<java.lang.String> linesStream = Files.lines(Paths.get(source));
 		List<String> sortedLinesList = linesStream.sorted().collect(Collectors.toList());
-//		BufferedWriter linesBW = Files.newBufferedWriter(Paths.get(destination));
-//		sortedLinesList.forEach(line -> {
-//			try {
-//				System.out.println("%%%%%%%%%%%%%%%%%%%: "+line);
-//				linesBW.write(line);
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-//		});
-		System.out.println("sortedLinesList : "+ sortedLinesList);
 		try(BufferedWriter writer = Files.newBufferedWriter(Paths.get(destination))) {
 			for (String line : sortedLinesList) {
-				System.out.println("%%%%%%%%%%%%%%%%%%% : "+ line);
+//				System.out.println("%%%%%%%%%%%%%%%%%%% : "+ line);
 				writer.write(line + "\r\n");
 			}
 		}
+//		System.out.println( "---------> Sorting finished..-- EndTime: "+new Date() );
+
 	}
 	
 /*	*//**
