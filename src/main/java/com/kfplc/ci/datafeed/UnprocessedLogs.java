@@ -1,13 +1,17 @@
 package com.kfplc.ci.datafeed;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
 import com.kfplc.ci.datafeed.util.ConfigReader;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * The class having methods to parse the Unprocessed logs
@@ -39,7 +43,7 @@ public class UnprocessedLogs {
 	 * This method splits the Unprocessed log file content into two parts and writes to separate files as LHS_PAth and RHS_Path
 	 * @throws IOException
 	 */
-	public void parseLogFile() throws IOException {
+	public static void parseLogFile() throws IOException {
 		BufferedWriter leftBw = Files.newBufferedWriter(Paths.get(ConfigReader.getProperty("UNPROCESSED_LOG_LHS_PATH")));
 		BufferedWriter rightBw = Files.newBufferedWriter(Paths.get(ConfigReader.getProperty("UNPROCESSED_LOG_RHS_PATH")));
 		String logFilePath = ConfigReader.getProperty("UNPROCESSED_LOG_FILE_PATH");
@@ -56,7 +60,7 @@ public class UnprocessedLogs {
 	 * @param rightBw
 	 * @param line
 	 */
-	private void writeToFiles(BufferedWriter leftBw, BufferedWriter rightBw, java.lang.String line) {
+	private static void writeToFiles(BufferedWriter leftBw, BufferedWriter rightBw, java.lang.String line) {
 		
 		try {
 			//leftfw.write(line.substring(0, line.length()-100));
@@ -84,6 +88,26 @@ public class UnprocessedLogs {
 			}
 			
 		});
+	}
+
+	public static void assertIfContains(String inputRow) throws IOException {
+		String logFilePath = ConfigReader.getProperty("UNPROCESSED_LOG_FILE_PATH");
+		boolean found= false;
+		ArrayList<String> matchingLogLines= new ArrayList<String>();
+		try (BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(logFilePath))) {
+			String logLine = null;
+			while( (logLine = bufferedReader.readLine() ) != null) {
+				if(logLine.contains(inputRow)) {
+					found = true;
+					matchingLogLines.add(logLine);
+				}
+					
+					
+			}
+		}
+		assertTrue("log file content: "+ matchingLogLines, found == false);
+		assertTrue("Input Data not found in Unprocessed logs", found == true);
+		
 	}
 
 
