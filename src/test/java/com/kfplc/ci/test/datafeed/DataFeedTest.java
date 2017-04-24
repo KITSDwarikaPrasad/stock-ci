@@ -105,7 +105,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	@Test
+	//@Test
 	public void testStockLevelRoundingZero() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testStockLevelRoundingZero"," If the Stock level is 0.000 then it should be exported as zero");
 		//Cleanup
@@ -159,7 +159,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	//@Test
+	@Test
 	public void testStockLevelNaN() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testStockLevelNaN", " If the Stock level is a Not a Number then it should be exported as zero");
 		//Cleanup
@@ -186,7 +186,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	@Test
+	//@Test
 	public void testStockLevelNegative() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testStockLevelNegative"," If the Stock level is a Negative Number then it should be exported as zero");
 		//Cleanup
@@ -214,7 +214,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	//@Test
+	@Test
 	public void testBQCodeNotFound() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testBQCodeNotFound", " If the 'destination' BQCode in EFFECTIVE_ARTICLE is not present then no line is created in the output"
 				+ " file Log this row to the 'Not Processed' file, with a reason");
