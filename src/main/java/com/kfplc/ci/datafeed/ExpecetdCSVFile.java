@@ -32,17 +32,17 @@ public class ExpecetdCSVFile {
 	
 	/**
 	 * @param storeCode
-	 * @param stockLevel
+	 * @param expecetdCSVRow
 	 * @param bQCd - to get corresponding EAN from Database
 	 * @return List of ExpectedCSVRow objects
 	 * @throws SQLException
 	 */
-	public static List<ExpectedCSVRow> fetchDataFromDB(String fullStoreCode, String stockLevel, String bQCd) throws SQLException {
+	public static List<ExpectedCSVRow> fetchDataFromDB(String fullStoreCode, ExpectedCSVRow expecetdCSVRow, String bQCd) throws SQLException {
 		
 		List<ExpectedCSVRow> expectedCSVRowList = new ArrayList<ExpectedCSVRow>();
 		//read store_code and BQCode from database
 		try {
-			String sqlQueryStoreCd = "select distinct NUMSTORECODE from MBREPOS.MBSTRCD where FULLSTORECODE = ?";
+			String sqlQueryStoreCd = "select distinct NUMSTORECODE, OPCO from MBREPOS.MBSTRCD where FULLSTORECODE = ?";
 			String sqlQueryEan = "select EAN from MBODS."+ ConfigReader.getProperty("TBL_EFFECTIVE_ARTICLE")+" where BQCODE = ?";
 			String ean = "";
 			
@@ -62,7 +62,11 @@ public class ExpecetdCSVFile {
 				ExpectedCSVRow expectedCSVRow= new  ExpectedCSVRow();
 				expectedCSVRow.setStoreCode(resultSetStoreCd.getString(1));
 				expectedCSVRow.setEan(ean);
-				expectedCSVRow.setStockLevel(stockLevel);
+				expectedCSVRow.setStockLevel(expecetdCSVRow.getStockLevel());
+				//Below- take OPCO from Database only if it is not set in Test case
+				if( expecetdCSVRow.getOpco() == null) {
+					expectedCSVRow.setOpco(resultSetStoreCd.getString(2));
+				}
 				expectedCSVRowList.add(expectedCSVRow);
 			}
 			
@@ -100,7 +104,7 @@ public class ExpecetdCSVFile {
 			writer.write(ConfigReader.getProperty("EXPECTED_FILE_HEADER"));
 		}
 		if(!expecetdCSVRow.isNoOutputFlag()) {
-			List<ExpectedCSVRow> expectedCSVRowList =  fetchDataFromDB(inputTextRow.getFull_store_code(), expecetdCSVRow.getStockLevel(), inputTextRow.getBqcode());
+			List<ExpectedCSVRow> expectedCSVRowList =  fetchDataFromDB(inputTextRow.getFull_store_code(), expecetdCSVRow, inputTextRow.getBqcode());
 			rowsWrittenCount = expectedCSVRowList.size();
 			//System.out.println("Creating Expected CSV File : " + path );
 			try(BufferedWriter writer = Files.newBufferedWriter(path)) {

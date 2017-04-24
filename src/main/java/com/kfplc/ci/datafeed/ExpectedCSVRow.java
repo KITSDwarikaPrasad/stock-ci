@@ -8,7 +8,7 @@ public class ExpectedCSVRow {
 	String ean;
 	String stockLevel = "0";
 	String rangedFlg = "1";
-	String opco = "UKBQ";
+	String opco ;
 	boolean noOutputFlag = false;
 	boolean unprocessedFileFlag = false;
 	/**
