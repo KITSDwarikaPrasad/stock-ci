@@ -215,7 +215,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	@Test
+	//@Test
 	public void testBQCodeNotFound() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testBQCodeNotFound", " If the 'destination' BQCode in EFFECTIVE_ARTICLE is not present then no line is created in the output"
 				+ " file Log this row to the 'Not Processed' file, with a reason");
@@ -237,7 +237,6 @@ public class DataFeedTest {
 		assertTrue("unprocessedLogFile not found!",unprocessedLogFile.exists());
 		UnprocessedLogsTester.assertIfContains(inputTextRow.formatAsRow());
 		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("BQCODE_NULL_INVALID"));
-		//assertThat(unprocessedLogFile).hasContent(inputTextRow.formatAsRow());
 		
 		//TestHelper.cleanUpBuild();
 	}
@@ -249,7 +248,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	//@Test
+	@Test
 	public void testStoreCodeNotFound() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testStoreCodeNotFound", " If no Store Code exists for the 'destination' BQCode in EFFECTIVE_ARTICLE "
 				+ "then no line is created in the output file, Log this row to the 'Not Processed' file, with a reason");
@@ -257,7 +256,8 @@ public class DataFeedTest {
 		TestHelper.preJUnitCleanUp();
 		//Create Input Text File
 		InputTextRow inputTextRow = new InputTextRow();
-		inputTextRow.setBqcode("27345338");
+		inputTextRow.setBqcode("27345337");
+		inputTextRow.setFull_store_code("RFI140");
 		
 		InputTextFile.createInputTextFile(inputTextRow);
 		//Create Expeccted CSV File
@@ -268,9 +268,9 @@ public class DataFeedTest {
 		TestHelper.invokeBODSJob();
 		
 		assertThat(actualFile).hasSameContentAs(expectedFile);
-		assertTrue(unprocessedLogFile.exists());
-		assertThat(unprocessedLogFile).hasContent(inputTextRow.formatAsRow());
-		UnprocessedLogs.printUnprocessedCause(inputTextRow.formatAsRow());
+		assertTrue("unprocessedLogFile not found!",unprocessedLogFile.exists());
+		UnprocessedLogsTester.assertIfContains(inputTextRow.formatAsRow());
+		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("BQCODE_NULL_INVALID"));
 		//TestHelper.cleanUpBuild();
 	}	
 	
@@ -289,7 +289,7 @@ public class DataFeedTest {
 		TestHelper.preJUnitCleanUp();
 		//Create Input Text File
 		InputTextRow inputTextRow = new InputTextRow();
-		inputTextRow.setBqcode("27345338");
+		inputTextRow.setBqcode("27345337");
 		
 		InputTextFile.createInputTextFile(inputTextRow);
 		//Create Expeccted CSV File
@@ -300,9 +300,9 @@ public class DataFeedTest {
 		TestHelper.invokeBODSJob();
 		
 		assertThat(actualFile).hasSameContentAs(expectedFile);
-		assertTrue(unprocessedLogFile.exists());
-		assertThat(unprocessedLogFile).hasContent(inputTextRow.formatAsRow());
-		UnprocessedLogs.printUnprocessedCause(inputTextRow.formatAsRow());
+		assertTrue("unprocessedLogFile not found!",unprocessedLogFile.exists());
+		UnprocessedLogsTester.assertIfContains(inputTextRow.formatAsRow());
+		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("BQCODE_NULL_INVALID"));
 		//TestHelper.cleanUpBuild();
 	}	
 	
@@ -313,7 +313,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	//@Test
+	@Test
 	public void testRangedFlag() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testRangedFlag", " If the 'ranged' flag is not 0 or 1 then no line is created in the output file,"
 				+ "  Log this row to the 'Not Processed' file, with a reason");
@@ -333,9 +333,9 @@ public class DataFeedTest {
 		TestHelper.invokeBODSJob();
 		
 		assertThat(actualFile).hasSameContentAs(expectedFile);
-		assertTrue(unprocessedLogFile.exists());
-		assertThat(unprocessedLogFile).hasContent(inputTextRow.formatAsRow());
-		UnprocessedLogs.printUnprocessedCause(inputTextRow.formatAsRow());
+		assertTrue("unprocessedLogFile not found!",unprocessedLogFile.exists());
+		UnprocessedLogsTester.assertIfContains(inputTextRow.formatAsRow());
+		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("BQCODE_NULL_INVALID"));
 		//TestHelper.cleanUpBuild();
 	}
 	
