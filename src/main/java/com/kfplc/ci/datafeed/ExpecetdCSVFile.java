@@ -26,7 +26,7 @@ public class ExpecetdCSVFile {
 
 	public static void main(String[] args) throws SQLException {
 		// TODO Auto-generated method stub
-		System.out.println(fetchDataFromDB("PBI964", "1.9", "27345337"));
+		//System.out.println(fetchDataFromDB("PBI964", "1.9", "27345337"));
 	}
 
 	

@@ -281,7 +281,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	//@Test
+	@Test
 	public void testOPCONotFound() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testStoreCodeNotFound", " If no OPCO exists for the 'destination' BQCode in EFFECTIVE_ARTICLE then"
 				+ " no line is created in the output file,  Log this row to the 'Not Processed' file, with a reason");
