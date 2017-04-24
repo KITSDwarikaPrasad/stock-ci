@@ -32,14 +32,14 @@ public class TestHelper {
 		Optional<Integer> oldLastModZipTs = null;
 		System.out.println("userDir: "+ userDir);
 
-		//		if( Files.exists( Paths.get(directory, fileName)) ) {
-		//			//Create backup csv file	
-		//			Files.copy(Paths.get(directory, fileName), Paths.get(directory, fileName + "_bkp"));
-		//			Files.delete(Paths.get(directory, fileName));
-		//			System.out.println("Backup file created :SAPR3toStockAPI.csv_bkp");
-		//		} else {
-		//			System.out.println( "old files not found" );
-		//		}
+		if( Files.exists( Paths.get(directory, fileName)) ) {
+			//Create backup csv file	
+			Files.copy(Paths.get(directory, fileName), Paths.get(directory, fileName + "_bkp"));
+			Files.delete(Paths.get(directory, fileName));
+			System.out.println("Backup file created :SAPR3toStockAPI.csv_bkp");
+		} else {
+			System.out.println( "old files not found" );
+		}
 		///hold the zip file - find out the latest zip file
 		oldLastModZipTs = getLastModifiedZipFileTs();
 
@@ -111,7 +111,7 @@ public class TestHelper {
 		while (System.currentTimeMillis() < endTimeSeconds) {
 			System.out.println("checking for the file..");
 			if(Files.exists(filePath)) {
-				
+
 				long newFileSize = Files.size(filePath);
 				if( newFileSize == fileSize) {
 					fileArrived = true;
@@ -150,9 +150,9 @@ public class TestHelper {
 		if(Files.exists(Paths.get(directory, fileName + "_Expected"))) {
 			Files.delete(Paths.get(directory, fileName + "_Expected"));
 		}
-//		if(Files.exists(Paths.get(unprocessedLogPath))) {
-//			Files.delete(Paths.get(unprocessedLogPath));
-//		}
+		//		if(Files.exists(Paths.get(unprocessedLogPath))) {
+		//			Files.delete(Paths.get(unprocessedLogPath));
+		//		}
 	}
 
 
@@ -164,5 +164,5 @@ public class TestHelper {
 		System.out.println("################ Test Case Name:"+testName+" , Scenario :- " + scenario);
 	}
 
-	
+
 }
