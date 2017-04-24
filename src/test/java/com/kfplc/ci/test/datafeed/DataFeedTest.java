@@ -256,8 +256,8 @@ public class DataFeedTest {
 		TestHelper.preJUnitCleanUp();
 		//Create Input Text File
 		InputTextRow inputTextRow = new InputTextRow();
-		inputTextRow.setBqcode("27345337");
-		inputTextRow.setFull_store_code("RFI140");
+		//inputTextRow.setBqcode("27345337");
+		inputTextRow.setFull_store_code("RFI141");
 		
 		InputTextFile.createInputTextFile(inputTextRow);
 		//Create Expeccted CSV File
@@ -313,7 +313,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	@Test
+	//@Test
 	public void testRangedFlag() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testRangedFlag", " If the 'ranged' flag is not 0 or 1 then no line is created in the output file,"
 				+ "  Log this row to the 'Not Processed' file, with a reason");
@@ -335,14 +335,14 @@ public class DataFeedTest {
 		assertThat(actualFile).hasSameContentAs(expectedFile);
 		assertTrue("unprocessedLogFile not found!",unprocessedLogFile.exists());
 		UnprocessedLogsTester.assertIfContains(inputTextRow.formatAsRow());
-		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("BQCODE_NULL_INVALID"));
+		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("RANGED_FLAG_NOT_0_1"));
 		//TestHelper.cleanUpBuild();
 	}
 	
 	/**
 	 *  If multiple EANs are found for the same BQCode then these additional lines will be written to the output file
 	 * @throws IOException
-	 * @throws InterruptedException
+	 * @throws InterruptedException	
 	 * @throws SQLException
 	 */
 	//@Test
