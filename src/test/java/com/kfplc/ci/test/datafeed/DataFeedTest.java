@@ -107,7 +107,7 @@ public class DataFeedTest {
 	 */
 	@Test
 	public void testStockLevelRoundingZero() throws IOException, InterruptedException, SQLException {
-		TestHelper.logWhatToTest("testStockLevelRoundingZero"," If the Stock level is zero then it should be exported as zero");
+		TestHelper.logWhatToTest("testStockLevelRoundingZero"," If the Stock level is 0.000 then it should be exported as zero");
 		//Cleanup
 		TestHelper.preJUnitCleanUp();
 		//Create Input Text File
@@ -186,7 +186,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	//@Test
+	@Test
 	public void testStockLevelNegative() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testStockLevelNegative"," If the Stock level is a Negative Number then it should be exported as zero");
 		//Cleanup
