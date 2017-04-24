@@ -79,7 +79,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-/*	@Test
+	@Test
 	public void testStockLevelRoundingInteger() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testStockLevelRoundingInteger","If the Stock level is an Integer then it should be exported as same");
 		//Cleanup
@@ -368,5 +368,5 @@ public class DataFeedTest {
 		assertThat(actualFile).hasSameContentAs(expectedFile);
 		//TestHelper.cleanUpBuild();
 	}
-*/
+
 }

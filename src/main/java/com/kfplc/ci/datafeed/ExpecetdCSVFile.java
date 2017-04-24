@@ -31,7 +31,8 @@ public class ExpecetdCSVFile {
 
 	
 	/**
-	 * @param storeCode
+	 * This method looks into Database to fetch EAN, OPCO and NUMSTORECODE based on fullStorecode and BQcode in Input
+	 * @param fullStoreCode
 	 * @param expecetdCSVRow
 	 * @param bQCd - to get corresponding EAN from Database
 	 * @return List of ExpectedCSVRow objects
