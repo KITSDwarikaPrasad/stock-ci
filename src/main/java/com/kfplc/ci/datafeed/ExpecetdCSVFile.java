@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.kfplc.ci.datafeed.util.ConfigReader;
 import com.kfplc.ci.datafeed.util.WMBConnection;
@@ -128,6 +130,27 @@ public class ExpecetdCSVFile {
 			}
 		}
 		return rowsWrittenCount;
+	}
+
+
+	/**
+	 * Sorts the data of the small file
+	 * @param source
+	 * @throws IOException 
+	 */
+	public static void sortData(String source, String destination) throws IOException {
+		Stream<java.lang.String> linesStream = Files.lines(Paths.get(source));
+		List<String> sortedLinesList = linesStream.sorted().collect(Collectors.toList());
+		BufferedWriter linesBW = Files.newBufferedWriter(Paths.get(destination));
+		sortedLinesList.forEach(line -> {
+			try {
+				linesBW.write(line);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		});
 	}
 	
 /*	*//**
