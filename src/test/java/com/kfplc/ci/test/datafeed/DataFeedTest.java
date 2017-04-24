@@ -52,7 +52,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-//	@Test
+	@Test
 	public void testStockLevelRoundingNonInteger() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testStockLevelRoundingNonInteger","If the Stock level is a non - Integer then it should be rounded down to nearest lower integer value.");
 		//Cleanup
