@@ -236,8 +236,9 @@ public class DataFeedTest {
 		assertThat(actualFile).hasSameContentAs(expectedFile);
 		assertTrue("unprocessedLogFile not found!",unprocessedLogFile.exists());
 		UnprocessedLogsTester.assertIfContains(inputTextRow.formatAsRow());
+		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("BQCODE_NULL_INVALID"));
 		//assertThat(unprocessedLogFile).hasContent(inputTextRow.formatAsRow());
-		UnprocessedLogs.printUnprocessedCause(inputTextRow.formatAsRow());
+		
 		//TestHelper.cleanUpBuild();
 	}
 	
