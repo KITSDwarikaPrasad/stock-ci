@@ -2,6 +2,8 @@ package com.kfplc.ci.datafeed;
 
 import java.util.Formatter;
 
+import com.kfplc.ci.datafeed.util.DateUtils;
+
 /**
  * The class to hold data reflecting one row in input text file.
  * Configure Default values here itself, override by calling setter methods.
@@ -13,7 +15,7 @@ public class InputTextRow {
 	
 	String record_identifier = "1";
 	String full_store_code;
-	String stock_date = "ddmmyyyy";
+	String stock_date = DateUtils.todaysDate();
 	String bqcode;
 	String current_stock_quantity = "0";
 	String optimum_stock_quantity = "0";
@@ -22,7 +24,7 @@ public class InputTextRow {
 	String cdl = "0";
 	String out_of_stock = "0";
 	String stocked_flag = "0";
-	String creation_date = "ddmmyyyy";
+	String creation_date = DateUtils.todaysDate();
 	String textRow = "";
 	
 	
