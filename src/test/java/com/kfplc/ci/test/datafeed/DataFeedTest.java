@@ -256,7 +256,7 @@ public class DataFeedTest {
 		TestHelper.preJUnitCleanUp();
 		//Create Input Text File
 		InputTextRow inputTextRow = new InputTextRow();
-		//inputTextRow.setBqcode("27345337");
+		inputTextRow.setBqcode("27345337");
 		inputTextRow.setFull_store_code("RFI141");
 		
 		InputTextFile.createInputTextFile(inputTextRow);
