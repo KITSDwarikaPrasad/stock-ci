@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import com.kfplc.ci.datafeed.util.ConfigReader;
 
@@ -26,8 +27,7 @@ public class UnprocessedLogsTester {
 					
 			}
 		}
-		assertTrue("log file content: "+ matchingLogLines, found == false);
-		assertTrue("Input Data not found in Unprocessed logs", found == true);
+		assertTrue("Input Data ["+ inputRow +"] not found in Unprocessed logs"+ matchingLogLines, found == true);
 		
 	}
 }
