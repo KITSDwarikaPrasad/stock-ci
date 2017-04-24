@@ -126,7 +126,8 @@ public class TestHelper {
 
 		if (!fileArrived) {
 			System.out.println("-----------> File did not arrive.");
-			System.exit(1);
+			throw new AssertionError("Waiting for the file "+ strFilePath + " , but the file dod not arrive.");
+//			System.exit(1);
 		}
 	}
 
