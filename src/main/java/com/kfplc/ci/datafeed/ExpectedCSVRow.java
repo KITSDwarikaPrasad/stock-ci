@@ -10,6 +10,7 @@ public class ExpectedCSVRow {
 	String rangedFlg = "1";
 	String opco ;
 	boolean noOutputFlag = false;
+	boolean hasHeaderFlag = true;
 	boolean unprocessedFileFlag = false;
 	/**
 	 * @return the storeCode
@@ -88,10 +89,25 @@ public class ExpectedCSVRow {
 	public void setNoOutputFlag(boolean noOutputFlag) {
 		this.noOutputFlag = noOutputFlag;
 	}
+	
+
+	/**
+	 * @return the hasHeaderFlag
+	 */
+	public boolean isHasHeaderFlag() {
+		return hasHeaderFlag;
+	}
+	/**
+	 * @param hasHeaderFlag the hasHeaderFlag to set
+	 */
+	public void setHasHeaderFlag(boolean hasHeaderFlag) {
+		this.hasHeaderFlag = hasHeaderFlag;
+	}
 	/**
 	 * Marks that the data should be found in Unprocessed log file
 	 * @return the unprocessedFileFlag
 	 */
+	
 	public boolean isUnprocessedFileFlag() {
 		return unprocessedFileFlag;
 	}
