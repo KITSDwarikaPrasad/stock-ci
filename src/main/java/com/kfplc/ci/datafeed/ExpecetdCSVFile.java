@@ -103,6 +103,7 @@ public class ExpecetdCSVFile {
 		if(expecetdCSVRow.isHasHeaderFlag()) {
 			try(BufferedWriter writer = Files.newBufferedWriter(path)) {
 				writer.write(ConfigReader.getProperty("EXPECTED_FILE_HEADER"));
+				System.out.println("EXPECTED_FILE_HEADER : "+ ConfigReader.getProperty("EXPECTED_FILE_HEADER"));
 			}
 		}
 		if(!expecetdCSVRow.isNoOutputFlag()) {
