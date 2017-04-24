@@ -141,17 +141,23 @@ public class ExpecetdCSVFile {
 	public static void sortData(String source, String destination) throws IOException {
 		Stream<java.lang.String> linesStream = Files.lines(Paths.get(source));
 		List<String> sortedLinesList = linesStream.sorted().collect(Collectors.toList());
-		BufferedWriter linesBW = Files.newBufferedWriter(Paths.get(destination));
-		sortedLinesList.forEach(line -> {
-			try {
-				System.out.println("%%%%%%%%%%%%%%%%%%%: "+line);
-				linesBW.write(line);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+//		BufferedWriter linesBW = Files.newBufferedWriter(Paths.get(destination));
+//		sortedLinesList.forEach(line -> {
+//			try {
+//				System.out.println("%%%%%%%%%%%%%%%%%%%: "+line);
+//				linesBW.write(line);
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//		});
+		try(BufferedWriter writer = Files.newBufferedWriter(Paths.get(destination))) {
+			for (String line : sortedLinesList) {
+				System.out.println("%%%%%%%%%%%%%%%%%%% : "+ line);
+				writer.write(line);
 			}
-			
-		});
+		}
 	}
 	
 /*	*//**
