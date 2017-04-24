@@ -83,7 +83,7 @@ public class UnprocessedLogs {
 		Stream<java.lang.String> lines = Files.lines(Paths.get(logFilePath));
 		lines.forEach(line -> {
 			if(line.contains(inputRow)) {
-				System.out.println("Input Row:"+ inputRow + ", Unprocessed due to Error: "+ line.substring(0, line.length()-100).trim());
+				System.out.println("Input Row:"+ inputRow + ", Unprocessed due to Error: "+ line.substring(100, line.length()).trim());
 			}
 			
 		});
