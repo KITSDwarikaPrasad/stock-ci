@@ -100,7 +100,7 @@ public class ExpecetdCSVFile {
 	public static int createExpectedCSVFile(InputTextRow inputTextRow, ExpectedCSVRow expecetdCSVRow) throws SQLException, IOException {
 		int rowsWrittenCount = 0;
 		Path path = Paths.get(ConfigReader.getProperty("TARGET_OUT_DIR") + ConfigReader.getProperty("CSV_FILENAME") + "_Expected.0");
-		if(expecetdCSVRow.hasHeaderFlag) {
+		if(expecetdCSVRow.isHasHeaderFlag()) {
 			try(BufferedWriter writer = Files.newBufferedWriter(path)) {
 				writer.write(ConfigReader.getProperty("EXPECTED_FILE_HEADER"));
 			}
