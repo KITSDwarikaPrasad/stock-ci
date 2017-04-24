@@ -139,6 +139,7 @@ public class ExpecetdCSVFile {
 	 * @throws IOException 
 	 */
 	public static void sortData(String source, String destination) throws IOException {
+		System.out.println("To sort "+ source +" to destination "+ destination);
 		Stream<java.lang.String> linesStream = Files.lines(Paths.get(source));
 		List<String> sortedLinesList = linesStream.sorted().collect(Collectors.toList());
 //		BufferedWriter linesBW = Files.newBufferedWriter(Paths.get(destination));
@@ -152,10 +153,11 @@ public class ExpecetdCSVFile {
 //			}
 //			
 //		});
+		System.out.println("sortedLinesList : "+ sortedLinesList);
 		try(BufferedWriter writer = Files.newBufferedWriter(Paths.get(destination))) {
 			for (String line : sortedLinesList) {
 				System.out.println("%%%%%%%%%%%%%%%%%%% : "+ line);
-				writer.write(line);
+				writer.write(line + "\r\n");
 			}
 		}
 	}
