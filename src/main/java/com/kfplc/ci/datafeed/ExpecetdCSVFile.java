@@ -96,12 +96,14 @@ public class ExpecetdCSVFile {
 	public static int createExpectedCSVFile(InputTextRow inputTextRow, ExpectedCSVRow expecetdCSVRow) throws SQLException, IOException {
 		int rowsWrittenCount = 0;
 		Path path = Paths.get(ConfigReader.getProperty("TARGET_OUT_DIR") + ConfigReader.getProperty("CSV_FILENAME") + "_Expected.0");
+		try(BufferedWriter writer = Files.newBufferedWriter(path)) {
+			writer.write(ConfigReader.getProperty("EXPECTED_FILE_HEADER"));
+		}
 		if(!expecetdCSVRow.isNoOutputFlag()) {
 			List<ExpectedCSVRow> expectedCSVRowList =  fetchDataFromDB(inputTextRow.getFull_store_code(), expecetdCSVRow.getStockLevel(), inputTextRow.getBqcode());
 			rowsWrittenCount = expectedCSVRowList.size();
 			//System.out.println("Creating Expected CSV File : " + path );
 			try(BufferedWriter writer = Files.newBufferedWriter(path)) {
-				writer.write(ConfigReader.getProperty("EXPECTED_FILE_HEADER"));
 				String outputRow = null;
 				for (ExpectedCSVRow expectedCSVRow : expectedCSVRowList) {
 					outputRow = expectedCSVRow.formatAsRow();
@@ -110,9 +112,7 @@ public class ExpecetdCSVFile {
 				}
 			} 
 			
-		} else {
-			Files.createFile(path);
-		}
+		} 
 		return rowsWrittenCount;
 	}
 	
