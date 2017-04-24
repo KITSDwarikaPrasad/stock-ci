@@ -90,25 +90,7 @@ public class UnprocessedLogs {
 		});
 	}
 
-	public static void assertIfContains(String inputRow) throws IOException {
-		String logFilePath = ConfigReader.getProperty("UNPROCESSED_LOG_FILE_PATH");
-		boolean found= false;
-		ArrayList<String> matchingLogLines= new ArrayList<String>();
-		try (BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(logFilePath))) {
-			String logLine = null;
-			while( (logLine = bufferedReader.readLine() ) != null) {
-				if(logLine.contains(inputRow)) {
-					found = true;
-					matchingLogLines.add(logLine);
-				}
-					
-					
-			}
-		}
-		assertTrue("log file content: "+ matchingLogLines, found == false);
-		assertTrue("Input Data not found in Unprocessed logs", found == true);
-		
-	}
+
 
 
 

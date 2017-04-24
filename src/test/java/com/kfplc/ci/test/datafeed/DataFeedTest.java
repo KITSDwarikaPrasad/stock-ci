@@ -22,6 +22,7 @@ import com.kfplc.ci.datafeed.InputTextRow;
 import com.kfplc.ci.datafeed.TestHelper;
 import com.kfplc.ci.datafeed.UnprocessedLogs;
 import com.kfplc.ci.datafeed.util.ConfigReader;
+import com.kfplc.ci.test.datafeed.util.UnprocessedLogsTester;
 
 /**
  * Write the test cases in this file 
@@ -234,7 +235,7 @@ public class DataFeedTest {
 		
 		assertThat(actualFile).hasSameContentAs(expectedFile);
 		assertTrue("unprocessedLogFile not found!",unprocessedLogFile.exists());
-		UnprocessedLogs.assertIfContains(inputTextRow.formatAsRow());
+		UnprocessedLogsTester.assertIfContains(inputTextRow.formatAsRow());
 		//assertThat(unprocessedLogFile).hasContent(inputTextRow.formatAsRow());
 		UnprocessedLogs.printUnprocessedCause(inputTextRow.formatAsRow());
 		//TestHelper.cleanUpBuild();
