@@ -65,7 +65,8 @@ public class TestHelper {
 
 				//sort the content of new csv file
 				System.out.println("------> starting sorting of csv file -- StartTime: "+new Date());
-				CommandRunner.runShellCommand( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +" --dest "+ csvFilePath +"_Actual");
+				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh");
+//				CommandRunner.runShellCommand( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +" --dest "+ csvFilePath +"_Actual");
 				pollTheFile(csvFilePath +"_Actual");
 				CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh csvsort.sh --source "+ csvFilePath +"_Expected.0 --dest "+ csvFilePath +"_Expected");
 				pollTheFile(csvFilePath +"_Expected");

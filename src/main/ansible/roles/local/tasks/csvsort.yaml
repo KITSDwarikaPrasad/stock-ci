@@ -1,0 +1,9 @@
+---
+- name: run csvsort
+#  shell: echo "{{ansible_ssh_user_passsword}}" | kinit "{{ansible_ssh_user}}"
+  shell: sort -t',' "{{source}}" -o "{{destination}}"
+  args:
+    chdir: "chdirTo"
+  register: login_output
+
+- debug: var=login_output
