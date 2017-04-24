@@ -263,7 +263,7 @@ public class DataFeedTest {
 		//Create Expeccted CSV File
 		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
 		expecetdCSVRow.setNoOutputFlag(true);
-		expecetdCSVRow.setHasHeaderFlag(false);
+		//expecetdCSVRow.setHasHeaderFlag(false);
 		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
 		
 		TestHelper.invokeBODSJob();
@@ -284,7 +284,7 @@ public class DataFeedTest {
 	 */
 	@Test
 	public void testOPCONotFound() throws IOException, InterruptedException, SQLException {
-		TestHelper.logWhatToTest("testStoreCodeNotFound", " If no OPCO exists for the 'destination' BQCode in EFFECTIVE_ARTICLE then"
+		TestHelper.logWhatToTest("testOPCONotFound", " If no OPCO exists for the 'destination' BQCode in EFFECTIVE_ARTICLE then"
 				+ " no line is created in the output file,  Log this row to the 'Not Processed' file, with a reason");
 		//Cleanup
 		TestHelper.preJUnitCleanUp();
@@ -330,7 +330,7 @@ public class DataFeedTest {
 		//Create Expeccted CSV File
 		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
 		expecetdCSVRow.setNoOutputFlag(true);
-		expecetdCSVRow.setHasHeaderFlag(false);
+		//expecetdCSVRow.setHasHeaderFlag(false);
 		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
 		
 		TestHelper.invokeBODSJob();
