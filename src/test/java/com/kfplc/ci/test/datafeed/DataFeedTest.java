@@ -100,12 +100,12 @@ public class DataFeedTest {
 		//TestHelper.cleanUpBuild();
 	}
 	
-	*//**
+	/**
 	 * If the Stock level is a Zero then it should be exported as same
 	 * @throws IOException
 	 * @throws InterruptedException
 	 * @throws SQLException
-	 *//*
+	 */
 	@Test
 	public void testStockLevelRoundingZero() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testStockLevelRoundingZero"," If the Stock level is 0.000 then it should be exported as zero");
@@ -127,12 +127,12 @@ public class DataFeedTest {
 		//TestHelper.cleanUpBuild();
 	}
 	
-	*//**
+	/**
 	 * If the Stock level is a Large number then it should be exported as nearest lower integer
 	 * @throws IOException
 	 * @throws InterruptedException
 	 * @throws SQLException
-	 *//*
+	 */
 	@Test
 	public void testStockLevelRoundingLargeNumber() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testStockLevelRoundingLargeNumber", "If the Stock level is a large number then it should be exported as nearest lower integer");
@@ -154,12 +154,12 @@ public class DataFeedTest {
 		//TestHelper.cleanUpBuild();
 	}
 	
-	*//**
+	/**
 	 * If the Stock level is a Not a Number then it should be exported as zero
 	 * @throws IOException
 	 * @throws InterruptedException
 	 * @throws SQLException
-	 *//*
+	 */
 	@Test
 	public void testStockLevelNaN() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testStockLevelNaN", " If the Stock level is a Not a Number then it should be exported as zero");
@@ -181,12 +181,12 @@ public class DataFeedTest {
 		//TestHelper.cleanUpBuild();
 	}
 	
-	*//**
+	/**
 	 * If the Stock level is a Negative Number then it should be exported as zero
 	 * @throws IOException
 	 * @throws InterruptedException
 	 * @throws SQLException
-	 *//*
+	 */
 	@Test
 	public void testStockLevelNegative() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testStockLevelNegative"," If the Stock level is a Negative Number then it should be exported as zero");
@@ -208,13 +208,13 @@ public class DataFeedTest {
 		//TestHelper.cleanUpBuild();
 	}
 	
-	*//**
+	/**
 	 * If the 'destination' BQCode in EFFECTIVE_ARTICLE is not present then no line is created in the output file
 	 *	Log this row to the 'Not Processed' file, with a reason
 	 * @throws IOException
 	 * @throws InterruptedException
 	 * @throws SQLException
-	 *//*
+	 */
 	@Test
 	public void testBQCodeNotFound() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testBQCodeNotFound", " If the 'destination' BQCode in EFFECTIVE_ARTICLE is not present then no line is created in the output"
@@ -241,13 +241,13 @@ public class DataFeedTest {
 		//TestHelper.cleanUpBuild();
 	}
 	
-	*//**
+	/**
 	 * If no Store Code exists for the 'destination' BQCode in EFFECTIVE_ARTICLE then no line is created in the output file
 	 *	Log this row to the 'Not Processed' file, with a reason
 	 * @throws IOException
 	 * @throws InterruptedException
 	 * @throws SQLException
-	 *//*
+	 */
 	@Test
 	public void testStoreCodeNotFound() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testStoreCodeNotFound", " If no Store Code exists for the 'destination' BQCode in EFFECTIVE_ARTICLE "
@@ -275,13 +275,13 @@ public class DataFeedTest {
 		//TestHelper.cleanUpBuild();
 	}	
 	
-	*//**
+	/**
 	 *  If no OPCO exists for the 'destination' BQCode in EFFECTIVE_ARTICLE then no line is created in the output file.
 	 *	Log this row to the 'Not Processed' file, with a reason
 	 * @throws IOException
 	 * @throws InterruptedException
 	 * @throws SQLException
-	 *//*
+	 */
 	@Test
 	public void testOPCONotFound() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testStoreCodeNotFound", " If no OPCO exists for the 'destination' BQCode in EFFECTIVE_ARTICLE then"
@@ -308,13 +308,13 @@ public class DataFeedTest {
 		//TestHelper.cleanUpBuild();
 	}	
 	
-	*//**
+	/**
 	 *  If the 'ranged' flag is not 0 or 1 then no line is created in the output file.
 	 *	Log this row to the 'Not Processed' file, with a reason
 	 * @throws IOException
 	 * @throws InterruptedException
 	 * @throws SQLException
-	 *//*
+	 */
 	@Test
 	public void testRangedFlag() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testRangedFlag", " If the 'ranged' flag is not 0 or 1 then no line is created in the output file,"
@@ -341,12 +341,12 @@ public class DataFeedTest {
 		//TestHelper.cleanUpBuild();
 	}
 	
-	*//**
+	/**
 	 *  If multiple EANs are found for the same BQCode then these additional lines will be written to the output file
 	 * @throws IOException
 	 * @throws InterruptedException	
 	 * @throws SQLException
-	 *//*
+	 */
 	@Test
 	public void testMultipleEANs() throws IOException, InterruptedException, SQLException {
 		TestHelper.logWhatToTest("testMultipleEANs", " If multiple EANs are found for the same BQCode then these additional lines will be written to the output file");
