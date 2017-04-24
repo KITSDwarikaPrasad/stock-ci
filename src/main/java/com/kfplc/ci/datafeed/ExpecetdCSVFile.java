@@ -144,6 +144,7 @@ public class ExpecetdCSVFile {
 		BufferedWriter linesBW = Files.newBufferedWriter(Paths.get(destination));
 		sortedLinesList.forEach(line -> {
 			try {
+				System.out.println("%%%%%%%%%%%%%%%%%%%: "+line);
 				linesBW.write(line);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
