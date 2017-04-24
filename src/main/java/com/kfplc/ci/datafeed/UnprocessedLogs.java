@@ -11,7 +11,6 @@ import java.util.stream.Stream;
 
 import com.kfplc.ci.datafeed.util.ConfigReader;
 
-import static org.junit.Assert.assertTrue;
 
 /**
  * The class having methods to parse the Unprocessed logs
