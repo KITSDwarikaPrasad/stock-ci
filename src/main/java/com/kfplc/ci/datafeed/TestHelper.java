@@ -123,10 +123,12 @@ public class TestHelper {
 //				} else {
 //					fileSize = newFileSize;
 //				}
-				if(!(fileArrived  = isCompletelyWritten(strFilePath))){
-					Thread.sleep(pollingInterval);
+				if(isCompletelyWritten(strFilePath)){
+					fileArrived = true;
+					break;
 				}
 			}
+			Thread.sleep(pollingInterval);
 		}
 
 		if (!fileArrived) {
