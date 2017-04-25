@@ -113,6 +113,7 @@ public class TestHelper {
 		while (System.currentTimeMillis() < endTimeSeconds) {
 			System.out.println("checking for the file..");
 			if(Files.exists(filePath)) {
+				System.out.println("File exists..");
 				if(isCompletelyWritten(strFilePath)){
 					long newFileSize = Files.size(filePath);
 					System.out.println("newFileSize: "+ newFileSize);
