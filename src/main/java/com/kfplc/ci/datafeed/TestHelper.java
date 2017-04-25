@@ -117,8 +117,6 @@ public class TestHelper {
 			System.out.println("checking for the file..");
 			if(Files.exists(filePath)) {
 
-				long newFileSize = Files.size(filePath);
-				System.out.println("newFileSize: "+ newFileSize);
 //				if( newFileSize == fileSize) {
 //					fileArrived = true;
 //					System.out.println("--------> File has arrived completely..");
@@ -127,8 +125,12 @@ public class TestHelper {
 //					fileSize = newFileSize;
 //				}
 				if(isCompletelyWritten(strFilePath)){
-					fileArrived = true;
-					break;
+					long newFileSize = Files.size(filePath);
+					System.out.println("newFileSize: "+ newFileSize);
+					if(newFileSize > 0) {
+						fileArrived = true;
+						break;
+					}
 				}
 			}
 			Thread.sleep(pollingInterval);
@@ -175,13 +177,13 @@ public class TestHelper {
 			Files.delete(Paths.get(directory, fileName));
 			System.out.println("-------> Backup file created :"+fileName + "_bkp");
 		}
-//		if(Files.exists(Paths.get(directory, fileName + "_Actual"))) {
-//			Files.delete(Paths.get(directory, fileName + "_Actual"));
-//		}
-//		if(Files.exists(Paths.get(directory, fileName + "_Expected"))) {
-//			Files.delete(Paths.get(directory, fileName + "_Expected"));
-//
-//		}
+		if(Files.exists(Paths.get(directory, fileName + "_Actual"))) {
+			Files.delete(Paths.get(directory, fileName + "_Actual"));
+		}
+		if(Files.exists(Paths.get(directory, fileName + "_Expected"))) {
+			Files.delete(Paths.get(directory, fileName + "_Expected"));
+
+		}
 		//		if(Files.exists(Paths.get(unprocessedLogPath))) {
 		//			Files.delete(Paths.get(unprocessedLogPath));
 		//		}
