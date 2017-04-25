@@ -365,6 +365,42 @@ public class DataFeedTest {
 	}
 
 	/**
+	 *  If the 'ranged' flag is not 0 or 1 but if it is 'a' then no line is created in the output file.
+	 *	Log this row to the 'Not Processed' file, with a reason
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testRangedFlagNaN() throws IOException, InterruptedException, SQLException {
+		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+		TestHelper.logWhatToTest(testName, " If the 'ranged' flag is not 0 or 1 then no line is created in the output file,"
+				+ "  Log this row to the 'Not Processed' file, with a reason");
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
+		//Create Input Text File
+
+		InputTextRow inputTextRow = new InputTextRow();
+		inputTextRow.setRanged_flag("a");
+		InputTextFile.createInputTextFile(inputTextRow);
+
+		//Create Expeccted CSV File
+		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+		expecetdCSVRow.setNoOutputFlag(true);
+		//expecetdCSVRow.setHasHeaderFlag(false);
+		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
+
+		TestHelper.invokeBODSJob();
+
+		assertThat(actualFile).hasSameContentAs(expectedFile);
+		assertTrue("unprocessedLogFile not found!",unprocessedLogFile.exists());
+		UnprocessedLogsTester.assertIfContains(inputTextRow.formatAsRow());
+		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("RANGED_FLAG_NOT_0_1"));
+		TestHelper.postJUnitCleanUp(testName);
+	}
+	
+	/**
 	 *  If multiple EANs are found for the same BQCode then these additional lines will be written to the output file
 	 * @throws IOException
 	 * @throws InterruptedException	
