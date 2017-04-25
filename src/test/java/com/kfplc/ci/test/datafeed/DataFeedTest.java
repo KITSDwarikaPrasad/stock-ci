@@ -389,7 +389,8 @@ public class DataFeedTest {
 		int rowsWrittenCount = ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
 
 		TestHelper.invokeBODSJob();
-		//assertTrue(Files.lines(Paths.get(actualFile.getPath())).count() > 1);
+		long lineCount = Files.lines(Paths.get(actualFile.getPath())).count();
+		assertTrue("Expected multiple lines but got only "+ lineCount, lineCount> 2);
 		assertThat(actualFile).hasSameContentAs(expectedFile);
 		TestHelper.postJUnitCleanUp(testName);
 		

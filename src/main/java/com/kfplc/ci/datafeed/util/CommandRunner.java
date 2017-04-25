@@ -5,15 +5,20 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.ProcessBuilder.Redirect;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 
 public class CommandRunner {
 
 	public static String output = null;
 	public static void main(String[] args) {
+		//assertTrue(Files.lines(Paths.get(actualFile.getPath())).count() > 1);
+
 		try {
-			runShellCommand( "command",  null);
-		} catch (IOException | InterruptedException e) {
+			long count = Files.lines(Paths.get("C:\\Users\\prasad01\\OneDrive - Kingfisher PLC\\work\\JUnitCI\\StockService", "SAPR3toStockAPI.csv")).count();
+			System.out.println("count: "+ (count > 1));
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

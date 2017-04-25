@@ -66,8 +66,8 @@
 		<artifactId>ojdbc14</artifactId>
 		<version>10.2.0.5</version>
 		<scope>system</scope>
-		<!--<systemPath>C:/Users/prasad01/tools/jars/oracle/ojdbc14/10.2.0.5/ojdbc14-10.2.0.5.jar</systemPath> -->
-		<systemPath>/support/home/esradm/doNotDelete/ojdbc14-10.2.0.5.jar</systemPath>
+		<systemPath>C:/Users/prasad01/tools/jars/oracle/ojdbc14/10.2.0.5/ojdbc14-10.2.0.5.jar</systemPath> 
+		<!--  <systemPath>/support/home/esradm/doNotDelete/ojdbc14-10.2.0.5.jar</systemPath> -->
 	</dependency>
 
 	</dependencies>
