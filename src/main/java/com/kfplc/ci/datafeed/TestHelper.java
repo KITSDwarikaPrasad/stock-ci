@@ -78,7 +78,7 @@ public class TestHelper {
 			} else {
 				System.out.println("-------->New Zip file not found, So the process will discontinue here.");
 			}
-			Thread.sleep(40000);
+			Thread.sleep(Long.parseLong( ConfigReader.getProperty("POLLING_DURATION_SECONDS") ) * 1000);
 		}
 	}
 
@@ -166,28 +166,50 @@ public class TestHelper {
 	/**
 	 * Method to be called at start of each test case to delete the files created by previous test case
 	 * @throws IOException
+	 * @throws InterruptedException 
+	 * @throws NumberFormatException 
 	 */
-	public static void preJUnitCleanUp() throws IOException {
+	public static void preJUnitCleanUp() throws IOException, NumberFormatException, InterruptedException {
 		if(Files.exists(Paths.get(directory, fileName + "_bkp"))) {
-			Files.delete(Paths.get(directory, fileName + "_bkp"));
+			deleteFile(Paths.get(directory, fileName + "_bkp"));
 			System.out.println("----> Deleted existin bkp file");
 		}
 		if(Files.exists(Paths.get(directory, fileName))) {
 			Files.copy(Paths.get(directory, fileName), Paths.get(directory, fileName + "_bkp"));
-			Files.delete(Paths.get(directory, fileName));
+			deleteFile(Paths.get(directory, fileName));
 			System.out.println("-------> Backup file created :"+fileName + "_bkp");
 		}
 		if(Files.exists(Paths.get(directory, fileName + "_Actual"))) {
-			Files.delete(Paths.get(directory, fileName + "_Actual"));
-		}
-		if(Files.exists(Paths.get(directory, fileName + "_Expected"))) {
-			Files.delete(Paths.get(directory, fileName + "_Expected"));
+			deleteFile(Paths.get(directory, fileName + "_Actual"));
 
 		}
-		//		if(Files.exists(Paths.get(unprocessedLogPath))) {
-		//			Files.delete(Paths.get(unprocessedLogPath));
-		//		}
+		if(Files.exists(Paths.get(directory, fileName + "_Expected"))) {
+			deleteFile(Paths.get(directory, fileName + "_Expected"));
+		}
 	}
+
+
+	/**
+	 * To delete a file  with handle for File busy exception
+	 * @param path
+	 * @throws NumberFormatException
+	 * @throws InterruptedException
+	 */
+	private static void deleteFile(Path path) throws NumberFormatException, InterruptedException {
+		// TODO Auto-generated method stub
+		boolean deletionRequired = true;
+		while(deletionRequired) {
+			try {
+				Files.delete(path);
+				deletionRequired = false;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				Thread.sleep(Long.parseLong( ConfigReader.getProperty("POLLING_DURATION_SECONDS") ) * 1000);
+			}
+		}
+	}
+
 
 
 	/**
