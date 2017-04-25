@@ -1,6 +1,8 @@
 package com.kfplc.ci.datafeed;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -74,6 +76,7 @@ public class TestHelper {
 			} else {
 				System.out.println("-------->New Zip file not found, So the process will discontinue here.");
 			}
+			Thread.sleep(40000);
 		}
 	}
 
@@ -112,16 +115,18 @@ public class TestHelper {
 			System.out.println("checking for the file..");
 			if(Files.exists(filePath)) {
 
-				long newFileSize = Files.size(filePath);
-				if( newFileSize == fileSize) {
-					fileArrived = true;
-					System.out.println("--------> File has arrived completely..");
-					break;
-				} else {
-					fileSize = newFileSize;
+//				long newFileSize = Files.size(filePath);
+//				if( newFileSize == fileSize) {
+//					fileArrived = true;
+//					System.out.println("--------> File has arrived completely..");
+//					break;
+//				} else {
+//					fileSize = newFileSize;
+//				}
+				if(!(fileArrived  = isCompletelyWritten(strFilePath))){
+					Thread.sleep(pollingInterval);
 				}
 			}
-			Thread.sleep(pollingInterval);
 		}
 
 		if (!fileArrived) {
@@ -129,6 +134,26 @@ public class TestHelper {
 			throw new AssertionError("Waiting for the file "+ strFilePath + " , but the file dod not arrive.");
 //			System.exit(1);
 		}
+	}
+	
+	
+	private static boolean isCompletelyWritten(String  filePath) {
+	    RandomAccessFile stream = null;
+	    try {
+	        stream = new RandomAccessFile(filePath, "rw");
+	        return true;
+	    } catch (Exception e) {
+	    	System.out.println("Skipping file " + filePath + " for this iteration due it's not completely written");
+	    } finally {
+	        if (stream != null) {
+	            try {
+	                stream.close();
+	            } catch (IOException e) {
+	            	System.out.println("Exception during closing file " + filePath);
+	            }
+	        }
+	    }
+	    return false;
 	}
 
 	/**

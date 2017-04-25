@@ -150,6 +150,7 @@ public class ExpecetdCSVFile {
 				writer.write(line + "\r\n");
 			}
 		}
+		linesStream.close();
 //		System.out.println( "---------> Sorting finished..-- EndTime: "+new Date() );
 
 	}
