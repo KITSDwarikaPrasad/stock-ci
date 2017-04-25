@@ -81,6 +81,22 @@ public class CommandRunner {
 		Process proces = pb.start();
 		
 	}
+
+
+	/**
+	 * For Kerberos authentication
+	 * User name and password configured in Properties file in home directory
+	 */
+	public static void authenticateKerberos() {
+		String kerberosUser = ConfigReader.getProperty("KERB_USER_NAME");
+		String command = "echo \""+ ConfigReader.getProperty("KERB_PASSWORD") +"\" | kinit "+ kerberosUser;
+		try {
+			System.out.println("Authenticating as "+kerberosUser);
+			runShellCommandPB(null, command);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/*public static void main(String[] args) {
 		// TODO Auto-generated method stub

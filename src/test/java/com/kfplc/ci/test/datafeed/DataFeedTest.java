@@ -20,6 +20,7 @@ import com.kfplc.ci.datafeed.ExpectedCSVRow;
 import com.kfplc.ci.datafeed.InputTextFile;
 import com.kfplc.ci.datafeed.InputTextRow;
 import com.kfplc.ci.datafeed.TestHelper;
+import com.kfplc.ci.datafeed.util.CommandRunner;
 import com.kfplc.ci.datafeed.util.ConfigReader;
 import com.kfplc.ci.test.datafeed.util.UnprocessedLogsTester;
 
@@ -52,6 +53,10 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
+	static {
+		CommandRunner.authenticateKerberos();
+	}
+	
 	//	@Test
 	public void testStockLevelRoundingNonInteger() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
