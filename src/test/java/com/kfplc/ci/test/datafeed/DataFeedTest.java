@@ -57,7 +57,7 @@ public class DataFeedTest {
 		CommandRunner.authenticateKerberos();
 	}
 	
-	//	@Test
+		@Test
 	public void testStockLevelRoundingNonInteger() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 		TestHelper.logWhatToTest(testName,"If the Stock level is a non - Integer then it should be rounded down to nearest lower integer value.");
@@ -112,7 +112,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	//	@Test
+		@Test
 	public void testStockLevelRoundingZero() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
@@ -396,7 +396,7 @@ public class DataFeedTest {
 		assertThat(actualFile).hasSameContentAs(expectedFile);
 		assertTrue("unprocessedLogFile not found!",unprocessedLogFile.exists());
 		UnprocessedLogsTester.assertIfContains(inputTextRow.formatAsRow());
-		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("RANGED_FLAG_NOT_0_1"));
+		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("RANGED_FLAG_NOT_INTEGER"));
 		TestHelper.postJUnitCleanUp(testName);
 	}
 	
