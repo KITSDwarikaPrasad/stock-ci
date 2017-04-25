@@ -200,12 +200,13 @@ public class TestHelper {
 		boolean deletionRequired = true;
 		while(deletionRequired) {
 			try {
+				System.out.println("deleting "+ path.getFileName());
 				Files.delete(path);
 				deletionRequired = false;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				Thread.sleep(Long.parseLong( ConfigReader.getProperty("POLLING_INTERVAL_SECONDS") ) * 1000);
+				Thread.sleep(Long.parseLong( ConfigReader.getProperty("POLLING_INTERVAL_SECONDS") ) * 100);
 			}
 		}
 	}
@@ -225,11 +226,11 @@ public class TestHelper {
 	public static void postJUnitCleanUp(String testName) throws IOException {
 		// TODO Auto-generated method stub
 		if(Files.exists(Paths.get(directory, fileName + "_Actual"))) {
-			Files.delete(Paths.get(directory, fileName + "_Actual"));
+//			Files.delete(Paths.get(directory, fileName + "_Actual"));
 //			Files.move(Paths.get(directory, fileName + "_Actual"), Paths.get(directory, fileName + "_Actual_"+ testName));
 		}
 		if(Files.exists(Paths.get(directory, fileName + "_Expected"))) {
-			Files.delete(Paths.get(directory, fileName + "_Expected"));
+//			Files.delete(Paths.get(directory, fileName + "_Expected"));
 //			Files.move(Paths.get(directory, fileName + "_Expected"), Paths.get(directory, fileName + "_Expected_"+ testName));
 
 		}
