@@ -117,7 +117,8 @@ public class TestHelper {
 			System.out.println("checking for the file..");
 			if(Files.exists(filePath)) {
 
-//				long newFileSize = Files.size(filePath);
+				long newFileSize = Files.size(filePath);
+				System.out.println("newFileSize: "+ newFileSize);
 //				if( newFileSize == fileSize) {
 //					fileArrived = true;
 //					System.out.println("--------> File has arrived completely..");
@@ -201,11 +202,11 @@ public class TestHelper {
 		// TODO Auto-generated method stub
 		if(Files.exists(Paths.get(directory, fileName + "_Actual"))) {
 //			Files.delete(Paths.get(directory, fileName + "_Actual"));
-			Files.move(Paths.get(directory, fileName + "_Actual"), Paths.get(directory, fileName + "_Actual"+ testName));
+			Files.move(Paths.get(directory, fileName + "_Actual"), Paths.get(directory, fileName + "_Actual_"+ testName));
 		}
 		if(Files.exists(Paths.get(directory, fileName + "_Expected"))) {
 			//Files.delete(Paths.get(directory, fileName + "_Expected"));
-			Files.move(Paths.get(directory, fileName + "_Expected"), Paths.get(directory, fileName + "_Expected"+ testName));
+			Files.move(Paths.get(directory, fileName + "_Expected"), Paths.get(directory, fileName + "_Expected_"+ testName));
 
 		}
 	}
