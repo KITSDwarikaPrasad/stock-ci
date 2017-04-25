@@ -30,7 +30,7 @@ public class TestHelper {
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public static void invokeBODSJob(String testName) throws IOException, InterruptedException {
+	public static void invokeBODSJob() throws IOException, InterruptedException {
 		String csvFilePath = directory + fileName ;
 		Optional<Integer> oldLastModZipTs = null;
 		System.out.println("userDir: "+ userDir);
@@ -73,9 +73,8 @@ public class TestHelper {
 				//pollTheFile(csvFilePath +"_Expected");
 				ExpecetdCSVFile.sortData(csvFilePath, csvFilePath + "_Actual");
 				ExpecetdCSVFile.sortData(csvFilePath + "_Expected.0", csvFilePath + "_Expected");
-			//Files.delete(Paths.get(directory, fileName + "_Expected.0"));
-				Files.move(Paths.get(csvFilePath + "_Actual"), Paths.get(csvFilePath + "_Actual"+ testName));
-				Files.move(Paths.get(csvFilePath + "_Expected"), Paths.get(csvFilePath + "_Expected"+ testName));
+				Files.delete(Paths.get(directory, fileName + "_Expected.0"));
+				
 			} else {
 				System.out.println("-------->New Zip file not found, So the process will discontinue here.");
 			}
@@ -175,12 +174,13 @@ public class TestHelper {
 			Files.delete(Paths.get(directory, fileName));
 			System.out.println("-------> Backup file created :"+fileName + "_bkp");
 		}
-		if(Files.exists(Paths.get(directory, fileName + "_Actual"))) {
-			Files.delete(Paths.get(directory, fileName + "_Actual"));
-		}
-		if(Files.exists(Paths.get(directory, fileName + "_Expected"))) {
-			Files.delete(Paths.get(directory, fileName + "_Expected"));
-		}
+//		if(Files.exists(Paths.get(directory, fileName + "_Actual"))) {
+//			Files.delete(Paths.get(directory, fileName + "_Actual"));
+//		}
+//		if(Files.exists(Paths.get(directory, fileName + "_Expected"))) {
+//			Files.delete(Paths.get(directory, fileName + "_Expected"));
+//
+//		}
 		//		if(Files.exists(Paths.get(unprocessedLogPath))) {
 		//			Files.delete(Paths.get(unprocessedLogPath));
 		//		}
@@ -193,6 +193,21 @@ public class TestHelper {
 	 */
 	public static void logWhatToTest(String testName, String scenario) {
 		System.out.println("################ Test Case Name:"+testName+" , Scenario :- " + scenario);
+	}
+
+
+
+	public static void postJUnitCleanUp(String testName) throws IOException {
+		// TODO Auto-generated method stub
+		if(Files.exists(Paths.get(directory, fileName + "_Actual"))) {
+//			Files.delete(Paths.get(directory, fileName + "_Actual"));
+			Files.move(Paths.get(directory, fileName + "_Actual"), Paths.get(directory, fileName + "_Actual"+ testName));
+		}
+		if(Files.exists(Paths.get(directory, fileName + "_Expected"))) {
+			//Files.delete(Paths.get(directory, fileName + "_Expected"));
+			Files.move(Paths.get(directory, fileName + "_Expected"), Paths.get(directory, fileName + "_Expected"+ testName));
+
+		}
 	}
 
 
