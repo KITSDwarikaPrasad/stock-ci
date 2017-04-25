@@ -78,7 +78,7 @@ public class TestHelper {
 			} else {
 				System.out.println("-------->New Zip file not found, So the process will discontinue here.");
 			}
-			Thread.sleep(Long.parseLong( ConfigReader.getProperty("POLLING_DURATION_SECONDS") ) * 1000);
+			Thread.sleep(Long.parseLong( ConfigReader.getProperty("POLLING_INTERVAL_SECONDS") ) * 100);
 		}
 	}
 
