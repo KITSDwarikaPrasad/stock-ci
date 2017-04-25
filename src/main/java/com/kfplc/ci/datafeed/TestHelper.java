@@ -1,13 +1,10 @@
 package com.kfplc.ci.datafeed;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.Date;
 import java.util.Optional;
 
 import com.kfplc.ci.datafeed.util.CommandRunner;
@@ -116,20 +113,14 @@ public class TestHelper {
 		while (System.currentTimeMillis() < endTimeSeconds) {
 			System.out.println("checking for the file..");
 			if(Files.exists(filePath)) {
-
-//				if( newFileSize == fileSize) {
-//					fileArrived = true;
-//					System.out.println("--------> File has arrived completely..");
-//					break;
-//				} else {
-//					fileSize = newFileSize;
-//				}
 				if(isCompletelyWritten(strFilePath)){
 					long newFileSize = Files.size(filePath);
 					System.out.println("newFileSize: "+ newFileSize);
-					if(newFileSize > 0) {
+					if(newFileSize > 0  && newFileSize == fileSize) {
 						fileArrived = true;
 						break;
+					} else {
+						fileSize = newFileSize;
 					}
 				}
 			}
@@ -139,11 +130,15 @@ public class TestHelper {
 		if (!fileArrived) {
 			System.out.println("-----------> File did not arrive.");
 			throw new AssertionError("Waiting for the file "+ strFilePath + " , but the file dod not arrive.");
-//			System.exit(1);
 		}
 	}
 	
 	
+	/**
+	 *  To check if the file is completely written
+	 * @param filePath
+	 * @return
+	 */
 	private static boolean isCompletelyWritten(String  filePath) {
 	    RandomAccessFile stream = null;
 	    try {

@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Formatter;
 
 import com.kfplc.ci.datafeed.util.ConfigReader;
 import com.kfplc.ci.datafeed.util.WMBConnection;
@@ -55,10 +54,7 @@ public class InputTextFile {
 				}
 			}
 			
-			
-			
 		} catch (Exception e) {
-			// TODO Auto-generated catch blockh
 			e.printStackTrace();
 		} finally {
 			WMBConnection.closeResultSet(resultSet);
@@ -67,9 +63,6 @@ public class InputTextFile {
 			WMBConnection.closePreparedStatement(preparedStatementBQ);
 			WMBConnection.closeConnection(connection);
 		}
-		
-		// File writter
-		
 		
 		return inputTextRow;
 	}

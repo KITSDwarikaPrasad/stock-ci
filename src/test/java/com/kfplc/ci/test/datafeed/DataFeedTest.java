@@ -20,7 +20,6 @@ import com.kfplc.ci.datafeed.ExpectedCSVRow;
 import com.kfplc.ci.datafeed.InputTextFile;
 import com.kfplc.ci.datafeed.InputTextRow;
 import com.kfplc.ci.datafeed.TestHelper;
-import com.kfplc.ci.datafeed.UnprocessedLogs;
 import com.kfplc.ci.datafeed.util.ConfigReader;
 import com.kfplc.ci.test.datafeed.util.UnprocessedLogsTester;
 
@@ -385,9 +384,11 @@ public class DataFeedTest {
 		int rowsWrittenCount = ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
 
 		TestHelper.invokeBODSJob();
-		assertTrue(Files.lines(Paths.get(actualFile.getPath())).count() > 1);
+		//assertTrue(Files.lines(Paths.get(actualFile.getPath())).count() > 1);
 		assertThat(actualFile).hasSameContentAs(expectedFile);
 		TestHelper.postJUnitCleanUp(testName);
+		
+		
 	}
 
 }
