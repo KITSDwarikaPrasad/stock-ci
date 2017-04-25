@@ -205,7 +205,7 @@ public class TestHelper {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				Thread.sleep(Long.parseLong( ConfigReader.getProperty("POLLING_DURATION_SECONDS") ) * 1000);
+				Thread.sleep(Long.parseLong( ConfigReader.getProperty("POLLING_INTERVAL_SECONDS") ) * 1000);
 			}
 		}
 	}
