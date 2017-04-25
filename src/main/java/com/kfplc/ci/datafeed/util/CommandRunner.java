@@ -89,10 +89,11 @@ public class CommandRunner {
 	 */
 	public static void authenticateKerberos() {
 		String kerberosUser = ConfigReader.getProperty("KERB_USER_NAME");
-		String command = "echo \""+ ConfigReader.getProperty("KERB_PASSWORD") +"\" | kinit "+ kerberosUser;
+//		String command = "echo \""+ ConfigReader.getProperty("KERB_PASSWORD") +"\" | kinit "+ kerberosUser;
+		String command = "/bin/sh kinitscript.sh "+ ConfigReader.getProperty("KERB_PASSWORD") +" " + kerberosUser;
 		try {
 			System.out.println("Authenticating as "+kerberosUser);
-			runShellCommandPB(null, command);
+			runShellCommandPB(System.getProperty("user.dir").concat("/script/shell"), command);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
