@@ -146,9 +146,11 @@ public class ExpecetdCSVFile {
 		List<String> sortedLinesList = linesStream.sorted().collect(Collectors.toList());
 		try(BufferedWriter writer = Files.newBufferedWriter(Paths.get(destination))) {
 			for (String line : sortedLinesList) {
-//				System.out.println("%%%%%%%%%%%%%%%%%%% : "+ line);
+				System.out.println("%%%%%%%%%%%%%%%%%%% : "+ line);
 				writer.write(line + "\r\n");
 			}
+		} catch (IOException ioe) {
+			System.out.println("sortData exception: "+ ioe.getMessage());
 		}
 		linesStream.close();
 //		System.out.println( "---------> Sorting finished..-- EndTime: "+new Date() );

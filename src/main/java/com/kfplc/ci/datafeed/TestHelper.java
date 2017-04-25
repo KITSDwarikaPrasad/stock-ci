@@ -6,6 +6,7 @@ import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public class TestHelper {
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public static void invokeBODSJob() throws IOException, InterruptedException {
+	public static void invokeBODSJob(String testName) throws IOException, InterruptedException {
 		String csvFilePath = directory + fileName ;
 		Optional<Integer> oldLastModZipTs = null;
 		System.out.println("userDir: "+ userDir);
@@ -72,7 +73,9 @@ public class TestHelper {
 				//pollTheFile(csvFilePath +"_Expected");
 				ExpecetdCSVFile.sortData(csvFilePath, csvFilePath + "_Actual");
 				ExpecetdCSVFile.sortData(csvFilePath + "_Expected.0", csvFilePath + "_Expected");
-				Files.delete(Paths.get(directory, fileName + "_Expected.0"));
+			//Files.delete(Paths.get(directory, fileName + "_Expected.0"));
+				Files.move(Paths.get(csvFilePath + "_Actual"), Paths.get(csvFilePath + "_Actual"+ testName));
+				Files.move(Paths.get(csvFilePath + "_Expected"), Paths.get(csvFilePath + "_Expected"+ testName));
 			} else {
 				System.out.println("-------->New Zip file not found, So the process will discontinue here.");
 			}
