@@ -416,7 +416,7 @@ public class DataFeedTest {
 		//Create Input Text File
 
 		InputTextRow inputTextRow = new InputTextRow();
-		inputTextRow.setCurrent_stock_quantity("4");;
+		inputTextRow.setCurrent_stock_quantity("4.00");;
 		InputTextFile.createInputTextFile(inputTextRow);
 
 		//Create Expeccted CSV File
