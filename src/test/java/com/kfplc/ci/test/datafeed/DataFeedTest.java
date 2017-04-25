@@ -130,264 +130,264 @@ public class DataFeedTest {
 		assertThat(actualFile).hasSameContentAs(expectedFile);
 		TestHelper.postJUnitCleanUp(testName);
 	}
-//	
-//	/**
-//	 * If the Stock level is a Large number then it should be exported as nearest lower integer
-//	 * @throws IOException
-//	 * @throws InterruptedException
-//	 * @throws SQLException
-//	 */
-//	@Test
-//	public void testStockLevelRoundingLargeNumber() throws IOException, InterruptedException, SQLException {
-//	testName = Thread.currentThread().getStackTrace()[1].getMethodName();
+	
+	/**
+	 * If the Stock level is a Large number then it should be exported as nearest lower integer
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testStockLevelRoundingLargeNumber() throws IOException, InterruptedException, SQLException {
+	testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
-//		TestHelper.logWhatToTest("testStockLevelRoundingLargeNumber", "If the Stock level is a large number then it should be exported as nearest lower integer");
-//		//Cleanup
-//		TestHelper.preJUnitCleanUp();
-//		//Create Input Text File
-//		InputTextRow inputTextRow = new InputTextRow();
-//		inputTextRow.setCurrent_stock_quantity("9999999.999");
-//		
-//		InputTextFile.createInputTextFile(inputTextRow);
-//		//Create Expeccted CSV File
-//		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
-//		expecetdCSVRow.setStockLevel("9999999");
-//		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
-//		
-//		TestHelper.invokeBODSJob();
-//		
-//		assertThat(actualFile).hasSameContentAs(expectedFile);
-//		TestHelper.postJUnitCleanUp(testName);
-//	}
-//	
-//	/**
-//	 * If the Stock level is a Not a Number then it should be exported as zero
-//	 * @throws IOException
-//	 * @throws InterruptedException
-//	 * @throws SQLException
-//	 */
-//	@Test
-//	public void testStockLevelNaN() throws IOException, InterruptedException, SQLException {
-//	testName = Thread.currentThread().getStackTrace()[1].getMethodName();
+		TestHelper.logWhatToTest("testStockLevelRoundingLargeNumber", "If the Stock level is a large number then it should be exported as nearest lower integer");
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
+		//Create Input Text File
+		InputTextRow inputTextRow = new InputTextRow();
+		inputTextRow.setCurrent_stock_quantity("9999999.999");
+		
+		InputTextFile.createInputTextFile(inputTextRow);
+		//Create Expeccted CSV File
+		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+		expecetdCSVRow.setStockLevel("9999999");
+		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
+		
+		TestHelper.invokeBODSJob();
+		
+		assertThat(actualFile).hasSameContentAs(expectedFile);
+		TestHelper.postJUnitCleanUp(testName);
+	}
+	
+	/**
+	 * If the Stock level is a Not a Number then it should be exported as zero
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testStockLevelNaN() throws IOException, InterruptedException, SQLException {
+	testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
-//		TestHelper.logWhatToTest("testStockLevelNaN", " If the Stock level is a Not a Number then it should be exported as zero");
-//		//Cleanup
-//		TestHelper.preJUnitCleanUp();
-//		//Create Input Text File
-//		InputTextRow inputTextRow = new InputTextRow();
-//		inputTextRow.setCurrent_stock_quantity("aaaaaaaaaaa");
-//		
-//		InputTextFile.createInputTextFile(inputTextRow);
-//		//Create Expeccted CSV File
-//		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
-//		expecetdCSVRow.setStockLevel("0");
-//		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
-//		
-//		TestHelper.invokeBODSJob();
-//		
-//		assertThat(actualFile).hasSameContentAs(expectedFile);
-//		TestHelper.postJUnitCleanUp(testName);
-//	}
-//	
-//	/**
-//	 * If the Stock level is a Negative Number then it should be exported as zero
-//	 * @throws IOException
-//	 * @throws InterruptedException
-//	 * @throws SQLException
-//	 */
-//	@Test
-//	public void testStockLevelNegative() throws IOException, InterruptedException, SQLException {
-//	 testName = Thread.currentThread().getStackTrace()[1].getMethodName();
+		TestHelper.logWhatToTest("testStockLevelNaN", " If the Stock level is a Not a Number then it should be exported as zero");
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
+		//Create Input Text File
+		InputTextRow inputTextRow = new InputTextRow();
+		inputTextRow.setCurrent_stock_quantity("aaaaaaaaaaa");
+		
+		InputTextFile.createInputTextFile(inputTextRow);
+		//Create Expeccted CSV File
+		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+		expecetdCSVRow.setStockLevel("0");
+		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
+		
+		TestHelper.invokeBODSJob();
+		
+		assertThat(actualFile).hasSameContentAs(expectedFile);
+		TestHelper.postJUnitCleanUp(testName);
+	}
+	
+	/**
+	 * If the Stock level is a Negative Number then it should be exported as zero
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testStockLevelNegative() throws IOException, InterruptedException, SQLException {
+	 testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
-//		TestHelper.logWhatToTest("testStockLevelNegative"," If the Stock level is a Negative Number then it should be exported as zero");
-//		//Cleanup
-//		TestHelper.preJUnitCleanUp();
-//		//Create Input Text File
-//		InputTextRow inputTextRow = new InputTextRow();
-//		inputTextRow.setCurrent_stock_quantity("-2.9");
-//		
-//		InputTextFile.createInputTextFile(inputTextRow);
-//		//Create Expeccted CSV File
-//		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
-//		expecetdCSVRow.setStockLevel("0");
-//		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
-//		
-//		TestHelper.invokeBODSJob();
-//		
-//		assertThat(actualFile).hasSameContentAs(expectedFile);
-//		TestHelper.postJUnitCleanUp(testName);
-//	}
-//	
-//	/**
-//	 * If the 'destination' BQCode in EFFECTIVE_ARTICLE is not present then no line is created in the output file
-//	 *	Log this row to the 'Not Processed' file, with a reason
-//	 * @throws IOException
-//	 * @throws InterruptedException
-//	 * @throws SQLException
-//	 */
-//	@Test
-//	public void testBQCodeNotFound() throws IOException, InterruptedException, SQLException {
-//	testName = Thread.currentThread().getStackTrace()[1].getMethodName();
+		TestHelper.logWhatToTest("testStockLevelNegative"," If the Stock level is a Negative Number then it should be exported as zero");
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
+		//Create Input Text File
+		InputTextRow inputTextRow = new InputTextRow();
+		inputTextRow.setCurrent_stock_quantity("-2.9");
+		
+		InputTextFile.createInputTextFile(inputTextRow);
+		//Create Expeccted CSV File
+		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+		expecetdCSVRow.setStockLevel("0");
+		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
+		
+		TestHelper.invokeBODSJob();
+		
+		assertThat(actualFile).hasSameContentAs(expectedFile);
+		TestHelper.postJUnitCleanUp(testName);
+	}
+	
+	/**
+	 * If the 'destination' BQCode in EFFECTIVE_ARTICLE is not present then no line is created in the output file
+	 *	Log this row to the 'Not Processed' file, with a reason
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testBQCodeNotFound() throws IOException, InterruptedException, SQLException {
+	testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
-//		TestHelper.logWhatToTest("testBQCodeNotFound", " If the 'destination' BQCode in EFFECTIVE_ARTICLE is not present then no line is created in the output"
-//				+ " file Log this row to the 'Not Processed' file, with a reason");
-//		//Cleanup
-//		TestHelper.preJUnitCleanUp();
-//		//Create Input Text File
-//		InputTextRow inputTextRow = new InputTextRow();
-//		inputTextRow.setBqcode("27345338");
-//		
-//		InputTextFile.createInputTextFile(inputTextRow);
-//		//Create Expeccted CSV File
-//		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
-//		expecetdCSVRow.setNoOutputFlag(true);
-//		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
-//		
-//		TestHelper.invokeBODSJob();
-//		
-//		assertThat(actualFile).hasSameContentAs(expectedFile);
-//		assertTrue("unprocessedLogFile not found!",unprocessedLogFile.exists());
-//		UnprocessedLogsTester.assertIfContains(inputTextRow.formatAsRow());
-//		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("BQCODE_NULL_INVALID"));
-//		
-//		TestHelper.postJUnitCleanUp(testName);
-//	}
-//	
-//	/**
-//	 * If no Store Code exists for the 'destination' BQCode in EFFECTIVE_ARTICLE then no line is created in the output file
-//	 *	Log this row to the 'Not Processed' file, with a reason
-//	 * @throws IOException
-//	 * @throws InterruptedException
-//	 * @throws SQLException
-//	 */
-//	@Test
-//	public void testStoreCodeNotFound() throws IOException, InterruptedException, SQLException {
-//	testName = Thread.currentThread().getStackTrace()[1].getMethodName();
+		TestHelper.logWhatToTest("testBQCodeNotFound", " If the 'destination' BQCode in EFFECTIVE_ARTICLE is not present then no line is created in the output"
+				+ " file Log this row to the 'Not Processed' file, with a reason");
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
+		//Create Input Text File
+		InputTextRow inputTextRow = new InputTextRow();
+		inputTextRow.setBqcode("27345338");
+		
+		InputTextFile.createInputTextFile(inputTextRow);
+		//Create Expeccted CSV File
+		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+		expecetdCSVRow.setNoOutputFlag(true);
+		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
+		
+		TestHelper.invokeBODSJob();
+		
+		assertThat(actualFile).hasSameContentAs(expectedFile);
+		assertTrue("unprocessedLogFile not found!",unprocessedLogFile.exists());
+		UnprocessedLogsTester.assertIfContains(inputTextRow.formatAsRow());
+		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("BQCODE_NULL_INVALID"));
+		
+		TestHelper.postJUnitCleanUp(testName);
+	}
+	
+	/**
+	 * If no Store Code exists for the 'destination' BQCode in EFFECTIVE_ARTICLE then no line is created in the output file
+	 *	Log this row to the 'Not Processed' file, with a reason
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testStoreCodeNotFound() throws IOException, InterruptedException, SQLException {
+	testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
-//		TestHelper.logWhatToTest("testStoreCodeNotFound", " If no Store Code exists for the 'destination' BQCode in EFFECTIVE_ARTICLE "
-//				+ "then no line is created in the output file, Log this row to the 'Not Processed' file, with a reason");
-//		//Cleanup
-//		TestHelper.preJUnitCleanUp();
-//		//Create Input Text File
-//		InputTextRow inputTextRow = new InputTextRow();
-//		inputTextRow.setBqcode("27345337");
-//		inputTextRow.setFull_store_code("RFI141");
-//		
-//		InputTextFile.createInputTextFile(inputTextRow);
-//		//Create Expeccted CSV File
-//		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
-//		expecetdCSVRow.setNoOutputFlag(true);
-//		//expecetdCSVRow.setHasHeaderFlag(false);
-//		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
-//		
-//		TestHelper.invokeBODSJob();
-//		
-//		assertThat(actualFile).hasSameContentAs(expectedFile);
-//		assertTrue("unprocessedLogFile not found!",unprocessedLogFile.exists());
-//		UnprocessedLogsTester.assertIfContains(inputTextRow.formatAsRow());
-//		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("STORECODE_NULL_INVALID"));
-//		TestHelper.postJUnitCleanUp(testName);
-//	}	
-//	
-//	/**
-//	 *  If no OPCO exists for the 'destination' BQCode in EFFECTIVE_ARTICLE then no line is created in the output file.
-//	 *	Log this row to the 'Not Processed' file, with a reason
-//	 * @throws IOException
-//	 * @throws InterruptedException
-//	 * @throws SQLException
-//	 */
-//	@Test
-//	public void testOPCONotFound() throws IOException, InterruptedException, SQLException {
-//	testName = Thread.currentThread().getStackTrace()[1].getMethodName();
+		TestHelper.logWhatToTest("testStoreCodeNotFound", " If no Store Code exists for the 'destination' BQCode in EFFECTIVE_ARTICLE "
+				+ "then no line is created in the output file, Log this row to the 'Not Processed' file, with a reason");
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
+		//Create Input Text File
+		InputTextRow inputTextRow = new InputTextRow();
+		inputTextRow.setBqcode("27345337");
+		inputTextRow.setFull_store_code("RFI141");
+		
+		InputTextFile.createInputTextFile(inputTextRow);
+		//Create Expeccted CSV File
+		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+		expecetdCSVRow.setNoOutputFlag(true);
+		//expecetdCSVRow.setHasHeaderFlag(false);
+		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
+		
+		TestHelper.invokeBODSJob();
+		
+		assertThat(actualFile).hasSameContentAs(expectedFile);
+		assertTrue("unprocessedLogFile not found!",unprocessedLogFile.exists());
+		UnprocessedLogsTester.assertIfContains(inputTextRow.formatAsRow());
+		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("STORECODE_NULL_INVALID"));
+		TestHelper.postJUnitCleanUp(testName);
+	}	
+	
+	/**
+	 *  If no OPCO exists for the 'destination' BQCode in EFFECTIVE_ARTICLE then no line is created in the output file.
+	 *	Log this row to the 'Not Processed' file, with a reason
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testOPCONotFound() throws IOException, InterruptedException, SQLException {
+	testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
-//		TestHelper.logWhatToTest("testOPCONotFound", " If no OPCO exists for the 'destination' BQCode in EFFECTIVE_ARTICLE then"
-//				+ " no line is created in the output file,  Log this row to the 'Not Processed' file, with a reason");
-//		//Cleanup
-//		TestHelper.preJUnitCleanUp();
-//		//Create Input Text File
-//		InputTextRow inputTextRow = new InputTextRow();
-//		inputTextRow.setBqcode("27345337");
-//		
-//		InputTextFile.createInputTextFile(inputTextRow);
-//		//Create Expeccted CSV File
-//		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
-//		expecetdCSVRow.setNoOutputFlag(true);
-//		expecetdCSVRow.setHasHeaderFlag(false);
-//		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
-//		
-//		TestHelper.invokeBODSJob();
-//		
-//		assertThat(actualFile).hasSameContentAs(expectedFile);
-//		assertTrue("unprocessedLogFile not found!",unprocessedLogFile.exists());
-//		UnprocessedLogsTester.assertIfContains(inputTextRow.formatAsRow());
-//		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("OPCO_NULL_INVALID"));
-//		TestHelper.postJUnitCleanUp(testName);
-//	}	
-//	
-//	/**
-//	 *  If the 'ranged' flag is not 0 or 1 then no line is created in the output file.
-//	 *	Log this row to the 'Not Processed' file, with a reason
-//	 * @throws IOException
-//	 * @throws InterruptedException
-//	 * @throws SQLException
-//	 */
-//	@Test
-//	public void testRangedFlag() throws IOException, InterruptedException, SQLException {
-//	testName = Thread.currentThread().getStackTrace()[1].getMethodName();
+		TestHelper.logWhatToTest("testOPCONotFound", " If no OPCO exists for the 'destination' BQCode in EFFECTIVE_ARTICLE then"
+				+ " no line is created in the output file,  Log this row to the 'Not Processed' file, with a reason");
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
+		//Create Input Text File
+		InputTextRow inputTextRow = new InputTextRow();
+		inputTextRow.setBqcode("27345337");
+		
+		InputTextFile.createInputTextFile(inputTextRow);
+		//Create Expeccted CSV File
+		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+		expecetdCSVRow.setNoOutputFlag(true);
+		expecetdCSVRow.setHasHeaderFlag(false);
+		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
+		
+		TestHelper.invokeBODSJob();
+		
+		assertThat(actualFile).hasSameContentAs(expectedFile);
+		assertTrue("unprocessedLogFile not found!",unprocessedLogFile.exists());
+		UnprocessedLogsTester.assertIfContains(inputTextRow.formatAsRow());
+		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("OPCO_NULL_INVALID"));
+		TestHelper.postJUnitCleanUp(testName);
+	}	
+	
+	/**
+	 *  If the 'ranged' flag is not 0 or 1 then no line is created in the output file.
+	 *	Log this row to the 'Not Processed' file, with a reason
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testRangedFlag() throws IOException, InterruptedException, SQLException {
+	testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
-//		TestHelper.logWhatToTest("testRangedFlag", " If the 'ranged' flag is not 0 or 1 then no line is created in the output file,"
-//				+ "  Log this row to the 'Not Processed' file, with a reason");
-//		//Cleanup
-//		TestHelper.preJUnitCleanUp();
-//		//Create Input Text File
-//		
-//		InputTextRow inputTextRow = new InputTextRow();
-//		inputTextRow.setRanged_flag("2");
-//		InputTextFile.createInputTextFile(inputTextRow);
-//		
-//		//Create Expeccted CSV File
-//		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
-//		expecetdCSVRow.setNoOutputFlag(true);
-//		//expecetdCSVRow.setHasHeaderFlag(false);
-//		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
-//		
-//		TestHelper.invokeBODSJob();
-//		
-//		assertThat(actualFile).hasSameContentAs(expectedFile);
-//		assertTrue("unprocessedLogFile not found!",unprocessedLogFile.exists());
-//		UnprocessedLogsTester.assertIfContains(inputTextRow.formatAsRow());
-//		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("RANGED_FLAG_NOT_0_1"));
-//		TestHelper.postJUnitCleanUp(testName);
-//	}
-//	
-//	/**
-//	 *  If multiple EANs are found for the same BQCode then these additional lines will be written to the output file
-//	 * @throws IOException
-//	 * @throws InterruptedException	
-//	 * @throws SQLException
-//	 */
-//	@Test
-//	public void testMultipleEANs() throws IOException, InterruptedException, SQLException {
-//	testName = Thread.currentThread().getStackTrace()[1].getMethodName();
+		TestHelper.logWhatToTest("testRangedFlag", " If the 'ranged' flag is not 0 or 1 then no line is created in the output file,"
+				+ "  Log this row to the 'Not Processed' file, with a reason");
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
+		//Create Input Text File
+		
+		InputTextRow inputTextRow = new InputTextRow();
+		inputTextRow.setRanged_flag("2");
+		InputTextFile.createInputTextFile(inputTextRow);
+		
+		//Create Expeccted CSV File
+		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+		expecetdCSVRow.setNoOutputFlag(true);
+		//expecetdCSVRow.setHasHeaderFlag(false);
+		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
+		
+		TestHelper.invokeBODSJob();
+		
+		assertThat(actualFile).hasSameContentAs(expectedFile);
+		assertTrue("unprocessedLogFile not found!",unprocessedLogFile.exists());
+		UnprocessedLogsTester.assertIfContains(inputTextRow.formatAsRow());
+		UnprocessedLogsTester.assertReason(inputTextRow.formatAsRow(), ConfigReader.getProperty("RANGED_FLAG_NOT_0_1"));
+		TestHelper.postJUnitCleanUp(testName);
+	}
+	
+	/**
+	 *  If multiple EANs are found for the same BQCode then these additional lines will be written to the output file
+	 * @throws IOException
+	 * @throws InterruptedException	
+	 * @throws SQLException
+	 */
+	@Test
+	public void testMultipleEANs() throws IOException, InterruptedException, SQLException {
+	testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
-//		TestHelper.logWhatToTest("testMultipleEANs", " If multiple EANs are found for the same BQCode then these additional lines will be written to the output file");
-//		//Cleanup
-//		TestHelper.preJUnitCleanUp();
-//		//Create Input Text File
-//		
-//		InputTextRow inputTextRow = new InputTextRow();
-//		inputTextRow.setCurrent_stock_quantity("4");;
-//		InputTextFile.createInputTextFile(inputTextRow);
-//		
-//		//Create Expeccted CSV File
-//		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
-//		expecetdCSVRow.setStockLevel("4");
-//		int rowsWrittenCount = ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
-//		
-//		TestHelper.invokeBODSJob();
-//		assertTrue(Files.lines(Paths.get(actualFile.getPath())).count() > 1);
-//		assertThat(actualFile).hasSameContentAs(expectedFile);
-//		TestHelper.postJUnitCleanUp(testName);
-//	}
+		TestHelper.logWhatToTest("testMultipleEANs", " If multiple EANs are found for the same BQCode then these additional lines will be written to the output file");
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
+		//Create Input Text File
+		
+		InputTextRow inputTextRow = new InputTextRow();
+		inputTextRow.setCurrent_stock_quantity("4");;
+		InputTextFile.createInputTextFile(inputTextRow);
+		
+		//Create Expeccted CSV File
+		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+		expecetdCSVRow.setStockLevel("4");
+		int rowsWrittenCount = ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
+		
+		TestHelper.invokeBODSJob();
+		assertTrue(Files.lines(Paths.get(actualFile.getPath())).count() > 1);
+		assertThat(actualFile).hasSameContentAs(expectedFile);
+		TestHelper.postJUnitCleanUp(testName);
+	}
 
 }
