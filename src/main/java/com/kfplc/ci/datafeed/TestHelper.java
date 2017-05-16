@@ -17,7 +17,6 @@ import com.kfplc.ci.datafeed.util.CommandRunner;
 import com.kfplc.ci.datafeed.util.ConfigReader;
 import com.kfplc.ci.datafeed.util.TestCasePosition;
 
-import junit.framework.AssertionFailedError;
 
 /**
  * The class with methods and flows to help in one test case
@@ -310,7 +309,7 @@ public class TestHelper {
 		// TODO Auto-generated method stub
 		int upperLimit = calculateUpperLimit();
 		if(executionTime > upperLimit) {
-			throw new AssertionFailedError("Execution took more time than normal");
+			throw new AssertionError("Execution took more time than normal");
 		}
 		
 	}
