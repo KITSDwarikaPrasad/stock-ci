@@ -537,12 +537,13 @@ public class DataFeedTest {
 	public void testLargeDatafeed() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
-		TestHelper.logWhatToTest(testName, " If the 'ranged' flag is 0 then csv file should be created.");
+		TestHelper.logWhatToTest(testName, "  Test the execution time of a large BODS Job");
 		//Cleanup
 		TestHelper.preJUnitCleanUp(TestCasePosition.LAST);
 		//Create Input Text File
 		InputTextFile.putLargeInputFile();
-		TestHelper.invokeLargeBODSJob();
+		long executionTime = TestHelper.invokeLargeBODSJob();
+		TestHelper.assertExecutionTimeInLimit(executionTime);
 	}
 
 }

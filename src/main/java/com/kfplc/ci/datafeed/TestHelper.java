@@ -82,14 +82,15 @@ public class TestHelper {
 		}
 	}
 
-	public static void invokeLargeBODSJob() throws IOException, InterruptedException {
+	public static long invokeLargeBODSJob() throws IOException, InterruptedException {
 		String csvFilePath = directory + fileName ;
 		System.out.println("-----------> invoking BODS Job ");
 		long startTime = System.currentTimeMillis();
 		CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh invokeBodsJob.sh");
 		pollTheFileLargeJob(csvFilePath);
-		long timeTakenInMinutes = (System.currentTimeMillis() - startTime) / 60000;
-		logExecutionTime(timeTakenInMinutes);
+		long executionTimeInMinutes = (System.currentTimeMillis() - startTime) / 60000;
+		logExecutionTime(executionTimeInMinutes);
+		return executionTimeInMinutes;
 		
 	}
 
@@ -297,6 +298,11 @@ public class TestHelper {
 //			Files.move(Paths.get(directory, fileName + "_Expected"), Paths.get(directory, fileName + "_Expected_"+ testName));
 
 		}
+	}
+
+	public static void assertExecutionTimeInLimit(long executionTime) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
