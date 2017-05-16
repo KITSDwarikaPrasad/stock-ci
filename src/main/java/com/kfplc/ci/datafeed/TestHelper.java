@@ -169,8 +169,8 @@ public class TestHelper {
 	private static void pollTheFileLargeJob(String strFilePath) throws IOException, InterruptedException {
 
 		boolean fileArrived = false;
-		long pollingDuration = Long.parseLong( ConfigReader.getProperty("POLLING_DURATION_SECONDS") ) * 10000;
-		long pollingInterval = Long.parseLong( ConfigReader.getProperty("POLLING_INTERVAL_SECONDS") ) * 10000;
+		long pollingDuration = Long.parseLong( ConfigReader.getProperty("POLLING_DURATION_SECONDS") ) * 1000;
+		long pollingInterval = Long.parseLong( ConfigReader.getProperty("POLLING_INTERVAL_SECONDS") ) * 1000;
 		System.out.println("----------> Started Polling for the csv file "+strFilePath +" , with polling interval(in milliSeconds) ="+ pollingInterval);
 		long endTimeSeconds= System.currentTimeMillis() + pollingDuration;
 		Path filePath = Paths.get(strFilePath);
