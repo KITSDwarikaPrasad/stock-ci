@@ -105,7 +105,7 @@ public class TestHelper {
 		//System.out.println("Creating input File : " + path );
 		try(BufferedWriter writer = Files.newBufferedWriter(path,Charset.defaultCharset(),StandardOpenOption.APPEND)) {
 			System.out.println("--------------> Large Job execution time in Minutes: "+timeTakenInMinutes);
-			writer.write(timeTakenInMinutes + "/n" );
+			writer.write(timeTakenInMinutes + "\n\r" );
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
