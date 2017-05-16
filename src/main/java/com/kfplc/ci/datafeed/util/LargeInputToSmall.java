@@ -34,36 +34,5 @@ public class LargeInputToSmall {
 				}
 		});
 		
-//		linesStream.filter(line -> ++count  >= 1000).collect(Collectors.joining("\n"));
-//		
-//		Files.write(bkpPath, (Iterable<String>)linesStream::iterator);
-//		linesStream.close();			
-//		//System.out.println("Creating input File : " + path );
-//		try (BufferedReader buffer = Files.newBufferedReader(path)) {
-//             buffer.lines().filter(line -> checkCount()).collect(Collectors.joining("\n"));
-////			buffer.lines().f
-//        }
-//		try(BufferedWriter writer = Files.newBufferedWriter(path)) {
-////			writer.write(arg0);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
-
-	private static void writeToFile(String line, BufferedWriter writer) throws IOException {
-		Files.createFile(bkpPath);
-//		try(BufferedWriter writer = Files.newBufferedWriter(bkpPath,Charset.defaultCharset() ,StandardOpenOption.WRITE)) {
-//		try( = ) {
-		writer.write(line + "\n\r");
-//	} catch (IOException e) {
-//		// TODO Auto-generated catch block
-//		e.printStackTrace();
-//	}
-	}
-
-	private static boolean checkCount() {
-		return ++count  >= 1000;
-	}
-
 }

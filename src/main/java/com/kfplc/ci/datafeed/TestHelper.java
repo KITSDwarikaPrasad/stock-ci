@@ -3,15 +3,21 @@ package com.kfplc.ci.datafeed;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 
 import com.kfplc.ci.datafeed.util.CommandRunner;
 import com.kfplc.ci.datafeed.util.ConfigReader;
 import com.kfplc.ci.datafeed.util.TestCasePosition;
+
+import junit.framework.AssertionFailedError;
 
 /**
  * The class with methods and flows to help in one test case
@@ -98,9 +104,9 @@ public class TestHelper {
 	private static void logExecutionTime(long timeTakenInMinutes) {
 		Path path = Paths.get(ConfigReader.getProperty("EXECUTION_TIME_LOG_PATH"));
 		//System.out.println("Creating input File : " + path );
-		try(BufferedWriter writer = Files.newBufferedWriter(path)) {
+		try(BufferedWriter writer = Files.newBufferedWriter(path,Charset.defaultCharset(),StandardOpenOption.APPEND)) {
 			System.out.println("--------------> Large Job execution time in Minutes: "+timeTakenInMinutes);
-			writer.write(timeTakenInMinutes + "," );
+			writer.write(timeTakenInMinutes + "/n" );
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -300,9 +306,38 @@ public class TestHelper {
 		}
 	}
 
-	public static void assertExecutionTimeInLimit(long executionTime) {
+	public static void assertExecutionTimeInLimit(long executionTime) throws IOException {
 		// TODO Auto-generated method stub
+		int upperLimit = calculateUpperLimit();
+		if(executionTime > upperLimit) {
+			throw new AssertionFailedError("Execution took more time than normal");
+		}
 		
+	}
+
+	private static int calculateUpperLimit() throws IOException {
+		
+		Map<Integer, Integer> freqMap = new HashMap<Integer, Integer>();
+		Files.lines(Paths.get(ConfigReader.getProperty("EXECUTION_TIME_LOG_PATH")))
+		.mapToInt( line -> Integer.parseInt(line))
+		.forEach( t -> {
+			if(freqMap.containsKey(t)) {
+				freqMap.put(t, freqMap.get(t).intValue() + 1);
+			} else {
+				freqMap.put(t,  1);
+			}
+		});
+		
+		int nr = 0;
+		int dr = 0;
+		for(Map.Entry<Integer, Integer> entry : freqMap.entrySet()) {
+			nr += entry.getKey() * entry.getValue();
+			dr += entry.getValue();
+		}
+		
+		float mean = nr / dr;
+		float upperLimit = mean * (1 + 20 / 100);
+		return (int)upperLimit;
 	}
 
 }
