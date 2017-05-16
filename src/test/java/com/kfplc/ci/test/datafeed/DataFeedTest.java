@@ -22,6 +22,7 @@ import com.kfplc.ci.datafeed.InputTextRow;
 import com.kfplc.ci.datafeed.TestHelper;
 import com.kfplc.ci.datafeed.util.CommandRunner;
 import com.kfplc.ci.datafeed.util.ConfigReader;
+import com.kfplc.ci.datafeed.util.TestCasePosition;
 import com.kfplc.ci.test.datafeed.util.UnprocessedLogsTester;
 
 /**
@@ -57,12 +58,12 @@ public class DataFeedTest {
 		CommandRunner.authenticateKerberos();
 	}
 	
-		@Test
+		//@Test
 	public void testStockLevelRoundingNonInteger() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 		TestHelper.logWhatToTest(testName,"If the Stock level is a non - Integer then it should be rounded down to nearest lower integer value.");
 		//Cleanup
-		TestHelper.preJUnitCleanUp();
+		TestHelper.preJUnitCleanUp(TestCasePosition.FIRST);
 		//Create Input Text File
 		InputTextRow inputTextRow = new InputTextRow();
 		inputTextRow.setCurrent_stock_quantity("1.999");
@@ -84,7 +85,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	@Test
+	//@Test
 	public void testStockLevelRoundingInteger() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 		TestHelper.logWhatToTest(testName,"If the Stock level is an Integer then it should be exported as same");
@@ -92,12 +93,12 @@ public class DataFeedTest {
 		TestHelper.preJUnitCleanUp();
 		//Create Input Text File
 		InputTextRow inputTextRow = new InputTextRow();
-		inputTextRow.setCurrent_stock_quantity("3.000");
-
-		InputTextFile.createInputTextFile(inputTextRow);
-		//Create Expeccted CSV File
-		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
-		expecetdCSVRow.setStockLevel("3");
+			inputTextRow.setCurrent_stock_quantity("3.000");
+	
+			InputTextFile.createInputTextFile(inputTextRow);
+			//Create Expeccted CSV File
+			ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+			expecetdCSVRow.setStockLevel("3");
 		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
 
 		TestHelper.invokeBODSJob();
@@ -112,7 +113,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-		@Test
+		//@Test
 	public void testStockLevelRoundingZero() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
@@ -141,7 +142,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	@Test
+	//@Test
 	public void testStockLevelRoundingLargeNumber() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
@@ -170,7 +171,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	@Test
+	//@Test
 	public void testStockLevelNaN() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
@@ -199,7 +200,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	@Test
+	//@Test
 	public void testStockLevelNegative() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
@@ -229,7 +230,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	@Test
+	//@Test
 	public void testBQCodeNotFound() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
@@ -264,7 +265,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	@Test
+	//@Test
 	public void testStoreCodeNotFound() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
@@ -300,7 +301,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-//	@Test
+//	//@Test
 	public void testOPCONotFound() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
@@ -335,8 +336,8 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	@Test
-	public void testRangedFlag() throws IOException, InterruptedException, SQLException {
+	//@Test
+	public void testRangedFlagNot01() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
 		TestHelper.logWhatToTest(testName, " If the 'ranged' flag is not 0 or 1 then no line is created in the output file,"
@@ -371,7 +372,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	@Test
+	//@Test
 	public void testRangedFlagNaN() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
@@ -401,12 +402,74 @@ public class DataFeedTest {
 	}
 	
 	/**
+	 *  Large BODS job Test - Test the time the BODS job takes and fail it if it takes > x % longer than usual
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	//@Test
+	public void testLargeBODSJob() throws IOException, InterruptedException, SQLException {
+		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+		TestHelper.logWhatToTest(testName, " Test the time the BODS job takes and fail it if it takes > x % longer than usual");
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
+		//Create Input Text File
+
+//		InputTextRow inputTextRow = new InputTextRow();
+//		inputTextRow.setRanged_flag("0");
+//		inputTextRow.setCurrent_stock_quantity("1.999");
+//		InputTextFile.createInputTextFile(inputTextRow);
+//
+//		//Create Expeccted CSV File
+//		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+//		expecetdCSVRow.setStockLevel("1");
+//		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
+//
+//		TestHelper.invokeBODSJob();
+//
+//		assertThat(actualFile).hasSameContentAs(expectedFile);
+//		TestHelper.postJUnitCleanUp(testName);
+	}
+	
+	/**
+	 *  If the 'ranged' flag is 0 then csv file should be created.
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	//@Test
+	public void testRangedFlagIs1() throws IOException, InterruptedException, SQLException {
+		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+		TestHelper.logWhatToTest(testName, " If the 'ranged' flag is 0 then csv file should be created.");
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
+		//Create Input Text File
+
+		InputTextRow inputTextRow = new InputTextRow();
+		inputTextRow.setRanged_flag("1");
+		inputTextRow.setCurrent_stock_quantity("1.999");
+		InputTextFile.createInputTextFile(inputTextRow);
+
+		//Create Expeccted CSV File
+		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+		expecetdCSVRow.setStockLevel("1");
+		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
+
+		TestHelper.invokeBODSJob();
+
+		assertThat(actualFile).hasSameContentAs(expectedFile);
+		TestHelper.postJUnitCleanUp(testName);
+	}
+	
+	/**
 	 *  If multiple EANs are found for the same BQCode then these additional lines will be written to the output file
 	 * @throws IOException
 	 * @throws InterruptedException	
 	 * @throws SQLException
 	 */
-	@Test
+	//@Test
 	public void testMultipleEANs() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
@@ -431,6 +494,55 @@ public class DataFeedTest {
 		TestHelper.postJUnitCleanUp(testName);
 		
 		
+	}
+	
+	/**
+	 *  If the 'ranged' flag is 0 then csv file should be created.
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	//@Test
+	public void testRangedFlagIs0() throws IOException, InterruptedException, SQLException {
+		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+		TestHelper.logWhatToTest(testName, " If the 'ranged' flag is 0 then csv file should be created.");
+		//Cleanup
+		TestHelper.preJUnitCleanUp();
+		//Create Input Text File
+
+		InputTextRow inputTextRow = new InputTextRow();
+		inputTextRow.setRanged_flag("0");
+		inputTextRow.setCurrent_stock_quantity("1.999");
+		InputTextFile.createInputTextFile(inputTextRow);
+
+		//Create Expeccted CSV File
+		ExpectedCSVRow expecetdCSVRow = new ExpectedCSVRow();
+		expecetdCSVRow.setStockLevel("1");
+		ExpecetdCSVFile.createExpectedCSVFile(inputTextRow, expecetdCSVRow);
+
+		TestHelper.invokeBODSJob();
+
+		assertThat(actualFile).hasSameContentAs(expectedFile);
+		TestHelper.postJUnitCleanUp(testName);
+	}
+	
+	/**
+	 * Test the execution time of a large BODS Job
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testLargeDatafeed() throws IOException, InterruptedException, SQLException {
+		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+		TestHelper.logWhatToTest(testName, " If the 'ranged' flag is 0 then csv file should be created.");
+		//Cleanup
+		TestHelper.preJUnitCleanUp(TestCasePosition.LAST);
+		//Create Input Text File
+		InputTextFile.putLargeInputFile();
+		TestHelper.invokeLargeBODSJob();
 	}
 
 }

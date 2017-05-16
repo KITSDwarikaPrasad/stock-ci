@@ -1,14 +1,17 @@
 package com.kfplc.ci.datafeed;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
+import java.nio.file.StandardCopyOption;
 
 import com.kfplc.ci.datafeed.util.CommandRunner;
 import com.kfplc.ci.datafeed.util.ConfigReader;
+import com.kfplc.ci.datafeed.util.TestCasePosition;
 
 /**
  * The class with methods and flows to help in one test case
@@ -79,7 +82,30 @@ public class TestHelper {
 		}
 	}
 
+	public static void invokeLargeBODSJob() throws IOException, InterruptedException {
+		String csvFilePath = directory + fileName ;
+		System.out.println("-----------> invoking BODS Job ");
+		long startTime = System.currentTimeMillis();
+		CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh invokeBodsJob.sh");
+		pollTheFileLargeJob(csvFilePath);
+		long timeTakenInMinutes = (System.currentTimeMillis() - startTime) / 60000;
+		logExecutionTime(timeTakenInMinutes);
+		
+	}
 
+
+	private static void logExecutionTime(long timeTakenInMinutes) {
+		Path path = Paths.get(ConfigReader.getProperty("EXECUTION_TIME_LOG_PATH"));
+		//System.out.println("Creating input File : " + path );
+		try(BufferedWriter writer = Files.newBufferedWriter(path)) {
+			System.out.println("--------------> Large Job execution time in Minutes: "+timeTakenInMinutes);
+			writer.write(timeTakenInMinutes + "," );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 	/**
 	 * Method to identify the most recent zip file created by BODS job
@@ -134,6 +160,39 @@ public class TestHelper {
 		}
 	}
 	
+	private static void pollTheFileLargeJob(String strFilePath) throws IOException, InterruptedException {
+
+		boolean fileArrived = false;
+		long pollingDuration = Long.parseLong( ConfigReader.getProperty("POLLING_DURATION_SECONDS") ) * 10000;
+		long pollingInterval = Long.parseLong( ConfigReader.getProperty("POLLING_INTERVAL_SECONDS") ) * 10000;
+		System.out.println("----------> Started Polling for the csv file "+strFilePath +" , with polling interval(in milliSeconds) ="+ pollingInterval);
+		long endTimeSeconds= System.currentTimeMillis() + pollingDuration;
+		Path filePath = Paths.get(strFilePath);
+		long fileSize = 0L;
+		while (System.currentTimeMillis() < endTimeSeconds) {
+			System.out.println("checking for the file..");
+			if(Files.exists(filePath)) {
+				System.out.println("File exists..");
+				if(isCompletelyWritten(strFilePath)){
+					long newFileSize = Files.size(filePath);
+					System.out.println("newFileSize: "+ newFileSize);
+					if(newFileSize > 0  && newFileSize == fileSize) {
+						fileArrived = true;
+						break;
+					} else {
+						fileSize = newFileSize;
+					}
+				}
+			}
+			Thread.sleep(pollingInterval);
+		}
+
+		if (!fileArrived) {
+			System.out.println("-----------> File did not arrive.");
+			throw new AssertionError("Waiting for the file "+ strFilePath + " , but the file dod not arrive.");
+		}
+			
+	}
 	
 	/**
 	 *  To check if the file is completely written
@@ -161,11 +220,12 @@ public class TestHelper {
 
 	/**
 	 * Method to be called at start of each test case to delete the files created by previous test case
+	 * @param testCasePosition 
 	 * @throws IOException
 	 * @throws InterruptedException 
 	 * @throws NumberFormatException 
 	 */
-	public static void preJUnitCleanUp() throws IOException, NumberFormatException, InterruptedException {
+	public static void preJUnitCleanUp(TestCasePosition... testCasePosition) throws IOException, NumberFormatException, InterruptedException {
 		if(Files.exists(Paths.get(directory, fileName + "_bkp"))) {
 			deleteFile(Paths.get(directory, fileName + "_bkp"));
 			System.out.println("----> Deleted existin bkp file");
@@ -181,6 +241,13 @@ public class TestHelper {
 		}
 		if(Files.exists(Paths.get(directory, fileName + "_Expected"))) {
 			deleteFile(Paths.get(directory, fileName + "_Expected"));
+		}
+		if(TestCasePosition.FIRST.equals(testCasePosition)) {
+			Files.move(Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH")), Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH") + "BKP") );
+			
+		} else if(TestCasePosition.LAST.equals(testCasePosition)) {
+			Files.move(Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH") + "BKP"), Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH")), StandardCopyOption.REPLACE_EXISTING);
+			
 		}
 	}
 
@@ -231,6 +298,5 @@ public class TestHelper {
 
 		}
 	}
-
 
 }

@@ -89,6 +89,13 @@ public class InputTextFile {
 		}
 	}
 
+
+
+	public static void putLargeInputFile() {
+
+		Path path = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH"));
+	}
+
 	
 	
 }
