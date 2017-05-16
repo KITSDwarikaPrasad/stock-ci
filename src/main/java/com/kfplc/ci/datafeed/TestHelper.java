@@ -103,9 +103,10 @@ public class TestHelper {
 	private static void logExecutionTime(long timeTakenInMinutes) {
 		Path path = Paths.get(ConfigReader.getProperty("EXECUTION_TIME_LOG_PATH"));
 		//System.out.println("Creating input File : " + path );
-		try(BufferedWriter writer = Files.newBufferedWriter(path,StandardOpenOption.APPEND)) {
+		 Charset charset = Charset.forName("UTF-8");
+		try(BufferedWriter writer = Files.newBufferedWriter(path,charset,StandardOpenOption.APPEND)) {
 			System.out.println("--------------> Large Job execution time in Minutes: "+timeTakenInMinutes);
-			writer.write(timeTakenInMinutes + "\n\r" );
+			writer.write(timeTakenInMinutes + "\n" );
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
