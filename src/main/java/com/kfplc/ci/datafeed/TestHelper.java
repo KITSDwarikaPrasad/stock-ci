@@ -106,7 +106,7 @@ public class TestHelper {
 		 Charset charset = Charset.forName("UTF-8");
 		try(BufferedWriter writer = Files.newBufferedWriter(path,charset,StandardOpenOption.APPEND)) {
 			System.out.println("--------------> Large Job execution time in Minutes: "+timeTakenInMinutes);
-			writer.write(timeTakenInMinutes + "\n" );
+			writer.write(String.valueOf(timeTakenInMinutes) + "\n" );
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
