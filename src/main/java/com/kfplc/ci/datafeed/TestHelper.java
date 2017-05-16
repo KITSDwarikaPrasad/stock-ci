@@ -336,6 +336,7 @@ public class TestHelper {
 		}
 		
 		float mean = nr / dr;
+		System.out.println("----------> Mean: "+ mean);
 		float upperLimit = mean * (1 + 20 / 100);
 		return (int)upperLimit;
 	}
