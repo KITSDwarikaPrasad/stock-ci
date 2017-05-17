@@ -1,5 +1,6 @@
 package com.kfplc.ci.datafeed;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -187,19 +188,41 @@ public class LargeBodsTestHelper {
 		final String validBQCode1 = validBQCode;
 		
 		System.out.println("-----------> Preparing input data for large datafeed job test from production like file.");
-		Files.lines(bkpPath).map(line -> new StringBuilder(line).replace(15, 23, validBQCode1).toString()).parallel()
-				.forEach(line -> {
-					try {
-						updateCount();
-						Files.write(path, line.concat("\n").getBytes(), StandardOpenOption.APPEND);
-						if(count % 1000 == 0){
-							System.out.print(".");
-						}
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				});
-
+//		Files.lines(bkpPath).map(line -> new StringBuilder(line).replace(15, 23, validBQCode1).toString()).parallel()
+//				.forEach(line -> {
+//					try {
+//						updateCount();
+//						Files.write(path, line.concat("\n").getBytes(), StandardOpenOption.APPEND);
+//						if(count % 1000 == 0){
+//							System.out.print(".");
+//						}
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//				});
+		long startTime = System.currentTimeMillis();
+		int chunkSize = Integer.parseInt(ConfigReader.getProperty("CHUNK_SIZE"));
+		try(BufferedWriter writer = Files.newBufferedWriter(path,  Charset.forName("UTF-8"), StandardOpenOption.APPEND);
+				BufferedReader reader = Files.newBufferedReader(bkpPath) ) {
+			int lineCount = 0;
+			StringBuilder chunk = new StringBuilder();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				lineCount++;
+				chunk = chunk.append(line).replace(15, 23, validBQCode).append("\n");
+				if(lineCount == chunkSize) {
+					lineCount = 0;
+					writer.write(chunk.toString());
+					chunk = new StringBuilder();
+					System.out.print(".");
+				}
+			}
+			writer.write(chunk.toString());
+			System.out.println("Time taken1: "+ (System.currentTimeMillis() - startTime));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private static void updateCount() {
