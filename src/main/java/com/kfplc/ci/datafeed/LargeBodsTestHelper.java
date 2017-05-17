@@ -218,7 +218,7 @@ public class LargeBodsTestHelper {
 				}
 			}
 			writer.write(chunk.toString());
-			System.out.println("Time taken1: "+ (System.currentTimeMillis() - startTime));
+			System.out.println("Time taken1: "+ (System.currentTimeMillis() - startTime)+ "ms");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
