@@ -195,7 +195,9 @@ public class LargeBodsTestHelper {
 	}
 
 	public static void postJUnitCleanUp(TestCasePosition last) throws IOException {
-		Files.move(Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH") + "BKP"), Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH")));
+		Path inputPath = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH"));
+		Files.delete(inputPath);
+		Files.move(Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH") + "BKP"), inputPath);
 		
 	}
 }
