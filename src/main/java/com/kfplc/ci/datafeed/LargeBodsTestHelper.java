@@ -160,6 +160,7 @@ public class LargeBodsTestHelper {
 		 ResultSet resultSetBQ = null;
 		try {
 		String sqlQueryBQCd = "select BQCODE from MBODS."+ ConfigReader.getProperty("TBL_EFFECTIVE_ARTICLE")+" where ROWNUM =1";
+		connection = WMBConnection.getConnection();
 		preparedStatementBQ = connection.prepareStatement(sqlQueryBQCd);
 		resultSetBQ = preparedStatementBQ.executeQuery();
 //		final String validBQCode = null;
