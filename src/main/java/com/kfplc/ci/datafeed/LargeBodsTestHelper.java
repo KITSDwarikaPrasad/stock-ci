@@ -7,11 +7,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.kfplc.ci.datafeed.util.CommandRunner;
 import com.kfplc.ci.datafeed.util.ConfigReader;
+import com.kfplc.ci.datafeed.util.TestCasePosition;
+import com.kfplc.ci.datafeed.util.WMBConnection;
 
 /**
  * The class with methods and flows to help in Large BODS test case
@@ -145,5 +151,49 @@ public class LargeBodsTestHelper {
 		System.out.println("----------> Mean: "+ mean);
 		float upperLimit = mean * (1 + varriationPerc / 100);
 		return (int)upperLimit;
+	}
+	
+	public static void prepareLargeInputFile() throws SQLException, IOException {
+		
+		 Connection connection = null;
+		 PreparedStatement preparedStatementBQ = null;
+		 ResultSet resultSetBQ = null;
+		try {
+		String sqlQueryBQCd = "select BQCODE from MBODS."+ ConfigReader.getProperty("TBL_EFFECTIVE_ARTICLE")+" where ROWNUM =1";
+		preparedStatementBQ = connection.prepareStatement(sqlQueryBQCd);
+		resultSetBQ = preparedStatementBQ.executeQuery();
+//		final String validBQCode = null;
+//		if(resultSetBQ != null && resultSetBQ.next()) {
+		final String validBQCode = resultSetBQ.getString(1);
+//		}
+		Path path = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH"));
+		Path bkpPath = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH") + "BKP");
+		Files.move(path, bkpPath);
+		if(Files.notExists(path)) {
+			Files.createFile(path);
+		}
+		Files.lines(bkpPath)
+		  .map(line-> new StringBuilder(line).replace(15, 23, validBQCode).toString()).parallel()
+		  .forEach(line -> {
+			try {
+				Files.write(path, line.concat("\n").getBytes(),StandardOpenOption.APPEND);
+				System.out.print(".");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			WMBConnection.closeResultSet(resultSetBQ);
+			WMBConnection.closePreparedStatement(preparedStatementBQ);
+			WMBConnection.closeConnection(connection);
+		}
+
+	}
+
+	public static void postJUnitCleanUp(TestCasePosition last) throws IOException {
+		Files.move(Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH") + "BKP"), Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH")));
+		
 	}
 }

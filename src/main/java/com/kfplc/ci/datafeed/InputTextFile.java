@@ -88,14 +88,4 @@ public class InputTextFile {
 			e.printStackTrace();
 		}
 	}
-
-
-
-	public static void putLargeInputFile() {
-
-		Path path = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH"));
-	}
-
-	
-	
 }
