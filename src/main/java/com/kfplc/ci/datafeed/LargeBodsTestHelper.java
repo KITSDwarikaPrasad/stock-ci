@@ -141,7 +141,7 @@ public class LargeBodsTestHelper {
 		}
 		
 		float mean = nr / dr;
-		int varriationPerc = Integer.parseInt(ConfigReader.getProperty("EXECUTION_TIME_VARRIATION"));
+		int varriationPerc = Integer.parseInt(ConfigReader.getProperty("EXECUTION_TIME_VARRIATION%"));
 		System.out.println("----------> Mean: "+ mean);
 		float upperLimit = mean * (1 + varriationPerc / 100);
 		return (int)upperLimit;
