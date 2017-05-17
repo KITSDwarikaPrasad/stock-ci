@@ -107,6 +107,7 @@ public class TestHelper {
 		try(BufferedWriter writer = Files.newBufferedWriter(path,charset,StandardOpenOption.APPEND)) {
 			System.out.println("--------------> Large Job execution time in Minutes: "+timeTakenInMinutes);
 			writer.write(String.valueOf(timeTakenInMinutes) + "\n" );
+			writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -336,8 +337,9 @@ public class TestHelper {
 		}
 		
 		float mean = nr / dr;
+		int varriationPerc = Integer.parseInt(ConfigReader.getProperty("EXECUTION_TIME_VARRIATION"));
 		System.out.println("----------> Mean: "+ mean);
-		float upperLimit = mean * (1 + 20 / 100);
+		float upperLimit = mean * (1 + varriationPerc / 100);
 		return (int)upperLimit;
 	}
 
