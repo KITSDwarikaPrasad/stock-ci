@@ -164,8 +164,9 @@ public class LargeBodsTestHelper {
 		preparedStatementBQ = connection.prepareStatement(sqlQueryBQCd);
 		resultSetBQ = preparedStatementBQ.executeQuery();
 //		final String validBQCode = null;
-//		if(resultSetBQ != null && resultSetBQ.next()) {
-		final String validBQCode = resultSetBQ.getString(1);
+//		if(resultSetBQ != null &&) {
+		 resultSetBQ.next();
+		final String validBQCode = (resultSetBQ != null && resultSetBQ.next())? resultSetBQ.getString(1) : "25694956";
 //		}
 		Path path = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH"));
 		Path bkpPath = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH") + "BKP");
