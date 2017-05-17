@@ -156,7 +156,6 @@ public class LargeBodsTestHelper {
 	}
 	
 	public static void prepareLargeInputFile() throws SQLException, IOException {
-		System.out.println("-----------> Preparing input data for large datafeed job test from production like file.");
 		Connection connection = null;
 		PreparedStatement preparedStatementBQ = null;
 		ResultSet resultSetBQ = null;
@@ -187,6 +186,7 @@ public class LargeBodsTestHelper {
 		}
 		final String validBQCode1 = validBQCode;
 		
+		System.out.println("-----------> Preparing input data for large datafeed job test from production like file.");
 		Files.lines(bkpPath).map(line -> new StringBuilder(line).replace(15, 23, validBQCode1).toString()).parallel()
 				.forEach(line -> {
 					try {
