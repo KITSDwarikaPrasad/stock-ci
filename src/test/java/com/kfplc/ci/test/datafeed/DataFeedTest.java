@@ -19,6 +19,7 @@ import com.kfplc.ci.datafeed.ExpecetdCSVFile;
 import com.kfplc.ci.datafeed.ExpectedCSVRow;
 import com.kfplc.ci.datafeed.InputTextFile;
 import com.kfplc.ci.datafeed.InputTextRow;
+import com.kfplc.ci.datafeed.LargeBodsTestHelper;
 import com.kfplc.ci.datafeed.TestHelper;
 import com.kfplc.ci.datafeed.util.CommandRunner;
 import com.kfplc.ci.datafeed.util.ConfigReader;
@@ -542,8 +543,8 @@ public class DataFeedTest {
 		TestHelper.preJUnitCleanUp(TestCasePosition.LAST);
 		//Create Input Text File
 		InputTextFile.putLargeInputFile();
-		long executionTime = TestHelper.invokeLargeBODSJob();
-		TestHelper.assertExecutionTimeInLimit(executionTime);
+		long executionTime = LargeBodsTestHelper.invokeLargeBODSJob();
+		LargeBodsTestHelper.assertExecutionTimeInLimit(executionTime);
 	}
 
 }
