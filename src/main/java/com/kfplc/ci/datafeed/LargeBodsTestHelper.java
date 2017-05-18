@@ -223,6 +223,28 @@ public class LargeBodsTestHelper {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		verifyLargeInputFile(path);
+	}
+
+	
+	/**
+	 * To print the top 5 line of large input file for verification
+	 * @param path
+	 */
+	private static void verifyLargeInputFile(Path path) {
+		try(BufferedReader reader = Files.newBufferedReader(path) ) {
+			int lineCount = 0;
+			String line;
+			while ((line = reader.readLine()) != null) {
+				System.out.println(line);
+				if( lineCount++ == 5) {
+					break;
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private static void updateCount() {
