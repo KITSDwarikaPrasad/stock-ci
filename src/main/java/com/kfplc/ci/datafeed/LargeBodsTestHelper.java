@@ -45,6 +45,10 @@ public class LargeBodsTestHelper {
 		long startTime = System.currentTimeMillis();
 		CommandRunner.runShellCommandPB( userDir.concat("/script/shell"), "/bin/sh invokeBodsJob.sh");
 		pollTheFileLargeJob(csvFilePath);
+		String logFilePath = ConfigReader.getProperty("UNPROCESSED_LOG_FILE_PATH"); 
+		if(Files.size(Paths.get(logFilePath)) > 0 ) {
+			pollTheFileLargeJob(logFilePath);
+		}
 		long executionTimeInMinutes = (System.currentTimeMillis() - startTime) / 60000;
 		logExecutionTime(executionTimeInMinutes);
 		return executionTimeInMinutes;

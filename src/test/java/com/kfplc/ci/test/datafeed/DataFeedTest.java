@@ -544,7 +544,7 @@ public class DataFeedTest {
 		//Create Input Text File
 		//LargeBodsTestHelper.prepareLargeInputFile();
 		long executionTime = LargeBodsTestHelper.invokeLargeBODSJob();
-		LargeBodsTestHelper.postJUnitCleanUp(TestCasePosition.LAST);
+		//LargeBodsTestHelper.postJUnitCleanUp(TestCasePosition.LAST); //call this in conjugation with prepareLargeInputFile()
 		LargeBodsTestHelper.assertExecutionTimeInLimit(executionTime);
 		
 	}
