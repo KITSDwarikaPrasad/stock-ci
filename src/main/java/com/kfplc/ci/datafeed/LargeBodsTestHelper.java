@@ -212,7 +212,9 @@ public class LargeBodsTestHelper {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				lineCount++;
-				chunk = chunk.append(line).replace(15, 23, validBQCode).append("\n");
+//				chunk = chunk.append(line).replace(15, 23, validBQCode).append("\n");
+				chunk = chunk.append(line.substring(0, 15)).append(validBQCode).append(line.substring(23)).append("\n");
+				
 				if(lineCount == chunkSize) {
 					lineCount = 0;
 					writer.write(chunk.toString());
