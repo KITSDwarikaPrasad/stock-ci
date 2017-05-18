@@ -164,6 +164,9 @@ public class LargeBodsTestHelper {
 
 		Path path = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH"));
 		Path bkpPath = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH") + "BKP");
+		if(Files.exists(bkpPath)) {
+			Files.delete(bkpPath);
+		}
 		Files.move(path, bkpPath);
 		if (Files.notExists(path)) {
 			Files.createFile(path);
