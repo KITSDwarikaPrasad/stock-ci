@@ -206,7 +206,7 @@ public class TestHelper {
 	 * @throws NumberFormatException
 	 * @throws InterruptedException
 	 */
-	private static void deleteFile(Path path) throws NumberFormatException, InterruptedException {
+	static void deleteFile(Path path) throws NumberFormatException, InterruptedException {
 		// TODO Auto-generated method stub
 		boolean deletionRequired = true;
 		while(deletionRequired) {

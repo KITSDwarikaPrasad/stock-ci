@@ -259,7 +259,12 @@ public class LargeBodsTestHelper {
 	public static void postJUnitCleanUp(TestCasePosition last) throws IOException {
 		System.out.println("Reverting input files.");
 		Path inputPath = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH"));
-		Files.delete(inputPath);
+		try {
+			TestHelper.deleteFile(inputPath);
+		} catch (NumberFormatException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Files.move(Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH") + "BKP"), inputPath);
 		
 	}

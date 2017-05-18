@@ -542,7 +542,7 @@ public class DataFeedTest {
 		//Cleanup
 		TestHelper.preJUnitCleanUp(TestCasePosition.LAST);
 		//Create Input Text File
-		LargeBodsTestHelper.prepareLargeInputFile();
+		//LargeBodsTestHelper.prepareLargeInputFile();
 		long executionTime = LargeBodsTestHelper.invokeLargeBODSJob();
 		LargeBodsTestHelper.postJUnitCleanUp(TestCasePosition.LAST);
 		LargeBodsTestHelper.assertExecutionTimeInLimit(executionTime);
