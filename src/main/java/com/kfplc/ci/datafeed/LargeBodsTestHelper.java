@@ -163,8 +163,11 @@ public class LargeBodsTestHelper {
 	public static void prepareLargeInputFile() throws SQLException, IOException {
 		Connection connection = null;
 		PreparedStatement preparedStatementBQ = null;
+		PreparedStatement preparedStatement = null;
 		ResultSet resultSetBQ = null;
+		ResultSet resultSet = null;
 		String validBQCode = "27345337";
+		String validFullStoreCd = "SOF221";
 
 		Path path = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH"));
 		Path bkpPath = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH") + "BKP");
@@ -176,6 +179,14 @@ public class LargeBodsTestHelper {
 			Files.createFile(path);
 		}
 		try {
+			String sqlQueryStoreCd = "select FULLSTORECODE from MBREPOS.MBSTRCD where ROWNUM =1";
+			connection = WMBConnection.getConnection();
+			preparedStatement = connection.prepareStatement(sqlQueryStoreCd);
+			resultSet = preparedStatement.executeQuery();
+			if(resultSet != null && resultSet.next()) {
+				validFullStoreCd = resultSet.getString(1);
+			}
+			
 			String sqlQueryBQCd = "select BQCODE from MBODS." + ConfigReader.getProperty("TBL_EFFECTIVE_ARTICLE")
 					+ " where ROWNUM =1";
 			connection = WMBConnection.getConnection();
@@ -184,6 +195,8 @@ public class LargeBodsTestHelper {
 			if(resultSetBQ != null && resultSetBQ.next()) {
 				validBQCode = resultSetBQ.getString(1);
 			}
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -192,7 +205,7 @@ public class LargeBodsTestHelper {
 			WMBConnection.closeConnection(connection);
 		}
 		final String validBQCode1 = validBQCode;
-		
+		final String validFullStoreCd1 = validFullStoreCd;
 		System.out.println("-----------> Preparing input data for large datafeed job test from production like file.");
 //		Files.lines(bkpPath).map(line -> new StringBuilder(line).replace(15, 23, validBQCode1).toString()).parallel()
 //				.forEach(line -> {
@@ -216,7 +229,11 @@ public class LargeBodsTestHelper {
 			while ((line = reader.readLine()) != null) {
 				lineCount++;
 				if(line.length() == Integer.parseInt(ConfigReader.getProperty("ONE_ROW_CONTENT_LENGTH"))){
-					chunk = chunk.append(line.substring(0, 15)).append(validBQCode1).append(line.substring(23)).append("\r\n");
+					chunk = chunk.append(line.substring(0,1))
+							.append(validFullStoreCd1)
+							.append(line.substring(7, 15))
+							.append(validBQCode1)
+							.append(line.substring(23)).append("\r\n");
 				} else {
 					chunk = chunk.append(line).append("\r\n");
 				}
