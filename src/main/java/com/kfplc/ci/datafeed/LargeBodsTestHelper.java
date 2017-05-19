@@ -164,7 +164,7 @@ public class LargeBodsTestHelper {
 		Connection connection = null;
 		PreparedStatement preparedStatementBQ = null;
 		ResultSet resultSetBQ = null;
-		String validBQCode = "25694956";
+		String validBQCode = "27345337";
 
 		Path path = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH"));
 		Path bkpPath = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH") + "BKP");
@@ -181,10 +181,9 @@ public class LargeBodsTestHelper {
 			connection = WMBConnection.getConnection();
 			preparedStatementBQ = connection.prepareStatement(sqlQueryBQCd);
 			resultSetBQ = preparedStatementBQ.executeQuery();
-			// final String validBQCode = null;
-			// if(resultSetBQ != null &&) {
-			resultSetBQ.next();
-			validBQCode = (resultSetBQ != null && resultSetBQ.next()) ? resultSetBQ.getString(1) : "25694956";
+			if(resultSetBQ != null && resultSetBQ.next()) {
+				validBQCode = resultSetBQ.getString(1);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -217,7 +216,7 @@ public class LargeBodsTestHelper {
 			while ((line = reader.readLine()) != null) {
 				lineCount++;
 //				chunk = chunk.append(line).replace(15, 23, validBQCode).append("\n");
-				chunk = chunk.append(line.substring(0, 15)).append(validBQCode).append(line.substring(23)).append("\n");
+				chunk = chunk.append(line.substring(0, 15)).append(validBQCode1).append(line.substring(23)).append("\n");
 				
 				if(lineCount == chunkSize) {
 					lineCount = 0;

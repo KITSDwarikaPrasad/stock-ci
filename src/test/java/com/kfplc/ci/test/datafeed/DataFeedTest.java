@@ -59,7 +59,7 @@ public class DataFeedTest {
 		CommandRunner.authenticateKerberos();
 	}
 	
-		@Test
+		//@Test
 	public void testStockLevelRoundingNonInteger() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 		TestHelper.logWhatToTest(testName,"If the Stock level is a non - Integer then it should be rounded down to nearest lower integer value.");
@@ -534,7 +534,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	//@Test
+	@Test
 	public void testLargeDatafeed() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
