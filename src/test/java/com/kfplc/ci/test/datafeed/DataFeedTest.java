@@ -543,9 +543,12 @@ public class DataFeedTest {
 		TestHelper.preJUnitCleanUp(TestCasePosition.LAST);
 		//Create Input Text File
 		LargeBodsTestHelper.prepareLargeInputFile();
-		long executionTime = LargeBodsTestHelper.invokeLargeBODSJob();
-		LargeBodsTestHelper.postJUnitCleanUp(TestCasePosition.LAST); //call this in conjugation with prepareLargeInputFile()
-		LargeBodsTestHelper.assertExecutionTimeInLimit(executionTime);
+		try {
+			long executionTime = LargeBodsTestHelper.invokeLargeBODSJob();
+			LargeBodsTestHelper.assertExecutionTimeInLimit(executionTime);
+		} finally {
+			LargeBodsTestHelper.postJUnitCleanUp(TestCasePosition.LAST); //call this in conjugation with prepareLargeInputFile()
+		}
 		
 	}
 	
@@ -565,9 +568,12 @@ public class DataFeedTest {
 		//Create Input Text File
 		//LargeBodsTestHelper.prepareLargeInputFile();
 		LargeBodsTestHelper.prapareInputWithCustomData("1FAE11101052017256949560000051.000000000000000000000000010000002052017");
-		long executionTime = LargeBodsTestHelper.invokeLargeBODSJob();
-		LargeBodsTestHelper.postJUnitCleanUp(TestCasePosition.LAST); //call this in conjugation with createInputWithCustomData()
-		LargeBodsTestHelper.assertCSVFileHasData();
+		try {
+			long executionTime = LargeBodsTestHelper.invokeLargeBODSJob();
+			LargeBodsTestHelper.postJUnitCleanUp(TestCasePosition.LAST); //call this in conjugation with createInputWithCustomData()
+		} finally {
+			LargeBodsTestHelper.assertCSVFileHasData();
+		}
 		
 	}
 	
