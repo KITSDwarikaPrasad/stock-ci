@@ -105,7 +105,7 @@ public class LargeBodsTestHelper {
 		 Charset charset = Charset.forName("UTF-8");
 		try(BufferedWriter writer = Files.newBufferedWriter(path,charset,StandardOpenOption.APPEND)) {
 			System.out.println("--------------> Large Job execution time in Minutes: "+timeTakenInMinutes);
-			writer.write(String.valueOf(timeTakenInMinutes) + "\n" );
+			writer.write(String.valueOf(timeTakenInMinutes) + "\r\n" );
 			writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -216,9 +216,9 @@ public class LargeBodsTestHelper {
 			while ((line = reader.readLine()) != null) {
 				lineCount++;
 				if(line.length() == Integer.parseInt(ConfigReader.getProperty("ONE_ROW_CONTENT_LENGTH"))){
-					chunk = chunk.append(line.substring(0, 15)).append(validBQCode1).append(line.substring(23)).append("\n");
+					chunk = chunk.append(line.substring(0, 15)).append(validBQCode1).append(line.substring(23)).append("\r\n");
 				} else {
-					chunk = chunk.append(line).append("\n");
+					chunk = chunk.append(line).append("\r\n");
 				}
 				if(lineCount == chunkSize) {
 					lineCount = 0;
