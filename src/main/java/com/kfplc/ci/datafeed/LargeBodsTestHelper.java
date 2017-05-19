@@ -226,7 +226,7 @@ public class LargeBodsTestHelper {
 			int lineCount = 0;
 			StringBuilder chunk = new StringBuilder();
 			String line;
-			while ((line = reader.readLine()) != null) {
+			while ((line = reader.readLine()) != null && !line.isEmpty()) {
 				lineCount++;
 				if(line.length() == Integer.parseInt(ConfigReader.getProperty("ONE_ROW_CONTENT_LENGTH"))){
 					chunk = chunk.append(line.substring(0,1))
