@@ -218,7 +218,7 @@ public class LargeBodsTestHelper {
 				if(line.length() == Integer.parseInt(ConfigReader.getProperty("ONE_ROW_CONTENT_LENGTH"))){
 					chunk = chunk.append(line.substring(0, 15)).append(validBQCode1).append(line.substring(23)).append("\n");
 				} else {
-					chunk = chunk.append(line);
+					chunk = chunk.append(line).append("\n");
 				}
 				if(lineCount == chunkSize) {
 					lineCount = 0;
