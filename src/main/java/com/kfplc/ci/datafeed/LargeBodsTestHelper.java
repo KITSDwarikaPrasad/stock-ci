@@ -215,9 +215,11 @@ public class LargeBodsTestHelper {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				lineCount++;
-//				chunk = chunk.append(line).replace(15, 23, validBQCode).append("\n");
-				chunk = chunk.append(line.substring(0, 15)).append(validBQCode1).append(line.substring(23)).append("\n");
-				
+				if(line.length() == Integer.parseInt(ConfigReader.getProperty("ONE_ROW_CONTENT_LENGTH"))){
+					chunk = chunk.append(line.substring(0, 15)).append(validBQCode1).append(line.substring(23)).append("\n");
+				} else {
+					chunk = chunk.append(line);
+				}
 				if(lineCount == chunkSize) {
 					lineCount = 0;
 					writer.write(chunk.toString());
@@ -225,6 +227,7 @@ public class LargeBodsTestHelper {
 					System.out.print(".");
 				}
 			}
+			
 			writer.write(chunk.toString());
 			System.out.println("Time taken1: "+ (System.currentTimeMillis() - startTime)+ "ms");
 		} catch (IOException e) {
