@@ -272,4 +272,43 @@ public class LargeBodsTestHelper {
 		Files.move(Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH") + "BKP"), inputPath);
 		
 	}
+
+	/**
+	 * Test the job with custom line input
+	 * @param customInput
+	 * @throws IOException
+	 */
+	public static void prapareInputWithCustomData(String customInput) throws IOException {
+		Path path = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH"));
+		Path bkpPath = Paths.get(ConfigReader.getProperty("INPUT_FILE_PATH") + "BKP");
+		if(Files.exists(bkpPath)) {
+			Files.delete(bkpPath);
+		}
+		Files.move(path, bkpPath);
+		if (Files.notExists(path)) {
+			Files.createFile(path);
+		}
+		try(BufferedWriter writer = Files.newBufferedWriter(path)) {
+			writer.write(customInput);
+		} catch (IOException e) {
+			// TODO: handle exception
+		}
+		
+	}
+
+	/**
+	 * Assert if the output csv file has got any data other than header
+	 * @throws IOException
+	 */
+	public static void assertCSVFileHasData() throws IOException {
+		String directory = ConfigReader.getProperty("TARGET_OUT_DIR");
+		String fileName = ConfigReader.getProperty("CSV_FILENAME");
+		Path outPath = Paths.get(directory.concat(fileName));
+		if(Files.exists(outPath)) {
+			long lineCount = Files.lines(outPath).count();
+			if(lineCount < 2l) {
+				throw new AssertionError("Output data not found");
+			}
+		}
+	}
 }

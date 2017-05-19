@@ -534,7 +534,7 @@ public class DataFeedTest {
 	 * @throws InterruptedException
 	 * @throws SQLException
 	 */
-	@Test
+	//@Test
 	public void testLargeDatafeed() throws IOException, InterruptedException, SQLException {
 		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
@@ -548,5 +548,28 @@ public class DataFeedTest {
 		LargeBodsTestHelper.assertExecutionTimeInLimit(executionTime);
 		
 	}
+	
+	/**
+	 * Test the job with custom input data
+	 * @throws IOException
+	 * @throws InterruptedException
+	 * @throws SQLException
+	 */
+	@Test
+	public void testCustomInput() throws IOException, InterruptedException, SQLException {
+		testName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+		TestHelper.logWhatToTest(testName, "  Test the job with custom input data");
+		//Cleanup
+		TestHelper.preJUnitCleanUp(TestCasePosition.LAST);
+		//Create Input Text File
+		//LargeBodsTestHelper.prepareLargeInputFile();
+		LargeBodsTestHelper.prapareInputWithCustomData("1FAE11101052017256949560000051.000000000000000000000000010000002052017");
+		long executionTime = LargeBodsTestHelper.invokeLargeBODSJob();
+		LargeBodsTestHelper.postJUnitCleanUp(TestCasePosition.LAST); //call this in conjugation with createInputWithCustomData()
+		LargeBodsTestHelper.assertCSVFileHasData();
+		
+	}
+	
 
 }
