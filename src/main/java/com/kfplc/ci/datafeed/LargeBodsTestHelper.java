@@ -286,7 +286,9 @@ public class LargeBodsTestHelper {
 		if(Files.exists(bkpPath)) {
 			Files.delete(bkpPath);
 		}
-		Files.move(path, bkpPath);
+		if(Files.exists(path)) {
+			Files.move(path, bkpPath);
+		}
 		if (Files.notExists(path)) {
 			Files.createFile(path);
 		}
