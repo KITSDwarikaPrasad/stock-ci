@@ -1,0 +1,6 @@
+---
+- name: check winrm config
+  win_shell: |
+   winrm get winrm/config
+  register: winrm_out
+#- debug: var=winrm_out

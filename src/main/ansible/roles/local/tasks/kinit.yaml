@@ -1,0 +1,12 @@
+---
+- include_vars:
+    file: secrets.yml
+
+- name: run kinit command to authenticate bods server user
+#  shell: echo "{{ansible_ssh_user_passsword}}" | kinit "{{ansible_ssh_user}}"
+  shell: sh kinitscript.sh "{{ansible_ssh_user_passsword}}" "{{ansible_ssh_user}}"
+  args:
+    chdir: '{{role_path}}/scripts/'
+  register: login_output
+
+- debug: var=login_output

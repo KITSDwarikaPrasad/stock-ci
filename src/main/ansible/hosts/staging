@@ -1,0 +1,12 @@
+[linux-server]
+lnxs0755.ghanp.kfplc.com
+
+[windows-server]
+app1456.GHANP.KFPLC.COM
+
+
+[jenkins:children]
+linux-server
+
+[bods:children]
+windows-server
